@@ -36,12 +36,11 @@ public class Relics extends JavaPlugin{
 		
 		Bukkit.getPluginManager().registerEvents(new StructureDetection(this), this);
 		
-		new ObeliskStructure(2, 2, 2, BasicObelisk.class)
-				.setBlockPosition(0, 0, 0, Material.GOLD_BLOCK).setBlockPosition(1, 0, 0, Material.GOLD_BLOCK)
-				.setBlockPosition(1, 0, 1, Material.GOLD_BLOCK).setBlockPosition(0, 0, 1, Material.GOLD_BLOCK)
-				.setBlockPosition(0, 1, 0, Material.DIAMOND_BLOCK).setBlockPosition(1, 1, 0, Material.DIAMOND_BLOCK)
-				.setBlockPosition(1, 1, 1, Material.DIAMOND_BLOCK).setBlockPosition(0, 1, 1, Material.DIAMOND_BLOCK)
-				.setFormationMaterial(0, 0, 0).build();
+		new ObeliskStructure(1, 3, 3, BasicObelisk.class)
+			.setBlockPosition(0, 0, 1, Material.LOG).setBlockPosition(0, 1, 0, Material.FENCE)
+			.setBlockPosition(0, 1, 1, Material.LOG).setBlockPosition(0, 1, 2, Material.FENCE)
+			.setBlockPosition(0, 2, 0, Material.WOOD).setBlockPosition(0, 2, 1, Material.LOG)
+			.setBlockPosition(0, 2, 2, Material.WOOD).setFormationMaterial(0, 0, 1).build();
 		
 		/* LAL
 		 * AIA -> Anvil on top of I

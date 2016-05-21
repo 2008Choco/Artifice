@@ -79,26 +79,18 @@ public class StructureDetection implements Listener{
 		if (!block.getType().equals(structure.getFormationMaterial())
 				|| manager.isObeliskComponent(block)) return false;
 		
-		Location aa = block.getLocation();
+		Location location = new Location(block.getWorld(), block.getX() - structure.getXFormationIndex(), block.getY() - structure.getYFormationIndex(), block.getZ() - structure.getZFormationIndex());
 		Material[][][] materials = new Material[structure.getLength()][structure.getHeight()][structure.getWidth()];
 		
 		for (int y = 0; y < structure.getHeight(); y++){
 			for (int x = 0; x < structure.getLength(); x++){
 				for (int z = 0; z < structure.getWidth(); z++){
-					aa.add(x, y, z);
-					materials[x][y][z] = aa.getBlock().getType();
-					aa.subtract(x, y, z);
+					location.add(x, y, z);
+					materials[x][y][z] = location.getBlock().getType();
+					location.subtract(x, y, z);
 				}
 			}
 		}
-		
-//		for (Material[][] mat : structure.getBlockFormation()){
-//			for (Material[] ma : mat){
-//				for (Material m : ma){
-//					System.out.println(m.name());
-//				}
-//			}
-//		}
 		
 		return Arrays.deepEquals(materials, structure.getBlockFormation());
 	}
