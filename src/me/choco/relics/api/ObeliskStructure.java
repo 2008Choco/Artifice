@@ -4,7 +4,6 @@ import org.bukkit.Material;
 
 import me.choco.relics.Relics;
 import me.choco.relics.structures.Obelisk;
-import me.choco.relics.utils.ObeliskType;
 import me.choco.relics.utils.managers.ObeliskManager;
 
 public class ObeliskStructure {
@@ -14,17 +13,16 @@ public class ObeliskStructure {
 	private Material formationMaterial;
 	private int xFormationIndex = 0, yFormationIndex = 0, zFormationIndex = 0;
 	
-	private ObeliskType type;
-	
+	private final Class<? extends Obelisk> clazz;
 	/** Create a new obelisk structure to be detected 
 	 * @param length - The size of the structure along the x axis
 	 * @param height - The size of the structure along the y axis
 	 * @param width - The size of the structure along the z axis
 	 */
-	public ObeliskStructure(int length, int height, int width, ObeliskType type){
+	public ObeliskStructure(int length, int height, int width, Class<? extends Obelisk> clazz){
 		 materials = new Material[length][height][width];
-		 this.type = type;
 		 this.length = length; this.height = height; this.width = width;
+		 this.clazz = clazz;
 	}
 	
 	public ObeliskStructure setFormationMaterial(int relXLoc, int relYLoc, int relZLoc){
@@ -89,25 +87,12 @@ public class ObeliskStructure {
 		return width;
 	}
 	
-	public ObeliskType getObeliskType(){
-		return type;
+	public Class<? extends Obelisk> getObeliskClass(){
+		return clazz;
 	}
 	
 	public void build(){
 		ObeliskManager manager = Relics.getPlugin().getObeliskManager();
-		
-		if (manager.getStructures().contains(this)) throw new IllegalStateException("Cannot register same obelisk structure twice");
-		if (type.equals(ObeliskType.CUSTOM)){
-			throw new IllegalStateException(
-					"To register a custom obelisk, use the Build(Class<? extends Obelisk>) method to specify your custom obelisk class");
-		}
-		
-		build(type.getObeliskClass());
-	}
-	
-	public void build(Class<? extends Obelisk> clazz){
-		ObeliskManager manager = Relics.getPlugin().getObeliskManager();
-		
 		if (manager.getStructures().contains(this)) throw new IllegalStateException("Cannot register same obelisk structure twice");
 		
 		for (int x = 0; x < length; x++){

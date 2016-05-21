@@ -7,12 +7,11 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.block.Block;
 
 import me.choco.relics.structures.Obelisk;
-import me.choco.relics.utils.ObeliskType;
 
 public class BasicObelisk extends Obelisk{
 
-	public BasicObelisk(OfflinePlayer owner, UUID uuid, ObeliskType type, List<Block> components) {
-		super(owner, uuid, type, components);
+	public BasicObelisk(OfflinePlayer owner, UUID uuid, List<Block> components, Class<? extends Obelisk> customClazz) {
+		super(owner, uuid, components, customClazz);
 	}
 
 	@Override

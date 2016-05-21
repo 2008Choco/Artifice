@@ -3,7 +3,6 @@ package me.choco.relics.utils.managers;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
@@ -14,7 +13,6 @@ import org.bukkit.block.Block;
 import me.choco.relics.Relics;
 import me.choco.relics.api.ObeliskStructure;
 import me.choco.relics.structures.Obelisk;
-import me.choco.relics.utils.ObeliskType;
 
 public class ObeliskManager {
 	
@@ -39,13 +37,6 @@ public class ObeliskManager {
 		this.obelisks.remove(obelisk);
 	}
 	
-	public void unregisterObelisks(ObeliskType type){
-		Iterator<Obelisk> it = obelisks.iterator();
-		while (it.hasNext()){
-			if (it.next().getType().equals(type)) it.remove();
-		}
-	}
-	
 	public Obelisk getObelisk(Block block){
 		for (Obelisk obelisk : obelisks)
 			if (obelisk.isObeliskComponent(block)) return obelisk;
@@ -66,19 +57,28 @@ public class ObeliskManager {
 		return structures.keySet();
 	}
 	
-	public Obelisk createObeliskFromStructure(ObeliskStructure structure, OfflinePlayer owner, List<Block> components){
+	public Obelisk createObelisk(ObeliskStructure structure, OfflinePlayer owner, List<Block> components){
+		return createObelisk(structure, owner, UUID.randomUUID(), components);
+	}
+	
+	public Obelisk createObelisk(ObeliskStructure structure, OfflinePlayer owner, UUID uuid, List<Block> components){
 		try{
-			return structures.get(structure).getConstructor(OfflinePlayer.class, UUID.class, ObeliskType.class, List.class).newInstance(owner, UUID.randomUUID(), structure.getObeliskType(), components);
+			return structures.get(structure).getConstructor(OfflinePlayer.class, UUID.class, List.class, Class.class).newInstance(owner, uuid, components, structure.getObeliskClass());
 		}catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e){
 			e.printStackTrace();
 			return null;
 		}
 	}
 	
-	public Obelisk createObeliskFromStructure(ObeliskStructure structure, UUID uuid, OfflinePlayer owner, List<Block> components){
-		try{
-			return structures.get(structure).getConstructor(OfflinePlayer.class, UUID.class, ObeliskType.class, List.class).newInstance(owner, uuid, structure.getObeliskType(), components);
-		}catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e){
+	public Obelisk createObelisk(Class<? extends Obelisk> clazz, OfflinePlayer owner, List<Block> components){
+		return createObelisk(clazz, owner, UUID.randomUUID(), components);
+	}
+	
+	public Obelisk createObelisk(Class<? extends Obelisk> clazz, OfflinePlayer owner, UUID uuid, List<Block> components){
+		try {
+			return clazz.getConstructor(OfflinePlayer.class, UUID.class, List.class, Class.class).newInstance(owner, uuid, components, clazz);
+		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
+				| NoSuchMethodException | SecurityException e) {
 			e.printStackTrace();
 			return null;
 		}

@@ -12,7 +12,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import me.choco.relics.api.ObeliskStructure;
 import me.choco.relics.events.StructureDetection;
 import me.choco.relics.structures.Obelisk;
-import me.choco.relics.utils.ObeliskType;
+import me.choco.relics.structures.obelisks.BasicObelisk;
 import me.choco.relics.utils.general.ConfigAccessor;
 import me.choco.relics.utils.managers.ObeliskManager;
 
@@ -36,7 +36,7 @@ public class Relics extends JavaPlugin{
 		
 		Bukkit.getPluginManager().registerEvents(new StructureDetection(this), this);
 		
-		new ObeliskStructure(2, 2, 2, ObeliskType.BASIC)
+		new ObeliskStructure(2, 2, 2, BasicObelisk.class)
 				.setBlockPosition(0, 0, 0, Material.GOLD_BLOCK).setBlockPosition(1, 0, 0, Material.GOLD_BLOCK)
 				.setBlockPosition(1, 0, 1, Material.GOLD_BLOCK).setBlockPosition(0, 0, 1, Material.GOLD_BLOCK)
 				.setBlockPosition(0, 1, 0, Material.DIAMOND_BLOCK).setBlockPosition(1, 1, 0, Material.DIAMOND_BLOCK)
@@ -53,23 +53,17 @@ public class Relics extends JavaPlugin{
 		 */
 		
 		for (String uuid : obeliskFile.getConfig().getKeys(false)){
-			ObeliskType type = ObeliskType.valueOf(obeliskFile.getConfig().getString(uuid + ".type"));
-			try{
-				if (type.equals(ObeliskType.CUSTOM)){
-					Obelisk obelisk = type.loadObelisk(
+				try {
+					Obelisk obelisk = obeliskManager.createObelisk(
 							(Class<? extends Obelisk>) Class.forName(obeliskFile.getConfig().getString(uuid + ".customClass")), 
 							Bukkit.getOfflinePlayer(UUID.fromString(obeliskFile.getConfig().getString(uuid + ".ownerUUID"))),
 							UUID.fromString(uuid), 
 							stringListToBlockList(obeliskFile.getConfig().getStringList(uuid + ".components")));
 					obeliskManager.registerObelisk(obelisk);
-				}else{
-					Obelisk obelisk = type.loadObelisk(
-							Bukkit.getOfflinePlayer(UUID.fromString(obeliskFile.getConfig().getString(uuid + ".ownerUUID"))), 
-							UUID.fromString(uuid), 
-							stringListToBlockList(obeliskFile.getConfig().getStringList(uuid + ".components")));
-					obeliskManager.registerObelisk(obelisk);
+				} catch (ClassNotFoundException e) {
+					this.getLogger().warning("Could not find obelisk variation for class "
+							+ obeliskFile.getConfig().getString(uuid + ".customClass"));
 				}
-			}catch(ClassNotFoundException e){ this.getLogger().warning("Obelisk " + uuid + " could not be loaded. The type " + obeliskFile.getConfig().getString(uuid + ".customClass") + " could not be found. Ignoring"); }
 		}
 	}
 	
@@ -80,10 +74,7 @@ public class Relics extends JavaPlugin{
 			obeliskFile.getConfig().set(obelisk.getUniqueId() + ".ownerUUID", obelisk.getOwner().getUniqueId().toString());
 			obeliskFile.getConfig().set(obelisk.getUniqueId() + ".ownerName", obelisk.getOwner().getName());
 			obeliskFile.getConfig().set(obelisk.getUniqueId() + ".components", blockListToStringList(obelisk.getComponents()));
-			obeliskFile.getConfig().set(obelisk.getUniqueId() + ".type", obelisk.getType().name());
-			if (obelisk.getType().equals(ObeliskType.CUSTOM)){
-				obeliskFile.getConfig().set(obelisk.getUniqueId() + ".customClass", obelisk.getCustomClass().getName());
-			}
+			obeliskFile.getConfig().set(obelisk.getUniqueId() + ".class", obelisk.getCustomClass().getName());
 		}
 		obeliskFile.saveConfig();
 	}

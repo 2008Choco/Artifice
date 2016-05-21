@@ -59,7 +59,7 @@ public class StructureDetection implements Listener{
 					}
 				}
 				
-				Obelisk obelisk = manager.createObeliskFromStructure(structure, player, components);
+				Obelisk obelisk = manager.createObelisk(structure, player, components);
 				PlayerCreateObeliskEvent pcoe = new PlayerCreateObeliskEvent(player, obelisk);
 				Bukkit.getPluginManager().callEvent(pcoe);
 				
