@@ -57,6 +57,10 @@ public class ObeliskManager {
 		return structures.keySet();
 	}
 	
+	public HashMap<ObeliskStructure, Class<? extends Obelisk>> getStructureRegistry(){
+		return structures;
+	}
+	
 	public Obelisk createObelisk(ObeliskStructure structure, OfflinePlayer owner, List<Block> components){
 		return createObelisk(structure, owner, UUID.randomUUID(), components);
 	}

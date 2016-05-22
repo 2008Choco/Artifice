@@ -3,16 +3,17 @@ package me.choco.relics.events;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
-import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 
@@ -24,7 +25,14 @@ import me.choco.relics.utils.managers.ObeliskManager;
 
 public class StructureDetection implements Listener{
 	
-	Relics plugin;
+	private static final Random random = new Random();
+	private static final String[] creationMessages = {
+			"A strange aura seems to empower and surround the structure",
+			"The structure seems to start shaking as it illuminates dimly",
+			"As you step away from the structures, you hear silent whispers",
+	};
+	
+	private Relics plugin;
 	private ObeliskManager manager;
 	public StructureDetection(Relics plugin){
 		this.plugin = plugin;
@@ -64,14 +72,10 @@ public class StructureDetection implements Listener{
 				Bukkit.getPluginManager().callEvent(pcoe);
 				
 				manager.registerObelisk(obelisk);
+				plugin.sendMessage(player, creationMessages[random.nextInt(creationMessages.length)]);
+				player.playSound(player.getLocation(), Sound.ENTITY_ELDER_GUARDIAN_AMBIENT, 5, 0);
+				player.playSound(player.getLocation(), Sound.ENTITY_ELDER_GUARDIAN_AMBIENT, 5, 1);
 			}
-		}
-	}
-	
-	@EventHandler
-	public void onBreakObelisk(BlockBreakEvent event){
-		if (manager.isObeliskComponent(event.getBlock())){
-			manager.unregisterObelisk(manager.getObelisk(event.getBlock()));
 		}
 	}
 	

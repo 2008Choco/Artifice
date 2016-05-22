@@ -15,8 +15,8 @@ import org.bukkit.inventory.meta.ItemMeta;
  */
 public class ItemBuilder {
 	
-	ItemStack item;
-	ItemMeta meta;
+	private ItemStack item;
+	private ItemMeta meta;
 	public ItemBuilder(Material material){
 		this(material, (short) 0);
 	}

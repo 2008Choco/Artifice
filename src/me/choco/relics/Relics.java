@@ -5,11 +5,14 @@ import java.util.List;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import me.choco.relics.api.ObeliskStructure;
+import me.choco.relics.events.ObeliskProtection;
 import me.choco.relics.events.StructureDetection;
 import me.choco.relics.structures.Obelisk;
 import me.choco.relics.structures.obelisks.BasicObelisk;
@@ -35,21 +38,13 @@ public class Relics extends JavaPlugin{
 		obeliskFile.saveConfig();
 		
 		Bukkit.getPluginManager().registerEvents(new StructureDetection(this), this);
+		Bukkit.getPluginManager().registerEvents(new ObeliskProtection(this), this);
 		
 		new ObeliskStructure(1, 3, 3, BasicObelisk.class)
 			.setBlockPosition(0, 0, 1, Material.LOG).setBlockPosition(0, 1, 0, Material.FENCE)
 			.setBlockPosition(0, 1, 1, Material.LOG).setBlockPosition(0, 1, 2, Material.FENCE)
 			.setBlockPosition(0, 2, 0, Material.WOOD).setBlockPosition(0, 2, 1, Material.LOG)
 			.setBlockPosition(0, 2, 2, Material.WOOD).setFormationMaterial(0, 0, 1).build();
-		
-		/* LAL
-		 * AIA -> Anvil on top of I
-		 * LAL
-		 * 
-		 * I = Iron Block
-		 * A = Air
-		 * L = Log
-		 */
 		
 		for (String uuid : obeliskFile.getConfig().getKeys(false)){
 				try {
@@ -69,13 +64,15 @@ public class Relics extends JavaPlugin{
 	@Override
 	public void onDisable(){
 		for (Obelisk obelisk : obeliskManager.getObelisks()){
-			System.out.println("Saving obelisk: " + obelisk.getUniqueId());
 			obeliskFile.getConfig().set(obelisk.getUniqueId() + ".ownerUUID", obelisk.getOwner().getUniqueId().toString());
 			obeliskFile.getConfig().set(obelisk.getUniqueId() + ".ownerName", obelisk.getOwner().getName());
 			obeliskFile.getConfig().set(obelisk.getUniqueId() + ".components", blockListToStringList(obelisk.getComponents()));
 			obeliskFile.getConfig().set(obelisk.getUniqueId() + ".class", obelisk.getCustomClass().getName());
 		}
 		obeliskFile.saveConfig();
+		
+		obeliskManager.getObelisks().clear();
+		obeliskManager.getStructureRegistry().clear();
 	}
 	
 	public static Relics getPlugin(){
@@ -84,6 +81,10 @@ public class Relics extends JavaPlugin{
 	
 	public ObeliskManager getObeliskManager(){
 		return obeliskManager;
+	}
+	
+	public void sendMessage(CommandSender sender, String message){
+		sender.sendMessage(ChatColor.GRAY + "[" + ChatColor.GOLD + "Relics" + ChatColor.GRAY + "] " + message);
 	}
 	
 	private List<String> blockListToStringList(List<Block> blocks){
@@ -108,8 +109,8 @@ public class Relics extends JavaPlugin{
 	 *   	- Killing Entities
 	 *   	- Crafting
 	 *   	- Dungeon Loot
-	 *   Different relics grant different abilities / effects
-	 *   Hopefully expandable relics?
+	 *   Different artifacts grant different abilities / effects
+	 *   Hopefully expandable artifacts?
 	 *   Craftable totemnic objects / obelisks that act similar to beacons
 	 *   Spirits fly around obelisks (particles)
 	 */
