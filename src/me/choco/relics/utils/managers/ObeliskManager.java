@@ -19,7 +19,6 @@ public class ObeliskManager {
 	private final Set<Obelisk> obelisks = new HashSet<>();
 	private final HashMap<ObeliskStructure, Class<? extends Obelisk>> structures = new HashMap<>();
 	
-	@SuppressWarnings("unused")
 	private Relics plugin;
 	public ObeliskManager(Relics plugin){
 		this.plugin = plugin;
@@ -35,6 +34,8 @@ public class ObeliskManager {
 	
 	public void unregisterObelisk(Obelisk obelisk){
 		this.obelisks.remove(obelisk);
+		plugin.obeliskFile.getConfig().set(obelisk.getUniqueId().toString(), null);
+		plugin.obeliskFile.saveConfig();
 	}
 	
 	public Obelisk getObelisk(Block block){

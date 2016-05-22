@@ -21,7 +21,7 @@ import me.choco.relics.utils.managers.ObeliskManager;
 
 public class Relics extends JavaPlugin{
 	
-	private ConfigAccessor obeliskFile;
+	public ConfigAccessor obeliskFile;
 	
 	private static Relics instance;
 	private ObeliskManager obeliskManager;
@@ -49,14 +49,14 @@ public class Relics extends JavaPlugin{
 		for (String uuid : obeliskFile.getConfig().getKeys(false)){
 				try {
 					Obelisk obelisk = obeliskManager.createObelisk(
-							(Class<? extends Obelisk>) Class.forName(obeliskFile.getConfig().getString(uuid + ".customClass")), 
+							(Class<? extends Obelisk>) Class.forName(obeliskFile.getConfig().getString(uuid + ".class")), 
 							Bukkit.getOfflinePlayer(UUID.fromString(obeliskFile.getConfig().getString(uuid + ".ownerUUID"))),
 							UUID.fromString(uuid), 
 							stringListToBlockList(obeliskFile.getConfig().getStringList(uuid + ".components")));
 					obeliskManager.registerObelisk(obelisk);
 				} catch (ClassNotFoundException e) {
 					this.getLogger().warning("Could not find obelisk variation for class "
-							+ obeliskFile.getConfig().getString(uuid + ".customClass"));
+							+ obeliskFile.getConfig().getString(uuid + ".class"));
 				}
 		}
 	}
