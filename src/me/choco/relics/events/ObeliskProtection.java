@@ -1,5 +1,6 @@
 package me.choco.relics.events;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -9,6 +10,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 
 import me.choco.relics.Relics;
+import me.choco.relics.api.events.PlayerDestroyObeliskEvent;
 import me.choco.relics.structures.Obelisk;
 import me.choco.relics.utils.managers.ObeliskManager;
 import net.md_5.bungee.api.ChatColor;
@@ -33,7 +35,10 @@ public class ObeliskProtection implements Listener{
 			plugin.sendMessage(player, "You are not allowed to disrupt the aura of " + obelisk.getOwner().getName() + "'s obelisk");
 			return;
 		}
-			
+		
+		PlayerDestroyObeliskEvent pdoe = new PlayerDestroyObeliskEvent(player, obelisk);
+		Bukkit.getPluginManager().callEvent(pdoe);
+		
 		plugin.sendMessage(player, ChatColor.RED + "The aura of the obelisk has been disrupted!");
 		manager.unregisterObelisk(obelisk);
 		player.playSound(player.getLocation(), Sound.ENTITY_ELDER_GUARDIAN_CURSE, 1, 0);
@@ -50,6 +55,9 @@ public class ObeliskProtection implements Listener{
 			plugin.sendMessage(player, "You are not allowed to disrupt the aura of " + obelisk.getOwner().getName() + "'s obelisk");
 			return;
 		}
+		
+		PlayerDestroyObeliskEvent pdoe = new PlayerDestroyObeliskEvent(player, obelisk);
+		Bukkit.getPluginManager().callEvent(pdoe);
 		
 		plugin.sendMessage(player, ChatColor.RED + "The aura of the obelisk has been disrupted!");
 		manager.unregisterObelisk(obelisk);

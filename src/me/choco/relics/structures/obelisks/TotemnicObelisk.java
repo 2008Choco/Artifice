@@ -35,4 +35,9 @@ public class TotemnicObelisk extends Obelisk{
 	public void executeEffect(Player player) {
 		
 	}
+	
+	@Override
+	public String getName(){
+		return "Totemnic Obelisk";
+	}
 }

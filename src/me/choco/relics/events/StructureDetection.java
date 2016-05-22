@@ -44,13 +44,15 @@ public class StructureDetection implements Listener{
 		if (!event.getAction().equals(Action.RIGHT_CLICK_BLOCK)
 				|| event.getHand().equals(EquipmentSlot.HAND)) return; 
 		
-		if (manager.isObeliskComponent(event.getClickedBlock())){
-			// return;
-			event.getPlayer().sendMessage("This is an obelisk (UUID: " + manager.getObelisk(event.getClickedBlock()).getUniqueId() + ")");
-		}
-		
 		Player player = event.getPlayer();
 		Block block = event.getClickedBlock();
+		if (manager.isObeliskComponent(block)){
+			String obeliskName = manager.getObelisk(block).getName().toLowerCase();
+			plugin.sendMessage(player, "You observe the strange structure. You notice an engraving that reads, \"" 
+					+ obeliskName.toLowerCase() + (!obeliskName.toLowerCase().contains("obelisk") ? " obelisk" : "") + "\"");
+			return;
+		}
+		
 		for (ObeliskStructure structure : manager.getStructures()){
 			if (isObeliskStructure(block, structure)){
 				

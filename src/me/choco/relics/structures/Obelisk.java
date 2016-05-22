@@ -50,6 +50,9 @@ public abstract class Obelisk {
 		return customClazz;
 	}
 	
+	/** The name of the obelisk used in game for identification */
+	public abstract String getName();
+	
 	/** Called when wisps should be displayed around the totem. 
 	 * Should contain particle effects that surround the totem. 
 	 * <br>Leave this method body empty if particles are not desired

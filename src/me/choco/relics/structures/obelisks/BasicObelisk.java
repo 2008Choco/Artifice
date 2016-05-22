@@ -35,4 +35,9 @@ public class BasicObelisk extends Obelisk{
 	public void executeEffect(Player player) {
 		
 	}
+	
+	@Override
+	public String getName(){
+		return "Basic Obelisk";
+	}
 }
