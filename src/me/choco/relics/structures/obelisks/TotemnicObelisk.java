@@ -1,10 +1,12 @@
 package me.choco.relics.structures.obelisks;
 
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 
 import org.bukkit.OfflinePlayer;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
 
 import me.choco.relics.structures.Obelisk;
 
@@ -15,7 +17,22 @@ public class TotemnicObelisk extends Obelisk{
 	}
 
 	@Override
-	public void displayWisps() {
-		// TODO Auto-generated method stub
+	public void displayWisps(Player player) {
+		
+	}
+
+	@Override
+	public int getEffectRadius() {
+		return 0;
+	}
+	
+	@Override
+	public boolean shouldEffect(Random random) {
+		return (random.nextInt(100) < 25);
+	}
+
+	@Override
+	public void executeEffect(Player player) {
+		
 	}
 }

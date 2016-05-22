@@ -2,10 +2,12 @@ package me.choco.relics.structures;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 
 import org.bukkit.OfflinePlayer;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
 
 public abstract class Obelisk {
 	
@@ -48,7 +50,26 @@ public abstract class Obelisk {
 		return customClazz;
 	}
 	
-	public abstract void displayWisps();
+	/** Called when wisps should be displayed around the totem. 
+	 * Should contain particle effects that surround the totem. 
+	 * <br>Leave this method body empty if particles are not desired
+	 */
+	public abstract void displayWisps(Player player);
+	
+	/** A utility method used internally
+	 * @return The radius in which entities will be affected by {@link #executeEffect(Player)}
+	 */
+	public abstract int getEffectRadius();
+	
+	/** Whether or not the totem should execute its effect. 
+	 * @param Used to generate random numbers in case the effect is desired to be random
+	 */
+	public abstract boolean shouldEffect(Random random);
+	
+	/** The effect to occur when {@link #shouldEffect(Random)} returns true
+	 * @param player - The player <i>currently</i> being affected
+	 */
+	public abstract void executeEffect(Player player);
 	
 	@Override
 	public String toString() {
