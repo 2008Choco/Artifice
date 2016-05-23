@@ -12,7 +12,7 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import me.choco.relics.Relics;
 import me.choco.relics.api.events.PlayerDestroyObeliskEvent;
 import me.choco.relics.structures.Obelisk;
-import me.choco.relics.utils.managers.ObeliskManager;
+import me.choco.relics.utils.ObeliskManager;
 import net.md_5.bungee.api.ChatColor;
 
 public class ObeliskProtection implements Listener{

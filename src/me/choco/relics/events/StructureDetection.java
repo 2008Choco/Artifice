@@ -21,7 +21,7 @@ import me.choco.relics.Relics;
 import me.choco.relics.api.ObeliskStructure;
 import me.choco.relics.api.events.PlayerCreateObeliskEvent;
 import me.choco.relics.structures.Obelisk;
-import me.choco.relics.utils.managers.ObeliskManager;
+import me.choco.relics.utils.ObeliskManager;
 
 public class StructureDetection implements Listener{
 	

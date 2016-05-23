@@ -4,7 +4,7 @@ import org.bukkit.Material;
 
 import me.choco.relics.Relics;
 import me.choco.relics.structures.Obelisk;
-import me.choco.relics.utils.managers.ObeliskManager;
+import me.choco.relics.utils.ObeliskManager;
 
 public class ObeliskStructure {
 	

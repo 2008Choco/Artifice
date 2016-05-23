@@ -1,4 +1,4 @@
-package me.choco.relics.utils.managers;
+package me.choco.relics.utils;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;

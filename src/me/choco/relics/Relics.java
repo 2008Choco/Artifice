@@ -16,8 +16,9 @@ import me.choco.relics.events.ObeliskProtection;
 import me.choco.relics.events.StructureDetection;
 import me.choco.relics.structures.Obelisk;
 import me.choco.relics.structures.obelisks.BasicObelisk;
+import me.choco.relics.utils.ArtifactManager;
+import me.choco.relics.utils.ObeliskManager;
 import me.choco.relics.utils.general.ConfigAccessor;
-import me.choco.relics.utils.managers.ObeliskManager;
 
 public class Relics extends JavaPlugin{
 	
@@ -25,12 +26,14 @@ public class Relics extends JavaPlugin{
 	
 	private static Relics instance;
 	private ObeliskManager obeliskManager;
+	private ArtifactManager artifactManager;
 	
 	@SuppressWarnings("unchecked")
 	@Override
 	public void onEnable(){
 		instance = this;
 		obeliskManager = new ObeliskManager(this);
+		artifactManager = new ArtifactManager();
 		
 		obeliskFile = new ConfigAccessor(this, "obelisks.yml");
 		obeliskFile.loadConfig(); 
@@ -47,17 +50,17 @@ public class Relics extends JavaPlugin{
 			.setBlockPosition(0, 2, 2, Material.WOOD).setFormationMaterial(0, 0, 1).build();
 		
 		for (String uuid : obeliskFile.getConfig().getKeys(false)){
-				try {
-					Obelisk obelisk = obeliskManager.createObelisk(
-							(Class<? extends Obelisk>) Class.forName(obeliskFile.getConfig().getString(uuid + ".class")), 
-							Bukkit.getOfflinePlayer(UUID.fromString(obeliskFile.getConfig().getString(uuid + ".ownerUUID"))),
-							UUID.fromString(uuid), 
-							stringListToBlockList(obeliskFile.getConfig().getStringList(uuid + ".components")));
-					obeliskManager.registerObelisk(obelisk);
-				} catch (ClassNotFoundException e) {
-					this.getLogger().warning("Could not find obelisk variation for class "
-							+ obeliskFile.getConfig().getString(uuid + ".class"));
-				}
+			try {
+				Obelisk obelisk = obeliskManager.createObelisk(
+						(Class<? extends Obelisk>) Class.forName(obeliskFile.getConfig().getString(uuid + ".class")), 
+						Bukkit.getOfflinePlayer(UUID.fromString(obeliskFile.getConfig().getString(uuid + ".ownerUUID"))),
+						UUID.fromString(uuid), 
+						stringListToBlockList(obeliskFile.getConfig().getStringList(uuid + ".components")));
+				obeliskManager.registerObelisk(obelisk);
+			} catch (ClassNotFoundException e) {
+				this.getLogger().warning("Could not find obelisk variation for class "
+						+ obeliskFile.getConfig().getString(uuid + ".class"));
+			}
 		}
 	}
 	
@@ -81,6 +84,10 @@ public class Relics extends JavaPlugin{
 	
 	public ObeliskManager getObeliskManager(){
 		return obeliskManager;
+	}
+	
+	public ArtifactManager getArtifactManager(){
+		return artifactManager;
 	}
 	
 	public void sendMessage(CommandSender sender, String message){

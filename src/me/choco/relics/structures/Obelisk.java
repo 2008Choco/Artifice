@@ -53,8 +53,8 @@ public abstract class Obelisk {
 	/** The name of the obelisk used in game for identification */
 	public abstract String getName();
 	
-	/** Called when wisps should be displayed around the totem. 
-	 * Should contain particle effects that surround the totem. 
+	/** Called when wisps should be displayed around the obelisk. 
+	 * Should contain particle effects that surround the obelisk. 
 	 * <br>Leave this method body empty if particles are not desired
 	 */
 	public abstract void displayWisps(Player player);
@@ -64,7 +64,7 @@ public abstract class Obelisk {
 	 */
 	public abstract int getEffectRadius();
 	
-	/** Whether or not the totem should execute its effect. 
+	/** Whether or not the obelisk should execute its effect. 
 	 * @param Used to generate random numbers in case the effect is desired to be random
 	 */
 	public abstract boolean shouldEffect(Random random);
