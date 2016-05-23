@@ -26,8 +26,9 @@ public class ObeliskStructure {
 	}
 	
 	public ObeliskStructure setFormationMaterial(int relXLoc, int relYLoc, int relZLoc){
-		if (relXLoc > getLength() || relYLoc > getHeight() || relZLoc > getWidth()) 
-			throw new ArrayIndexOutOfBoundsException("Cannot use a size greater than the dimensions of the structure");
+		if (relXLoc > getLength() || relYLoc > getHeight() || relZLoc > getWidth()
+				|| relXLoc < 0 || relYLoc < 0 || relZLoc < 0) 
+			throw new IllegalArgumentException("Cannot use a size exceeding the dimensions of the structure");
 		this.formationMaterial = materials[relXLoc][relYLoc][relZLoc];
 		this.xFormationIndex = relXLoc; this.yFormationIndex = relYLoc; this.zFormationIndex = relZLoc;
 		return this;
