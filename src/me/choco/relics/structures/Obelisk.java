@@ -7,6 +7,7 @@ import java.util.UUID;
 
 import org.bukkit.OfflinePlayer;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
 public abstract class Obelisk {
@@ -65,14 +66,14 @@ public abstract class Obelisk {
 	public abstract int getEffectRadius();
 	
 	/** Whether or not the obelisk should execute its effect. 
-	 * @param Used to generate random numbers in case the effect is desired to be random
+	 * @param random - Used to generate random numbers in case the effect is desired to be random
 	 */
 	public abstract boolean shouldEffect(Random random);
 	
 	/** The effect to occur when {@link #shouldEffect(Random)} returns true
-	 * @param player - The player <i>currently</i> being affected
+	 * @param entity - The entity <i>currently</i> being affected
 	 */
-	public abstract void executeEffect(Player player);
+	public abstract void executeEffect(Entity entity);
 	
 	@Override
 	public String toString() {

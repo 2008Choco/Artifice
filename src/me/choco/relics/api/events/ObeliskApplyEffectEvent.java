@@ -1,6 +1,8 @@
 package me.choco.relics.api.events;
 
-import org.bukkit.entity.Player;
+import java.util.Set;
+
+import org.bukkit.entity.Entity;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
@@ -13,18 +15,18 @@ public class ObeliskApplyEffectEvent extends Event implements Cancellable{
 	private boolean cancelled = false;
 	
 	private final Obelisk obelisk;
-	private final Player player;
-	public ObeliskApplyEffectEvent(Obelisk obelisk, Player player) {
+	private final Set<Entity> entities;
+	public ObeliskApplyEffectEvent(Obelisk obelisk, Set<Entity> entities) {
 		this.obelisk = obelisk;
-		this.player = player;
+		this.entities = entities;
 	}
 	
 	public Obelisk getObelisk(){
 		return obelisk;
 	}
 	
-	public Player getPlayer(){
-		return player;
+	public Set<Entity> getAffectedEntities(){
+		return entities;
 	}
 	
 	@Override

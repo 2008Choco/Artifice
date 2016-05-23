@@ -19,6 +19,7 @@ import me.choco.relics.structures.obelisks.BasicObelisk;
 import me.choco.relics.utils.ArtifactManager;
 import me.choco.relics.utils.ObeliskManager;
 import me.choco.relics.utils.general.ConfigAccessor;
+import me.choco.relics.utils.loops.ObeliskEffectLoop;
 
 public class Relics extends JavaPlugin{
 	
@@ -27,6 +28,8 @@ public class Relics extends JavaPlugin{
 	private static Relics instance;
 	private ObeliskManager obeliskManager;
 	private ArtifactManager artifactManager;
+	
+	private ObeliskEffectLoop obeliskEffectLoop;
 	
 	@SuppressWarnings("unchecked")
 	@Override
@@ -40,15 +43,18 @@ public class Relics extends JavaPlugin{
 		obeliskFile.getConfig().options().copyDefaults(true); 
 		obeliskFile.saveConfig();
 		
+		// Register events
 		Bukkit.getPluginManager().registerEvents(new StructureDetection(this), this);
 		Bukkit.getPluginManager().registerEvents(new ObeliskProtection(this), this);
 		
+		// Load structures
 		new ObeliskStructure(1, 3, 3, BasicObelisk.class)
 			.setBlockPosition(0, 0, 1, Material.LOG).setBlockPosition(0, 1, 0, Material.FENCE)
 			.setBlockPosition(0, 1, 1, Material.LOG).setBlockPosition(0, 1, 2, Material.FENCE)
 			.setBlockPosition(0, 2, 0, Material.WOOD).setBlockPosition(0, 2, 1, Material.LOG)
 			.setBlockPosition(0, 2, 2, Material.WOOD).setFormationMaterial(0, 0, 1).build();
 		
+		// Load obelisks
 		for (String uuid : obeliskFile.getConfig().getKeys(false)){
 			try {
 				Obelisk obelisk = obeliskManager.createObelisk(
@@ -62,6 +68,10 @@ public class Relics extends JavaPlugin{
 						+ obeliskFile.getConfig().getString(uuid + ".class"));
 			}
 		}
+		
+		// Commence obelisk effect loop
+		obeliskEffectLoop = new ObeliskEffectLoop(this);
+		obeliskEffectLoop.runTaskTimer(this, 0, 100);
 	}
 	
 	@Override
@@ -76,6 +86,7 @@ public class Relics extends JavaPlugin{
 		
 		obeliskManager.getObelisks().clear();
 		obeliskManager.getStructureRegistry().clear();
+		obeliskEffectLoop.cancel();
 	}
 	
 	public static Relics getPlugin(){

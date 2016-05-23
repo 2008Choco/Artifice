@@ -21,7 +21,7 @@ public abstract class Artifact {
 	public abstract ArtifactType getType();
 	
 	/** Whether or not the artifact should execute its effect. 
-	 * @param Used to generate random numbers in case the effect is desired to be random
+	 * @param random Used to generate random numbers in case the effect is desired to be random
 	 */
 	public abstract boolean shouldEffect(Random random);
 	
