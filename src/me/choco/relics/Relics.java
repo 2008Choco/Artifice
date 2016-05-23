@@ -59,12 +59,6 @@ public class Relics extends JavaPlugin{
 			.setBlockPosition(0, 2, 0, Material.WOOD).setBlockPosition(0, 2, 1, Material.LOG)
 			.setBlockPosition(0, 2, 2, Material.WOOD).setFormationMaterial(0, 0, 1).build();
 		
-		new ObeliskStructure(3, 3, 1, BasicObelisk.class)
-			.setBlockPosition(1, 0, 0, Material.LOG).setBlockPosition(0, 1, 0, Material.FENCE)
-			.setBlockPosition(1, 1, 0, Material.LOG).setBlockPosition(2, 1, 0, Material.FENCE)
-			.setBlockPosition(0, 2, 0, Material.WOOD).setBlockPosition(1, 2, 0, Material.LOG)
-			.setBlockPosition(2, 2, 0, Material.WOOD).setFormationMaterial(1, 0, 0).build();
-		
 		// Load obelisks
 		this.getLogger().info("Loading existing obelisks from file");
 		for (String uuid : obeliskFile.getConfig().getKeys(false)){

@@ -20,9 +20,15 @@ public class ObeliskStructure {
 	 * @param width - The size of the structure along the z axis
 	 */
 	public ObeliskStructure(int length, int height, int width, Class<? extends Obelisk> clazz){
-		 materials = new Material[length][height][width];
+		 this.materials = new Material[length][height][width];
 		 this.length = length; this.height = height; this.width = width;
 		 this.clazz = clazz;
+	}
+	
+	private ObeliskStructure(int length, int height, int width, Class<? extends Obelisk> clazz, Material[][][] materials){
+		this.materials = materials;
+		this.length = length; this.height = height; this.width = width;
+		this.clazz = clazz;
 	}
 	
 	public ObeliskStructure setFormationMaterial(int relXLoc, int relYLoc, int relZLoc){
@@ -95,15 +101,25 @@ public class ObeliskStructure {
 	public void build(){
 		ObeliskManager manager = Relics.getPlugin().getObeliskManager();
 		if (manager.getStructures().contains(this)) throw new IllegalStateException("Cannot register same obelisk structure twice");
+		Material[][][] axisSwap = new Material[width][height][length];
 		
 		for (int x = 0; x < length; x++){
 			for (int y = 0; y < height; y++){
 				for (int z = 0; z < width; z++){
 					if (materials[x][y][z] == null) 
 						materials[x][y][z] = Material.AIR;
+					
+					axisSwap[z][y][x] = materials[x][y][z];
 				}
 			}
 		}
+		
+		// Inverted axis for the structure
+		ObeliskStructure axisSwapStructure = new ObeliskStructure(width, height, length, clazz, axisSwap);
+		axisSwapStructure.setFormationMaterial(zFormationIndex, yFormationIndex, xFormationIndex);
+		
+		// Register both structures
 		manager.registerStructure(this, clazz);
+		manager.registerStructure(axisSwapStructure, clazz); // Swapped axis
 	}
 }
