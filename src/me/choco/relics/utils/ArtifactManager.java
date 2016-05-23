@@ -3,6 +3,7 @@ package me.choco.relics.utils;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import me.choco.relics.artifacts.Artifact;
@@ -19,6 +20,12 @@ public class ArtifactManager {
 		return artifacts;
 	}
 	
+	public boolean isArtifact(ItemStack item){
+		for (Artifact artifact : artifacts.values())
+			if (artifact.getItem().isSimilar(item)) return true;
+		return false;
+	}
+	
 	public boolean isArtifact(ItemStack item, Class<? extends Artifact> artifact){
 		if (!artifacts.containsKey(artifact))
 			throw new UnsupportedOperationException(artifact.getName() + " has not been registered");
@@ -27,5 +34,21 @@ public class ArtifactManager {
 	
 	public Artifact getArtifact(Class<? extends Artifact> artifact){
 		return artifacts.get(artifact);
+	}
+	
+	public Artifact getArtifact(ItemStack item){
+		for (Artifact artifact : artifacts.values())
+			if (artifact.getItem().isSimilar(item)) return artifact;
+		return null;
+	}
+	
+	public void giveArtifact(Player player, Class<? extends Artifact> artifact){
+		if (!artifacts.containsKey(artifact))
+			throw new UnsupportedOperationException(artifact.getName() + " has not been registered");
+		giveArtifact(player, getArtifact(artifact));
+	}
+	
+	public void giveArtifact(Player player, Artifact artifact){
+		player.getInventory().addItem(artifact.getItem());
 	}
 }

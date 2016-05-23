@@ -12,6 +12,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import me.choco.relics.api.ObeliskStructure;
+import me.choco.relics.artifacts.regular.TestArtifact;
 import me.choco.relics.events.ObeliskProtection;
 import me.choco.relics.events.StructureDetection;
 import me.choco.relics.structures.Obelisk;
@@ -19,6 +20,7 @@ import me.choco.relics.structures.obelisks.BasicObelisk;
 import me.choco.relics.utils.ArtifactManager;
 import me.choco.relics.utils.ObeliskManager;
 import me.choco.relics.utils.general.ConfigAccessor;
+import me.choco.relics.utils.loops.ArtifactEffectLoop;
 import me.choco.relics.utils.loops.ObeliskEffectLoop;
 
 public class Relics extends JavaPlugin{
@@ -30,6 +32,7 @@ public class Relics extends JavaPlugin{
 	private ArtifactManager artifactManager;
 	
 	private ObeliskEffectLoop obeliskEffectLoop;
+	private ArtifactEffectLoop artifactEffectLoop;
 	
 	@SuppressWarnings("unchecked")
 	@Override
@@ -69,9 +72,15 @@ public class Relics extends JavaPlugin{
 			}
 		}
 		
-		// Commence obelisk effect loop
+		// Register artifacts
+		artifactManager.registerArtifact(TestArtifact.class, new TestArtifact());
+		
+		// Commence effect loops
 		obeliskEffectLoop = new ObeliskEffectLoop(this);
 		obeliskEffectLoop.runTaskTimer(this, 0, 100);
+		
+		artifactEffectLoop = new ArtifactEffectLoop(this);
+		artifactEffectLoop.runTaskTimer(this, 0, 100);
 	}
 	
 	@Override
@@ -87,6 +96,7 @@ public class Relics extends JavaPlugin{
 		obeliskManager.getObelisks().clear();
 		obeliskManager.getStructureRegistry().clear();
 		obeliskEffectLoop.cancel();
+		artifactEffectLoop.cancel();
 	}
 	
 	public static Relics getPlugin(){
