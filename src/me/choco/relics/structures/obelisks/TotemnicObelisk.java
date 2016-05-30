@@ -6,7 +6,7 @@ import java.util.UUID;
 
 import org.bukkit.OfflinePlayer;
 import org.bukkit.block.Block;
-import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 
 import me.choco.relics.structures.Obelisk;
@@ -33,7 +33,7 @@ public class TotemnicObelisk extends Obelisk{
 	}
 
 	@Override
-	public void executeEffect(Entity entity) {
+	public void executeEffect(LivingEntity entity) {
 		
 	}
 	

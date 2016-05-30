@@ -42,6 +42,18 @@ public class ArtifactManager {
 		return null;
 	}
 	
+	public Artifact getArtifact(String name){
+		for (Artifact artifact : artifacts.values())
+			if (artifact.getName().equalsIgnoreCase(name)) return artifact;
+		return null;
+	}
+	
+	public Class<? extends Artifact> getArtifactClass(String name){
+		for (Class<? extends Artifact> artifact : artifacts.keySet())
+			if (artifact.getSimpleName().equalsIgnoreCase(name)) return artifact;
+		return null;
+	}
+	
 	public void giveArtifact(Player player, Class<? extends Artifact> artifact){
 		if (!artifacts.containsKey(artifact))
 			throw new UnsupportedOperationException(artifact.getName() + " has not been registered");

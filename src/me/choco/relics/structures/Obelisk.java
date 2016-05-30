@@ -7,7 +7,7 @@ import java.util.UUID;
 
 import org.bukkit.OfflinePlayer;
 import org.bukkit.block.Block;
-import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 
 public abstract class Obelisk {
@@ -73,7 +73,7 @@ public abstract class Obelisk {
 	/** The effect to occur when {@link #shouldEffect(Random)} returns true
 	 * @param entity - The entity <i>currently</i> being affected
 	 */
-	public abstract void executeEffect(Entity entity);
+	public abstract void executeEffect(LivingEntity entity);
 	
 	@Override
 	public String toString() {

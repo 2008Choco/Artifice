@@ -1,5 +1,12 @@
 name: Relics
 main: me.choco.relics.Relics
-version: 0.1 ALPHA
+version: 0.2 ALPHA
 description: Mystical relics and obelisks to make your server more magical
 author: 2008Choco
+commands:
+    relics:
+      description: The main administrative command for relics
+      usage: /<command> <reload|version>
+    artifact:
+      description: The artifact command for artifact manipulation
+      usage: /<command> <list|give>

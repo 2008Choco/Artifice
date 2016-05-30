@@ -8,6 +8,7 @@ import java.util.Set;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import me.choco.relics.Relics;
@@ -38,8 +39,10 @@ public class ObeliskEffectLoop extends BukkitRunnable{
 			if (oaee.isCancelled()) continue;
 			
 			entities = oaee.getAffectedEntities(); // Update just in case it's modified in the event
-			for (Entity entity : entities)
-				obelisk.executeEffect(entity);
+			for (Entity entity : entities){
+				if (!(entity instanceof LivingEntity)) continue;
+				obelisk.executeEffect((LivingEntity) entity);
+			}
 			entities.clear();
 		}
 	}

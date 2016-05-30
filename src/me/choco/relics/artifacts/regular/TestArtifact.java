@@ -5,6 +5,7 @@ import java.util.Random;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffectType;
 
 import me.choco.relics.artifacts.Artifact;
 import me.choco.relics.artifacts.ArtifactType;
@@ -13,7 +14,7 @@ import net.md_5.bungee.api.ChatColor;
 
 public class TestArtifact extends Artifact {
 	
-	private static final ItemStack item = new ItemBuilder(Material.BLAZE_ROD).setName(ChatColor.LIGHT_PURPLE + "Test Artifact").build();
+	private static final ItemStack item = new ItemBuilder(Material.GOLDEN_APPLE).setName(ChatColor.LIGHT_PURPLE + "Test Artifact").build();
 
 	@Override
 	public String getName() {
@@ -37,6 +38,7 @@ public class TestArtifact extends Artifact {
 
 	@Override
 	public void executeEffect(Player player) {
-		player.sendMessage(getName() + "'s effect");
+		player.removePotionEffect(PotionEffectType.ABSORPTION);
+		player.addPotionEffect(PotionEffectType.ABSORPTION.createEffect(25, 9));
 	}
 }

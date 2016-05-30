@@ -13,12 +13,15 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import me.choco.relics.api.ObeliskStructure;
 import me.choco.relics.artifacts.regular.TestArtifact;
+import me.choco.relics.events.ArtifactProtection;
 import me.choco.relics.events.ObeliskProtection;
 import me.choco.relics.events.StructureDetection;
 import me.choco.relics.structures.Obelisk;
 import me.choco.relics.structures.obelisks.BasicObelisk;
 import me.choco.relics.utils.ArtifactManager;
 import me.choco.relics.utils.ObeliskManager;
+import me.choco.relics.utils.commands.ArtifactCmd;
+import me.choco.relics.utils.commands.RelicsCmd;
 import me.choco.relics.utils.general.ConfigAccessor;
 import me.choco.relics.utils.loops.ArtifactEffectLoop;
 import me.choco.relics.utils.loops.ObeliskEffectLoop;
@@ -50,8 +53,14 @@ public class Relics extends JavaPlugin{
 		this.getLogger().info("Registering events");
 		Bukkit.getPluginManager().registerEvents(new StructureDetection(this), this);
 		Bukkit.getPluginManager().registerEvents(new ObeliskProtection(this), this);
+		Bukkit.getPluginManager().registerEvents(new ArtifactProtection(this), this);
 		
-		// Load structures - TODO: Let the build fuction automatically allow for rotation registration
+		// Register commands
+		this.getLogger().info("Registering commands");
+		this.getCommand("relics").setExecutor(new RelicsCmd(this));
+		this.getCommand("artifact").setExecutor(new ArtifactCmd(this));
+		
+		// Load structures
 		this.getLogger().info("Construcing obelisk multiblock structures");
 		new ObeliskStructure(1, 3, 3, BasicObelisk.class)
 			.setBlockPosition(0, 0, 1, Material.LOG).setBlockPosition(0, 1, 0, Material.FENCE)
@@ -82,10 +91,10 @@ public class Relics extends JavaPlugin{
 		// Commence effect loops
 		this.getLogger().info("Running obelisk and artifact effect loops");
 		obeliskEffectLoop = new ObeliskEffectLoop(this);
-		obeliskEffectLoop.runTaskTimer(this, 0, 100);
+		obeliskEffectLoop.runTaskTimer(this, 0, 20);
 		
 		artifactEffectLoop = new ArtifactEffectLoop(this);
-		artifactEffectLoop.runTaskTimer(this, 0, 100);
+		artifactEffectLoop.runTaskTimer(this, 0, 20);
 	}
 	
 	@Override
