@@ -31,6 +31,7 @@ public class ObeliskEffectLoop extends BukkitRunnable{
 		while (it.hasNext()){
 			Obelisk obelisk = it.next();
 			if (obelisk == null || obelisk.getComponents().isEmpty()) it.remove();
+			if (!obelisk.getComponents().get(0).getChunk().isLoaded()) continue;
 			if (!obelisk.shouldEffect(random)) continue;
 			
 			Set<Entity> entities = getNearbyEntities(obelisk.getComponents().get(0).getLocation(), obelisk.getEffectRadius());

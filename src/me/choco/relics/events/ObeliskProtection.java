@@ -10,7 +10,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 
 import me.choco.relics.Relics;
-import me.choco.relics.api.events.PlayerDestroyObeliskEvent;
+import me.choco.relics.api.events.player.PlayerDestroyObeliskEvent;
 import me.choco.relics.structures.Obelisk;
 import me.choco.relics.utils.ObeliskManager;
 import net.md_5.bungee.api.ChatColor;

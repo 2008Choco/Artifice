@@ -111,9 +111,11 @@ public class Relics extends JavaPlugin{
 		}
 		obeliskFile.saveConfig();
 		
-		this.getLogger().info("Clearing local obelisk information");
+		this.getLogger().info("Clearing local relic registration information");
 		obeliskManager.getObelisks().clear();
 		obeliskManager.getStructureRegistry().clear();
+		
+		artifactManager.getArtifactRegistry().clear();
 		
 		this.getLogger().info("Cancelling obelisk and artifact effect loops");
 		obeliskEffectLoop.cancel();

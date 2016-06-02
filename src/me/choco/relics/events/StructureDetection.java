@@ -19,7 +19,7 @@ import org.bukkit.inventory.EquipmentSlot;
 
 import me.choco.relics.Relics;
 import me.choco.relics.api.ObeliskStructure;
-import me.choco.relics.api.events.PlayerCreateObeliskEvent;
+import me.choco.relics.api.events.player.PlayerCreateObeliskEvent;
 import me.choco.relics.structures.Obelisk;
 import me.choco.relics.utils.ObeliskManager;
 
