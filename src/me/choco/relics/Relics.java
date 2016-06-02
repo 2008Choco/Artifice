@@ -16,6 +16,7 @@ import me.choco.relics.artifacts.regular.TestArtifact;
 import me.choco.relics.events.ArtifactProtection;
 import me.choco.relics.events.ObeliskProtection;
 import me.choco.relics.events.StructureDetection;
+import me.choco.relics.events.discovery.MineArtifact;
 import me.choco.relics.structures.Obelisk;
 import me.choco.relics.structures.obelisks.BasicObelisk;
 import me.choco.relics.utils.ArtifactManager;
@@ -54,6 +55,8 @@ public class Relics extends JavaPlugin{
 		Bukkit.getPluginManager().registerEvents(new StructureDetection(this), this);
 		Bukkit.getPluginManager().registerEvents(new ObeliskProtection(this), this);
 		Bukkit.getPluginManager().registerEvents(new ArtifactProtection(this), this);
+		
+		Bukkit.getPluginManager().registerEvents(new MineArtifact(this), this);
 		
 		// Register commands
 		this.getLogger().info("Registering commands");

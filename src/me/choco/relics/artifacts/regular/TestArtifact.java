@@ -25,6 +25,11 @@ public class TestArtifact extends Artifact {
 	public ItemStack getItem() {
 		return item;
 	}
+	
+	@Override
+	public double retrievalPercent() {
+		return 10;
+	}
 
 	@Override
 	public ArtifactType getType() {

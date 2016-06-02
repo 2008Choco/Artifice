@@ -1,12 +1,15 @@
 package me.choco.relics.utils;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import me.choco.relics.artifacts.Artifact;
+import me.choco.relics.artifacts.ArtifactType;
 
 public class ArtifactManager {
 	
@@ -52,6 +55,13 @@ public class ArtifactManager {
 		for (Class<? extends Artifact> artifact : artifacts.keySet())
 			if (artifact.getSimpleName().equalsIgnoreCase(name)) return artifact;
 		return null;
+	}
+	
+	public Set<Artifact> getArtifacts(ArtifactType type){
+		Set<Artifact> artifacts = new HashSet<>();
+		for (Artifact artifact : this.artifacts.values())
+			if (artifact.getType().equals(type)) artifacts.add(artifact);
+		return artifacts;
 	}
 	
 	public void giveArtifact(Player player, Class<? extends Artifact> artifact){
