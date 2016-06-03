@@ -32,6 +32,7 @@ public class ObeliskProtection implements Listener{
 		Player player = event.getPlayer();
 		Obelisk obelisk = manager.getObelisk(block);
 		if (!obelisk.getOwner().getUniqueId().equals(player.getUniqueId())){
+			event.setCancelled(true);
 			plugin.sendMessage(player, "You are not allowed to disrupt the aura of " + obelisk.getOwner().getName() + "'s obelisk");
 			return;
 		}
@@ -52,6 +53,7 @@ public class ObeliskProtection implements Listener{
 		Player player = event.getPlayer();
 		Obelisk obelisk = manager.getObelisk(block);
 		if (!obelisk.getOwner().getUniqueId().equals(player.getUniqueId())){
+			event.setCancelled(true);
 			plugin.sendMessage(player, "You are not allowed to disrupt the aura of " + obelisk.getOwner().getName() + "'s obelisk");
 			return;
 		}

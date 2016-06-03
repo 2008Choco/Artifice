@@ -16,6 +16,12 @@ public class ArtifactManager {
 	private final Map<Class<? extends Artifact>, Artifact> artifacts = new HashMap<>();
 	
 	public void registerArtifact(Class<? extends Artifact> clazz, Artifact artifact){
+		if (artifact.getType() == null) throw new UnsupportedOperationException("You cannot register an artifact with a null type");
+		if (!artifact.getType().getParentClass().equals(artifact.getClass().getSuperclass()))
+			throw new UnsupportedOperationException("The artifact superclass " + artifact.getClass().getSuperclass().getSimpleName() 
+					+ " is not compatible with the parent class for type \"" + artifact.getType().name() + "\" "
+					+ "(" + artifact.getType().getParentClass().getSimpleName() + "). Violating Class: " + artifact.getClass().getName());
+		
 		this.artifacts.put(clazz, artifact);
 	}
 	

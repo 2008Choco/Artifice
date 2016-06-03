@@ -14,6 +14,7 @@ import me.choco.relics.Relics;
 import me.choco.relics.api.events.player.PlayerDiscoverArtifactEvent;
 import me.choco.relics.artifacts.Artifact;
 import me.choco.relics.artifacts.ArtifactType;
+import me.choco.relics.artifacts.fossilized.FossilizedArtifact;
 import me.choco.relics.utils.ArtifactManager;
 import me.choco.relics.utils.general.ArtifactUtils;
 
@@ -38,7 +39,7 @@ public class MineArtifact implements Listener{
 		Set<Artifact> artifacts = manager.getArtifacts(ArtifactType.FOSSILIZED);
 		for (Artifact artifact : artifacts){
 			// Check requirements
-			if (!artifact.isValidMaterial(blockMat)) return;
+			if (!((FossilizedArtifact) artifact).isValidMaterial(blockMat)) return;
 			
 			if (random.nextDouble() * 100 > artifact.retrievalPercent()) return;
 			if (ArtifactUtils.playerHasArtifact(player, artifact)) return; // Duplicate artifact prevention

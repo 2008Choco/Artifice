@@ -12,7 +12,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import me.choco.relics.api.ObeliskStructure;
-import me.choco.relics.artifacts.regular.TestArtifact;
+import me.choco.relics.artifacts.fossilized.TestArtifact;
 import me.choco.relics.events.ArtifactProtection;
 import me.choco.relics.events.ObeliskProtection;
 import me.choco.relics.events.StructureDetection;
@@ -63,6 +63,18 @@ public class Relics extends JavaPlugin{
 		this.getCommand("relics").setExecutor(new RelicsCmd(this));
 		this.getCommand("artifact").setExecutor(new ArtifactCmd(this));
 		
+		// Commence effect loops
+		this.getLogger().info("Running obelisk and artifact effect loops");
+		obeliskEffectLoop = new ObeliskEffectLoop(this);
+		obeliskEffectLoop.runTaskTimer(this, 0, 20);
+		
+		artifactEffectLoop = new ArtifactEffectLoop(this);
+		artifactEffectLoop.runTaskTimer(this, 0, 20);
+		
+		// Register artifacts
+		this.getLogger().info("Registering artifacts");
+		artifactManager.registerArtifact(TestArtifact.class, new TestArtifact());
+		
 		// Load structures
 		this.getLogger().info("Construcing obelisk multiblock structures");
 		new ObeliskStructure(1, 3, 3, BasicObelisk.class)
@@ -86,18 +98,6 @@ public class Relics extends JavaPlugin{
 						+ obeliskFile.getConfig().getString(uuid + ".class"));
 			}
 		}
-		
-		// Register artifacts
-		this.getLogger().info("Registering artifacts");
-		artifactManager.registerArtifact(TestArtifact.class, new TestArtifact());
-		
-		// Commence effect loops
-		this.getLogger().info("Running obelisk and artifact effect loops");
-		obeliskEffectLoop = new ObeliskEffectLoop(this);
-		obeliskEffectLoop.runTaskTimer(this, 0, 20);
-		
-		artifactEffectLoop = new ArtifactEffectLoop(this);
-		artifactEffectLoop.runTaskTimer(this, 0, 20);
 	}
 	
 	@Override

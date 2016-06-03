@@ -58,6 +58,16 @@ public class ObeliskManager {
 		return structures.keySet();
 	}
 	
+	public ObeliskStructure getStructure(Class<? extends Obelisk> obelisk){
+		for (ObeliskStructure structure : structures.keySet())
+			if (structure.getObeliskClass().equals(obelisk)) return structure;
+		return null;
+	}
+	
+	public ObeliskStructure getStructure(Obelisk obelisk){
+		return getStructure(obelisk.getClass());
+	}
+	
 	public HashMap<ObeliskStructure, Class<? extends Obelisk>> getStructureRegistry(){
 		return structures;
 	}
