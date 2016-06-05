@@ -15,12 +15,6 @@ public abstract class Artifact {
 	 */
 	public abstract ItemStack getItem();
 	
-	/** The percentage (0.00% - 100.00%) that this item can be discovered; 100 being guaranteed
-	 * Decimal values (up to two places) are accepted
-	 * @return The percentage chance
-	 */
-	public abstract double retrievalPercent();
-	
 	/** Whether or not the artifact should execute its effect. 
 	 * @param random Used to generate random numbers in case the effect is desired to be random
 	 */
@@ -30,6 +24,11 @@ public abstract class Artifact {
 	 * @param player - The player <i>currently</i> being affected
 	 */
 	public abstract void executeEffect(Player player);
+	
+	/** Get the rarity of the artifact
+	 * @return The rarity
+	 */
+	public abstract Rarity getRarity();
 	
 	/** A utility method used internally
 	 * @return The type of artifact

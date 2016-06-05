@@ -39,7 +39,6 @@ public class ArtifactCmd implements CommandExecutor {
 
 			else if (args[0].equalsIgnoreCase("give")){
 				if (args.length >= 2){
-					System.out.println(args[1]);
 					String artifactName = args[1].replace("_", " ");
 					Artifact artifact = manager.getArtifact(artifactName);
 					if (artifact == null){
@@ -47,7 +46,7 @@ public class ArtifactCmd implements CommandExecutor {
 						return true;
 					}
 					
-					player.getInventory().addItem(artifact.getItem());
+					manager.giveArtifact(player, artifact);
 				}else{
 					plugin.sendMessage(player, "/artifact give <artifact_name>");
 				}

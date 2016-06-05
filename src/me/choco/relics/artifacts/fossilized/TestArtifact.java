@@ -2,18 +2,18 @@ package me.choco.relics.artifacts.fossilized;
 
 import java.util.Random;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
-import me.choco.relics.artifacts.ArtifactType;
+import me.choco.relics.artifacts.Rarity;
 import me.choco.relics.utils.general.ItemBuilder;
-import net.md_5.bungee.api.ChatColor;
 
 public class TestArtifact extends FossilizedArtifact {
 	
-	private static final ItemStack item = new ItemBuilder(Material.GOLDEN_APPLE).setName(ChatColor.LIGHT_PURPLE + "Test Artifact").build();
+	private static final ItemStack item = new ItemBuilder(Material.GOLDEN_APPLE).setName(ChatColor.GOLD + "Test Artifact").build();
 
 	@Override
 	public String getName() {
@@ -26,13 +26,13 @@ public class TestArtifact extends FossilizedArtifact {
 	}
 	
 	@Override
-	public double retrievalPercent() {
+	public double discoveryPercent() {
 		return 0.5;
 	}
-
+	
 	@Override
-	public ArtifactType getType() {
-		return ArtifactType.FOSSILIZED;
+	public Rarity getRarity() {
+		return Rarity.LEGENDARY;
 	}
 
 	@Override

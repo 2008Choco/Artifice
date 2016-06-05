@@ -15,6 +15,12 @@ public abstract class FossilizedArtifact extends Artifact {
 				|| material.equals(Material.NETHERRACK) || material.equals(Material.ENDER_STONE));
 	}
 	
+	/** The percentage (0.00% - 100.00%) that this item can be discovered; 100 being guaranteed
+	 * Decimal values (up to two places) are accepted
+	 * @return The percentage chance
+	 */
+	public abstract double discoveryPercent();
+	
 	@Override
 	public ArtifactType getType() {
 		return ArtifactType.FOSSILIZED;

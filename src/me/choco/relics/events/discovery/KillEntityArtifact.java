@@ -4,45 +4,43 @@ import java.util.Random;
 import java.util.Set;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
+import org.bukkit.entity.Monster;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.entity.EntityDeathEvent;
 
 import me.choco.relics.Relics;
 import me.choco.relics.api.events.player.PlayerDiscoverArtifactEvent;
 import me.choco.relics.artifacts.Artifact;
 import me.choco.relics.artifacts.ArtifactType;
-import me.choco.relics.artifacts.fossilized.FossilizedArtifact;
+import me.choco.relics.artifacts.necrotic.NecroticArtifact;
 import me.choco.relics.utils.ArtifactManager;
 import me.choco.relics.utils.general.ArtifactUtils;
 
-public class MineArtifact implements Listener{
+public class KillEntityArtifact implements Listener {
 	
-	 /* THIS LISTENER IS TO DISCOVER ARTIFACTS OF THE TYPE "ArtifactType.FOSSILIZED" */
+	 /* THIS LISTENER IS TO DISCOVER ARTIFACTS OF THE TYPE "ArtifactType.NECROTIC" */
 	
 	private static final Random random = new Random();
 	
 	private Relics plugin;
 	private ArtifactManager manager;
-	public MineArtifact(Relics plugin){
+	public KillEntityArtifact(Relics plugin){
 		this.plugin = plugin;
 		this.manager = plugin.getArtifactManager();
 	}
 	
 	@EventHandler
-	public void onMineBlock(BlockBreakEvent event){
-		Player player = event.getPlayer();
-		Material blockMat = event.getBlock().getType();
+	public void onKillEntity(EntityDeathEvent event){
+		Player player = event.getEntity().getKiller();
+		if (player == null || !(event.getEntity() instanceof Monster)) return;
 		
-		Set<Artifact> artifacts = manager.getArtifacts(ArtifactType.FOSSILIZED);
+		Set<Artifact> artifacts = manager.getArtifacts(ArtifactType.NECROTIC);
 		for (Artifact a : artifacts){
-			FossilizedArtifact artifact = (FossilizedArtifact) a;
+			NecroticArtifact artifact = (NecroticArtifact) a;
 			
-			// Check requirementss
-			if (!artifact.isValidMaterial(blockMat)) return;
-			
+			// Check requirements
 			if (random.nextDouble() * 100 > artifact.discoveryPercent()) return;
 			if (ArtifactUtils.playerHasArtifact(player, artifact)) return; // Duplicate artifact prevention
 			
@@ -60,4 +58,5 @@ public class MineArtifact implements Listener{
 			break;
 		}
 	}
+	
 }
