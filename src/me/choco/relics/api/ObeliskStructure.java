@@ -119,7 +119,7 @@ public class ObeliskStructure {
 		axisSwapStructure.setFormationMaterial(zFormationIndex, yFormationIndex, xFormationIndex);
 		
 		// Register both structures
-		manager.registerStructure(this, clazz);
-		manager.registerStructure(axisSwapStructure, clazz); // Swapped axis
+		ObeliskManager.registerStructure(this, clazz);
+		ObeliskManager.registerStructure(axisSwapStructure, clazz); // Swapped axis
 	}
 }

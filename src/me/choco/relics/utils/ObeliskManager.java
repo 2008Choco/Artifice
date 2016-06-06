@@ -17,7 +17,7 @@ import me.choco.relics.structures.Obelisk;
 public class ObeliskManager {
 	
 	private final Set<Obelisk> obelisks = new HashSet<>();
-	private final HashMap<ObeliskStructure, Class<? extends Obelisk>> structures = new HashMap<>();
+	private static final HashMap<ObeliskStructure, Class<? extends Obelisk>> structures = new HashMap<>();
 	
 	private Relics plugin;
 	public ObeliskManager(Relics plugin){
@@ -50,8 +50,8 @@ public class ObeliskManager {
 		return false;
 	}
 	
-	public void registerStructure(ObeliskStructure structure, Class<? extends Obelisk> obeliskClass){
-		this.structures.put(structure, obeliskClass);
+	public static void registerStructure(ObeliskStructure structure, Class<? extends Obelisk> obeliskClass){
+		structures.put(structure, obeliskClass);
 	}
 	
 	public Set<ObeliskStructure> getStructures(){
