@@ -10,7 +10,7 @@ import org.bukkit.event.HandlerList;
 import me.choco.relics.structures.Obelisk;
 
 public class ObeliskApplyEffectEvent extends Event implements Cancellable{
-	public static HandlerList handlers = new HandlerList();
+	private static final HandlerList handlers = new HandlerList();
 	
 	private boolean cancelled = false;
 	
@@ -28,11 +28,6 @@ public class ObeliskApplyEffectEvent extends Event implements Cancellable{
 	public Set<Entity> getAffectedEntities(){
 		return entities;
 	}
-	
-	@Override
-	public HandlerList getHandlers() {
-		return handlers;
-	}
 
 	@Override
 	public boolean isCancelled() {
@@ -42,5 +37,14 @@ public class ObeliskApplyEffectEvent extends Event implements Cancellable{
 	@Override
 	public void setCancelled(boolean cancel){
 		this.cancelled = cancel;
+	}
+	
+	@Override
+	public HandlerList getHandlers() {
+		return handlers;
+	}
+
+	public static HandlerList getHandlerList() {
+		return handlers;
 	}
 }

@@ -18,9 +18,6 @@ public class ArtifactUtils {
 	}
 	
 	public static boolean playerHasArtifact(Player player, Artifact artifact){
-		Class<? extends Artifact> clazz = artifact.getClass();
-		for (ItemStack item : player.getInventory().getContents())
-			if (manager.isArtifact(item, clazz)) return true;
-		return false;
+		return playerHasArtifact(player, artifact.getClass());
 	}
 }

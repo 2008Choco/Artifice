@@ -40,11 +40,11 @@ public class MineArtifact implements Listener{
 		for (Artifact a : artifacts){
 			FossilizedArtifact artifact = (FossilizedArtifact) a;
 			
-			// Check requirementss
+			// Check requirements
 			if (!artifact.isValidMaterial(blockMat)) return;
 			
-			if (random.nextDouble() * 100 > artifact.discoveryPercent()) return;
 			if (ArtifactUtils.playerHasArtifact(player, artifact)) return; // Duplicate artifact prevention
+			if (random.nextDouble() * 100 > artifact.discoveryPercent()) return;
 			
 			// PlayerDiscoverArtifactEvent
 			PlayerDiscoverArtifactEvent pdae = new PlayerDiscoverArtifactEvent(player, artifact);

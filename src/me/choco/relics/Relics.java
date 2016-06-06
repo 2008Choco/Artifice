@@ -12,10 +12,14 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import me.choco.relics.api.ObeliskStructure;
+import me.choco.relics.artifacts.Artifact;
+import me.choco.relics.artifacts.ancient.AncientArtifact;
+import me.choco.relics.artifacts.corrupted.PoisonedArtifact;
 import me.choco.relics.artifacts.fossilized.TestArtifact;
 import me.choco.relics.events.ArtifactProtection;
 import me.choco.relics.events.ObeliskProtection;
 import me.choco.relics.events.StructureDetection;
+import me.choco.relics.events.artifact.ArtifactCorruption;
 import me.choco.relics.events.discovery.KillEntityArtifact;
 import me.choco.relics.events.discovery.MineArtifact;
 import me.choco.relics.structures.Obelisk;
@@ -59,6 +63,7 @@ public class Relics extends JavaPlugin{
 		
 		Bukkit.getPluginManager().registerEvents(new MineArtifact(this), this);
 		Bukkit.getPluginManager().registerEvents(new KillEntityArtifact(this), this);
+		Bukkit.getPluginManager().registerEvents(new ArtifactCorruption(this), this);
 		
 		// Register commands
 		this.getLogger().info("Registering commands");
@@ -75,7 +80,15 @@ public class Relics extends JavaPlugin{
 		
 		// Register artifacts
 		this.getLogger().info("Registering artifacts");
-		artifactManager.registerArtifact(TestArtifact.class, new TestArtifact());
+		ArtifactManager.registerArtifact(TestArtifact.class, new TestArtifact());
+		ArtifactManager.registerArtifact(PoisonedArtifact.class, new PoisonedArtifact());
+		
+		for (Artifact a : artifactManager.getArtifactRegistry().values()){
+			if (!(a instanceof AncientArtifact)) return;
+			AncientArtifact artifact = (AncientArtifact) a;
+			if (artifact.getShapedRecipe() != null) Bukkit.addRecipe(artifact.getShapedRecipe());
+			if (artifact.getShapelessRecipe() != null) Bukkit.addRecipe(artifact.getShapelessRecipe());
+		}
 		
 		// Load structures
 		this.getLogger().info("Construcing obelisk multiblock structures");

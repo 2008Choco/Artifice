@@ -18,16 +18,16 @@ import me.choco.relics.artifacts.ArtifactType;
 
 public class ArtifactManager {
 	
-	private final Map<Class<? extends Artifact>, Artifact> artifacts = new HashMap<>();
+	private static final Map<Class<? extends Artifact>, Artifact> artifacts = new HashMap<>();
 	
-	public void registerArtifact(Class<? extends Artifact> clazz, Artifact artifact){
+	public static void registerArtifact(Class<? extends Artifact> clazz, Artifact artifact){
 		if (artifact.getType() == null) throw new UnsupportedOperationException("You cannot register an artifact with a null type");
 		if (!artifact.getType().getParentClass().equals(artifact.getClass().getSuperclass()))
 			throw new UnsupportedOperationException("The artifact superclass " + artifact.getClass().getSuperclass().getSimpleName() 
 					+ " is not compatible with the parent class for type \"" + artifact.getType().name() + "\" "
 					+ "(" + artifact.getType().getParentClass().getSimpleName() + "). Violating Class: " + artifact.getClass().getName());
 		
-		this.artifacts.put(clazz, artifact);
+		artifacts.put(clazz, artifact);
 	}
 	
 	public Map<Class<? extends Artifact>, Artifact> getArtifactRegistry(){
@@ -70,8 +70,19 @@ public class ArtifactManager {
 	
 	public Set<Artifact> getArtifacts(ArtifactType type){
 		Set<Artifact> artifacts = new HashSet<>();
-		for (Artifact artifact : this.artifacts.values())
+		for (Artifact artifact : ArtifactManager.artifacts.values())
 			if (artifact.getType().equals(type)) artifacts.add(artifact);
+		return artifacts;
+	}
+	
+	public Set<Artifact> getArtifacts(ArtifactType... types){
+		Set<Artifact> artifacts = new HashSet<>();
+		for (Artifact artifact : ArtifactManager.artifacts.values())
+			for (ArtifactType type : types)
+				if (artifact.getType().equals(type)){
+					artifacts.add(artifact);
+					break;
+				}
 		return artifacts;
 	}
 	
@@ -82,7 +93,8 @@ public class ArtifactManager {
 	}
 	
 	public void giveArtifact(Player player, Artifact artifact){
-		ItemMeta meta = artifact.getItem().getItemMeta();
+		ItemStack item = artifact.getItem();
+		ItemMeta meta = item.getItemMeta();
 		meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_PLACED_ON, ItemFlag.HIDE_UNBREAKABLE);
 		if (meta.hasLore()){
 			List<String> lore = meta.getLore();
@@ -91,13 +103,14 @@ public class ArtifactManager {
 				if (line.contains(ChatColor.WHITE + "Rarity: ")) hasRarityLore = true;
 			
 			if (!hasRarityLore){
+				lore.add("");
 				lore.add(ChatColor.WHITE + "Rarity: " + artifact.getRarity().getDisplayName());
 				meta.setLore(lore);
 			}
 		}else{
 			meta.setLore(Arrays.asList(ChatColor.WHITE + "Rarity: " + artifact.getRarity().getDisplayName()));
 		}
-		artifact.getItem().setItemMeta(meta);
-		player.getInventory().addItem(artifact.getItem());
+		item.setItemMeta(meta);
+		player.getInventory().addItem(item);
 	}
 }

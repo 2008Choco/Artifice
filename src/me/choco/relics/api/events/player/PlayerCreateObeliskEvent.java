@@ -7,7 +7,7 @@ import org.bukkit.event.player.PlayerEvent;
 import me.choco.relics.structures.Obelisk;
 
 public class PlayerCreateObeliskEvent extends PlayerEvent{
-	public static HandlerList handlers = new HandlerList();
+	private static final HandlerList handlers = new HandlerList();
 	
 	private final Obelisk obelisk;
 	public PlayerCreateObeliskEvent(Player player, Obelisk obelisk) {
@@ -21,6 +21,10 @@ public class PlayerCreateObeliskEvent extends PlayerEvent{
 	
 	@Override
 	public HandlerList getHandlers() {
+		return handlers;
+	}
+	
+	public static HandlerList getHandlerList() {
 		return handlers;
 	}
 }

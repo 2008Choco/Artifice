@@ -8,7 +8,7 @@ import org.bukkit.event.player.PlayerEvent;
 import me.choco.relics.artifacts.Artifact;
 
 public class PlayerDiscoverArtifactEvent extends PlayerEvent implements Cancellable{
-	public static HandlerList handlers = new HandlerList();
+	private static final HandlerList handlers = new HandlerList();
 	private boolean cancelled = false;
 	
 	private Artifact artifact;
@@ -37,6 +37,10 @@ public class PlayerDiscoverArtifactEvent extends PlayerEvent implements Cancella
 	
 	@Override
 	public HandlerList getHandlers() {
+		return handlers;
+	}
+
+	public static HandlerList getHandlerList() {
 		return handlers;
 	}
 }

@@ -41,8 +41,8 @@ public class KillEntityArtifact implements Listener {
 			NecroticArtifact artifact = (NecroticArtifact) a;
 			
 			// Check requirements
-			if (random.nextDouble() * 100 > artifact.discoveryPercent()) return;
 			if (ArtifactUtils.playerHasArtifact(player, artifact)) return; // Duplicate artifact prevention
+			if (random.nextDouble() * 100 > artifact.discoveryPercent()) return;
 			
 			// PlayerDiscoverArtifactEvent
 			PlayerDiscoverArtifactEvent pdae = new PlayerDiscoverArtifactEvent(player, artifact);
