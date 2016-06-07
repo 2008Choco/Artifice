@@ -98,17 +98,25 @@ public class ArtifactManager {
 		meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_PLACED_ON, ItemFlag.HIDE_UNBREAKABLE);
 		if (meta.hasLore()){
 			List<String> lore = meta.getLore();
-			boolean hasRarityLore = false;
-			for (String line : lore)
+			boolean hasTypeLore = false, hasRarityLore = false;
+			for (String line : lore){
+				if (line.contains(ChatColor.WHITE + "Type: ")) hasTypeLore = true;
 				if (line.contains(ChatColor.WHITE + "Rarity: ")) hasRarityLore = true;
-			
-			if (!hasRarityLore){
-				lore.add("");
-				lore.add(ChatColor.WHITE + "Rarity: " + artifact.getRarity().getDisplayName());
-				meta.setLore(lore);
 			}
+			
+			if (!hasTypeLore){
+				lore.add("");
+				lore.add(ChatColor.WHITE + "Type: " + ChatColor.GRAY + artifact.getType().getName());
+			}
+			if (!hasRarityLore){
+				lore.add(ChatColor.WHITE + "Rarity: " + artifact.getRarity().getDisplayName());
+			}
+			meta.setLore(lore);
 		}else{
-			meta.setLore(Arrays.asList(ChatColor.WHITE + "Rarity: " + artifact.getRarity().getDisplayName()));
+			meta.setLore(Arrays.asList(
+				ChatColor.WHITE + "Type: " + ChatColor.GRAY + artifact.getType().getName(),
+				ChatColor.WHITE + "Rarity: " + artifact.getRarity().getDisplayName()
+			));
 		}
 		item.setItemMeta(meta);
 		player.getInventory().addItem(item);
