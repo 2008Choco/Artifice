@@ -1,20 +1,16 @@
 package me.choco.relics.utils;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import me.choco.relics.artifacts.Artifact;
 import me.choco.relics.artifacts.ArtifactType;
+import me.choco.relics.utils.general.ArtifactUtils;
 
 public class ArtifactManager {
 	
@@ -93,32 +89,6 @@ public class ArtifactManager {
 	}
 	
 	public void giveArtifact(Player player, Artifact artifact){
-		ItemStack item = artifact.getItem();
-		ItemMeta meta = item.getItemMeta();
-		meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_PLACED_ON, ItemFlag.HIDE_UNBREAKABLE);
-		if (meta.hasLore()){
-			List<String> lore = meta.getLore();
-			boolean hasTypeLore = false, hasRarityLore = false;
-			for (String line : lore){
-				if (line.contains(ChatColor.WHITE + "Type: ")) hasTypeLore = true;
-				if (line.contains(ChatColor.WHITE + "Rarity: ")) hasRarityLore = true;
-			}
-			
-			if (!hasTypeLore){
-				lore.add("");
-				lore.add(ChatColor.WHITE + "Type: " + ChatColor.GRAY + artifact.getType().getName());
-			}
-			if (!hasRarityLore){
-				lore.add(ChatColor.WHITE + "Rarity: " + artifact.getRarity().getDisplayName());
-			}
-			meta.setLore(lore);
-		}else{
-			meta.setLore(Arrays.asList(
-				ChatColor.WHITE + "Type: " + ChatColor.GRAY + artifact.getType().getName(),
-				ChatColor.WHITE + "Rarity: " + artifact.getRarity().getDisplayName()
-			));
-		}
-		item.setItemMeta(meta);
-		player.getInventory().addItem(item);
+		player.getInventory().addItem(ArtifactUtils.getArtifactItem(artifact));
 	}
 }

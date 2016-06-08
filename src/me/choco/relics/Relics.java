@@ -16,6 +16,7 @@ import me.choco.relics.artifacts.Artifact;
 import me.choco.relics.artifacts.ancient.AncientArtifact;
 import me.choco.relics.artifacts.corrupted.PoisonedArtifact;
 import me.choco.relics.artifacts.fossilized.TestArtifact;
+import me.choco.relics.artifacts.necrotic.DevilsStaff;
 import me.choco.relics.events.ArtifactProtection;
 import me.choco.relics.events.ObeliskProtection;
 import me.choco.relics.events.StructureDetection;
@@ -82,6 +83,7 @@ public class Relics extends JavaPlugin{
 		this.getLogger().info("Registering artifacts");
 		ArtifactManager.registerArtifact(TestArtifact.class, new TestArtifact());
 		ArtifactManager.registerArtifact(PoisonedArtifact.class, new PoisonedArtifact());
+		ArtifactManager.registerArtifact(DevilsStaff.class, new DevilsStaff());
 		
 		for (Artifact a : artifactManager.getArtifactRegistry().values()){
 			if (!(a instanceof AncientArtifact)) return;

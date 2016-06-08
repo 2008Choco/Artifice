@@ -53,10 +53,9 @@ public class KillEntityArtifact implements Listener {
 			String artifactName = pdae.getArtifact().getName();
 			plugin.sendMessage(player, "You have discovered a " + artifactName  
 					+ (artifactName.contains("artifact") || artifactName.contains("Artifact")  ? "" : " artifact"));
-			manager.giveArtifact(player, pdae.getArtifact());
+			event.getDrops().add(ArtifactUtils.getArtifactItem(pdae.getArtifact()));
 			// TODO: Play a, "mystical sound of discovery" :P
 			break;
 		}
 	}
-	
 }
