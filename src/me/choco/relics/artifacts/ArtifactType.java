@@ -1,6 +1,5 @@
 package me.choco.relics.artifacts;
 
-import me.choco.relics.api.artifact.AncientArtifact;
 import me.choco.relics.api.artifact.Artifact;
 import me.choco.relics.api.artifact.CorruptedArtifact;
 import me.choco.relics.api.artifact.FossilizedArtifact;
@@ -9,7 +8,6 @@ import me.choco.relics.api.artifact.NecroticArtifact;
 public enum ArtifactType {
 	
 	REGULAR(Artifact.class, "Regular"),
-	ANCIENT(AncientArtifact.class, "Ancient"),
 	FOSSILIZED(FossilizedArtifact.class, "Fossilized"),
 	CORRUPTED(CorruptedArtifact.class, "Corrupted"),
 	NECROTIC(NecroticArtifact.class, "Necrotic");

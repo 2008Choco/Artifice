@@ -12,8 +12,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import me.choco.relics.api.ObeliskStructure;
-import me.choco.relics.api.artifact.AncientArtifact;
-import me.choco.relics.api.artifact.Artifact;
 import me.choco.relics.artifacts.corrupted.PoisonedArtifact;
 import me.choco.relics.artifacts.fossilized.TestArtifact;
 import me.choco.relics.artifacts.necrotic.DevilsStaff;
@@ -84,13 +82,6 @@ public class Relics extends JavaPlugin{
 		ArtifactManager.registerArtifact(TestArtifact.class, new TestArtifact());
 		ArtifactManager.registerArtifact(PoisonedArtifact.class, new PoisonedArtifact());
 		ArtifactManager.registerArtifact(DevilsStaff.class, new DevilsStaff());
-		
-		for (Artifact a : artifactManager.getArtifactRegistry().values()){
-			if (!(a instanceof AncientArtifact)) return;
-			AncientArtifact artifact = (AncientArtifact) a;
-			if (artifact.getShapedRecipe() != null) Bukkit.addRecipe(artifact.getShapedRecipe());
-			if (artifact.getShapelessRecipe() != null) Bukkit.addRecipe(artifact.getShapelessRecipe());
-		}
 		
 		// Load structures
 		this.getLogger().info("Construcing obelisk multiblock structures");
