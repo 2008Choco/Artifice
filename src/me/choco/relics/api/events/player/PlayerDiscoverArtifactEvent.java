@@ -5,7 +5,7 @@ import org.bukkit.event.Cancellable;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.player.PlayerEvent;
 
-import me.choco.relics.artifacts.Artifact;
+import me.choco.relics.api.artifact.Artifact;
 
 public class PlayerDiscoverArtifactEvent extends PlayerEvent implements Cancellable{
 	private static final HandlerList handlers = new HandlerList();

@@ -1,6 +1,5 @@
-package me.choco.relics.artifacts.necrotic;
+package me.choco.relics.api.artifact;
 
-import me.choco.relics.artifacts.Artifact;
 import me.choco.relics.artifacts.ArtifactType;
 
 public abstract class NecroticArtifact extends Artifact {

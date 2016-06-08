@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
+import me.choco.relics.api.artifact.FossilizedArtifact;
 import me.choco.relics.artifacts.Rarity;
 import me.choco.relics.utils.general.ItemBuilder;
 

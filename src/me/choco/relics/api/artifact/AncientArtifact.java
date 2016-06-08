@@ -1,9 +1,8 @@
-package me.choco.relics.artifacts.ancient;
+package me.choco.relics.api.artifact;
 
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.ShapelessRecipe;
 
-import me.choco.relics.artifacts.Artifact;
 import me.choco.relics.artifacts.ArtifactType;
 
 public abstract class AncientArtifact extends Artifact {

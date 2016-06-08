@@ -8,6 +8,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import me.choco.relics.api.artifact.CorruptedArtifact;
 import me.choco.relics.artifacts.ArtifactType;
 import me.choco.relics.artifacts.Rarity;
 import me.choco.relics.utils.general.ItemBuilder;

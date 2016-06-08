@@ -8,7 +8,7 @@ import java.util.Set;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import me.choco.relics.artifacts.Artifact;
+import me.choco.relics.api.artifact.Artifact;
 import me.choco.relics.artifacts.ArtifactType;
 import me.choco.relics.utils.general.ArtifactUtils;
 

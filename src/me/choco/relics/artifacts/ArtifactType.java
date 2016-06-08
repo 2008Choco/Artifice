@@ -1,9 +1,10 @@
 package me.choco.relics.artifacts;
 
-import me.choco.relics.artifacts.ancient.AncientArtifact;
-import me.choco.relics.artifacts.corrupted.CorruptedArtifact;
-import me.choco.relics.artifacts.fossilized.FossilizedArtifact;
-import me.choco.relics.artifacts.necrotic.NecroticArtifact;
+import me.choco.relics.api.artifact.AncientArtifact;
+import me.choco.relics.api.artifact.Artifact;
+import me.choco.relics.api.artifact.CorruptedArtifact;
+import me.choco.relics.api.artifact.FossilizedArtifact;
+import me.choco.relics.api.artifact.NecroticArtifact;
 
 public enum ArtifactType {
 	

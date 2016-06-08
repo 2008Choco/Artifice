@@ -12,8 +12,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import me.choco.relics.api.ObeliskStructure;
-import me.choco.relics.artifacts.Artifact;
-import me.choco.relics.artifacts.ancient.AncientArtifact;
+import me.choco.relics.api.artifact.AncientArtifact;
+import me.choco.relics.api.artifact.Artifact;
 import me.choco.relics.artifacts.corrupted.PoisonedArtifact;
 import me.choco.relics.artifacts.fossilized.TestArtifact;
 import me.choco.relics.artifacts.necrotic.DevilsStaff;

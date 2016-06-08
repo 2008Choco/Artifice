@@ -1,8 +1,7 @@
-package me.choco.relics.artifacts.fossilized;
+package me.choco.relics.api.artifact;
 
 import org.bukkit.Material;
 
-import me.choco.relics.artifacts.Artifact;
 import me.choco.relics.artifacts.ArtifactType;
 
 public abstract class FossilizedArtifact extends Artifact {

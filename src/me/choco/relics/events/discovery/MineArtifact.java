@@ -11,10 +11,10 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 
 import me.choco.relics.Relics;
+import me.choco.relics.api.artifact.Artifact;
+import me.choco.relics.api.artifact.FossilizedArtifact;
 import me.choco.relics.api.events.player.PlayerDiscoverArtifactEvent;
-import me.choco.relics.artifacts.Artifact;
 import me.choco.relics.artifacts.ArtifactType;
-import me.choco.relics.artifacts.fossilized.FossilizedArtifact;
 import me.choco.relics.utils.ArtifactManager;
 import me.choco.relics.utils.general.ArtifactUtils;
 

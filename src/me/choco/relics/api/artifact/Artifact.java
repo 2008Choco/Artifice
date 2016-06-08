@@ -1,9 +1,12 @@
-package me.choco.relics.artifacts;
+package me.choco.relics.api.artifact;
 
 import java.util.Random;
 
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+
+import me.choco.relics.artifacts.ArtifactType;
+import me.choco.relics.artifacts.Rarity;
 
 public abstract class Artifact {
 	

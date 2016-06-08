@@ -5,7 +5,7 @@ import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
-import me.choco.relics.artifacts.Artifact;
+import me.choco.relics.api.artifact.Artifact;
 
 public class ArtifactCorruptEvent extends Event implements Cancellable {
 	private static final HandlerList handlers = new HandlerList();

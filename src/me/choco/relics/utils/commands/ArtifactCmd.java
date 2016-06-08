@@ -7,7 +7,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import me.choco.relics.Relics;
-import me.choco.relics.artifacts.Artifact;
+import me.choco.relics.api.artifact.Artifact;
 import me.choco.relics.utils.ArtifactManager;
 
 public class ArtifactCmd implements CommandExecutor {

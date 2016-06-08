@@ -9,7 +9,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import me.choco.relics.Relics;
-import me.choco.relics.artifacts.Artifact;
+import me.choco.relics.api.artifact.Artifact;
 import me.choco.relics.utils.ArtifactManager;
 
 public class ArtifactEffectLoop extends BukkitRunnable {

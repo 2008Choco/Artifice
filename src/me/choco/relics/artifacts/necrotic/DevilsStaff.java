@@ -7,6 +7,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import me.choco.relics.api.artifact.NecroticArtifact;
 import me.choco.relics.artifacts.Rarity;
 import me.choco.relics.utils.general.ItemBuilder;
 

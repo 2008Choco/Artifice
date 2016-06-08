@@ -10,11 +10,11 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 
 import me.choco.relics.Relics;
+import me.choco.relics.api.artifact.Artifact;
+import me.choco.relics.api.artifact.CorruptedArtifact;
 import me.choco.relics.api.events.ArtifactCorruptEvent;
 import me.choco.relics.api.events.player.PlayerDiscoverArtifactEvent;
-import me.choco.relics.artifacts.Artifact;
 import me.choco.relics.artifacts.ArtifactType;
-import me.choco.relics.artifacts.corrupted.CorruptedArtifact;
 import me.choco.relics.utils.ArtifactManager;
 import me.choco.relics.utils.general.ArtifactUtils;
 
