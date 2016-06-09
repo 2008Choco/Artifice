@@ -11,18 +11,32 @@ public class PlayerDiscoverArtifactEvent extends PlayerEvent implements Cancella
 	private static final HandlerList handlers = new HandlerList();
 	private boolean cancelled = false;
 	
+	private String message;
+	
 	private Artifact artifact;
 	public PlayerDiscoverArtifactEvent(Player player, Artifact artifact) {
 		super(player);
 		this.artifact = artifact;
+		this.message = "You have discovered a " + artifact.getName()
+				+ (artifact.getName().contains("artifact") || artifact.getName().contains("Artifact")  ? "" : " artifact");
 	}
 	
 	public void setArtifact(Artifact artifact){
 		this.artifact = artifact;
+		this.message = "You have discovered a " + artifact.getName()
+			+ (artifact.getName().contains("artifact") || artifact.getName().contains("Artifact")  ? "" : " artifact");
 	}
 	
 	public Artifact getArtifact(){
 		return artifact;
+	}
+	
+	public String getMessage(){
+		return message;
+	}
+	
+	public void setMessage(String message){
+		this.message = message;
 	}
 	
 	@Override

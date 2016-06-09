@@ -50,9 +50,7 @@ public class KillEntityArtifact implements Listener {
 			if (pdae.isCancelled()) return;
 			
 			// Give actual artifact (Can be modified in event)
-			String artifactName = pdae.getArtifact().getName();
-			plugin.sendMessage(player, "You have discovered a " + artifactName  
-					+ (artifactName.contains("artifact") || artifactName.contains("Artifact")  ? "" : " artifact"));
+			plugin.sendMessage(player, pdae.getMessage());
 			event.getDrops().add(ArtifactUtils.getArtifactItem(pdae.getArtifact()));
 			// TODO: Play a, "mystical sound of discovery" :P
 			break;

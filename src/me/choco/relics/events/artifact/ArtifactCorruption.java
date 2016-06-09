@@ -49,6 +49,8 @@ public class ArtifactCorruption implements Listener {
 			
 			// Corrupt the artifact
 			event.setArtifact(artifact);
+			event.setMessage("The artifact's aura corrupts around you violently. You have discovered a " + artifact.getName()
+						+ (artifact.getName().contains("artifact") || artifact.getName().contains("Artifact")  ? "" : " artifact"));
 			break;
 		}
 	}

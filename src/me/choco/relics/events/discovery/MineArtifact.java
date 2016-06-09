@@ -52,9 +52,7 @@ public class MineArtifact implements Listener{
 			if (pdae.isCancelled()) return;
 			
 			// Give actual artifact (Can be modified in event)
-			String artifactName = pdae.getArtifact().getName();
-			plugin.sendMessage(player, "You have discovered a " + artifactName  
-					+ (artifactName.contains("artifact") || artifactName.contains("Artifact")  ? "" : " artifact"));
+			plugin.sendMessage(player, pdae.getMessage());
 			manager.giveArtifact(player, pdae.getArtifact());
 			// TODO: Play a, "mystical sound of discovery" :P
 			break;

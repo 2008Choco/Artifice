@@ -11,6 +11,7 @@ public enum ArtifactType {
 	FOSSILIZED(FossilizedArtifact.class, "Fossilized"),
 	CORRUPTED(CorruptedArtifact.class, "Corrupted"),
 	NECROTIC(NecroticArtifact.class, "Necrotic");
+	// ANCIENT - Re-add with the capability to discover them in dungeon chests
 	
 	private String name;
 	private Class<? extends Artifact> clazz;
