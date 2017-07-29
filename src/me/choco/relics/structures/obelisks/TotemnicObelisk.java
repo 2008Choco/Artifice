@@ -2,7 +2,6 @@ package me.choco.relics.structures.obelisks;
 
 import java.util.List;
 import java.util.Random;
-import java.util.UUID;
 
 import org.bukkit.OfflinePlayer;
 import org.bukkit.block.Block;
@@ -11,10 +10,15 @@ import org.bukkit.entity.Player;
 
 import me.choco.relics.structures.Obelisk;
 
-public class TotemnicObelisk extends Obelisk{
+/**
+ * Represents a totemnic obelisk
+ * 
+ * @author Parker Hawke - 2008Choco
+ */
+public class TotemnicObelisk extends Obelisk {
 
-	public TotemnicObelisk(OfflinePlayer owner, UUID uuid, List<Block> components, Class<? extends Obelisk> customClazz){
-		super(owner, uuid, components, customClazz);
+	public TotemnicObelisk(OfflinePlayer owner, List<Block> components){
+		super(owner, components, TotemnicObelisk.class);
 	}
 
 	@Override
@@ -38,7 +42,7 @@ public class TotemnicObelisk extends Obelisk{
 	}
 	
 	@Override
-	public String getName(){
+	public String getName() {
 		return "Totemnic Obelisk";
 	}
 }

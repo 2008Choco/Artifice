@@ -2,7 +2,6 @@ package me.choco.relics.structures.obelisks;
 
 import java.util.List;
 import java.util.Random;
-import java.util.UUID;
 
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
@@ -13,10 +12,15 @@ import org.bukkit.entity.Player;
 
 import me.choco.relics.structures.Obelisk;
 
-public class BasicObelisk extends Obelisk{
+/**
+ * Represents a basic implementation of an obelisk
+ * 
+ * @author Parker Hawke - 2008Choco
+ */
+public class BasicObelisk extends Obelisk {
 
-	public BasicObelisk(OfflinePlayer owner, UUID uuid, List<Block> components, Class<? extends Obelisk> customClazz) {
-		super(owner, uuid, components, customClazz);
+	public BasicObelisk(OfflinePlayer owner, List<Block> components) {
+		super(owner, components, BasicObelisk.class);
 	}
 
 	@Override
@@ -53,7 +57,7 @@ public class BasicObelisk extends Obelisk{
 	}
 	
 	@Override
-	public String getName(){
+	public String getName() {
 		return "Basic Obelisk";
 	}
 }

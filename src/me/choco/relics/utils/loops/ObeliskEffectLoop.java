@@ -17,23 +17,24 @@ import me.choco.relics.api.events.ObeliskApplyEffectEvent;
 import me.choco.relics.structures.Obelisk;
 import me.choco.relics.utils.ObeliskManager;
 
-public class ObeliskEffectLoop extends BukkitRunnable{
+public class ObeliskEffectLoop extends BukkitRunnable {
 	
-	private static final Random random = new Random();
+	private static final Random RANDOM = new Random();
 	
-	private ObeliskManager manager;
-	public ObeliskEffectLoop(Relics plugin){
+	private final ObeliskManager manager;
+	
+	public ObeliskEffectLoop(Relics plugin) {
 		this.manager = plugin.getObeliskManager();
 	}
 	
 	@Override
-	public void run(){
+	public void run() {
 		Iterator<Obelisk> it = manager.getObelisks().iterator();
-		while (it.hasNext()){
+		while (it.hasNext()) {
 			Obelisk obelisk = it.next();
 			if (obelisk == null || obelisk.getComponents().isEmpty()) it.remove();
 			if (!obelisk.getComponents().get(0).getChunk().isLoaded()) continue;
-			if (!obelisk.shouldEffect(random)) continue;
+			if (!obelisk.shouldEffect(RANDOM)) continue;
 			
 			Location center = obelisk.getComponents().get(0).getLocation();
 			ObeliskStructure structure = manager.getStructure(obelisk);
@@ -61,7 +62,7 @@ public class ObeliskEffectLoop extends BukkitRunnable{
 			if (oaee.isCancelled()) continue;
 			
 			entities = oaee.getAffectedEntities(); // Update just in case it's modified in the event
-			for (Entity entity : entities){
+			for (Entity entity : entities) {
 				if (!(entity instanceof LivingEntity)) continue;
 				obelisk.executeEffect((LivingEntity) entity);
 			}
@@ -69,7 +70,7 @@ public class ObeliskEffectLoop extends BukkitRunnable{
 		}
 	}
 	
-    private Set<Entity> getNearbyEntities(Location location, int radius){
+    private Set<Entity> getNearbyEntities(Location location, int radius) {
         int chunkRadius = radius < 16 ? 1 : (radius - (radius % 16)) / 16;
         Set<Entity> entities = new HashSet<Entity>();
         

@@ -8,35 +8,52 @@ import org.bukkit.inventory.ItemStack;
 import me.choco.relics.artifacts.ArtifactType;
 import me.choco.relics.artifacts.Rarity;
 
+/**
+ * Represents a special item ("artifact") with special effects applicable to players
+ * 
+ * @author Parker Hawke - 2008Choco
+ */
 public abstract class Artifact {
 	
-	/** The name of the obelisk used in game for identification */
+	/** 
+	 * The name of the obelisk used in game for identification 
+	 */
 	public abstract String getName();
 	
-	/** The item representation of the artifact (Used for identification)
-	 * @return The item to reference
+	/** 
+	 * The item representation of the artifact (Used for identification)
+	 * 
+	 * @return the item to reference
 	 */
 	public abstract ItemStack getItem();
 	
-	/** Whether or not the artifact should execute its effect. 
-	 * @param random Used to generate random numbers in case the effect is desired to be random
+	/** 
+	 * Whether or not the artifact should execute its effect. 
+	 * 
+	 * @param random a random instance
 	 */
 	public abstract boolean shouldEffect(Random random);
 	
-	/** The effect to occur when {@link #shouldEffect(Random)} returns true
-	 * @param player - The player <i>currently</i> being affected
+	/** 
+	 * The effect to occur when {@link #shouldEffect(Random)} returns true
+	 * 
+	 * @param player the player <i>currently</i> being affected
 	 */
 	public abstract void executeEffect(Player player);
 	
-	/** Get the rarity of the artifact
-	 * @return The rarity
+	/** 
+	 * Get the rarity of the artifact
+	 * 
+	 * @return the rarity
 	 */
 	public abstract Rarity getRarity();
 	
-	/** A utility method used internally
-	 * @return The type of artifact
+	/** 
+	 * Get the type of artifact
+	 * 
+	 * @return the type of artifact
 	 */
-	public ArtifactType getType(){
+	public ArtifactType getType() {
 		return ArtifactType.REGULAR;
 	}
 }

@@ -12,22 +12,23 @@ import me.choco.relics.utils.ArtifactManager;
 
 public class ArtifactCmd implements CommandExecutor {
 	
-	private Relics plugin;
-	private ArtifactManager manager;
-	public ArtifactCmd(Relics plugin){
+	private final Relics plugin;
+	private final ArtifactManager manager;
+	
+	public ArtifactCmd(Relics plugin) {
 		this.plugin = plugin;
 		this.manager = plugin.getArtifactManager();
 	}
 	
-	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args){
-		if (!(sender instanceof Player)){
+	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+		if (!(sender instanceof Player)) {
 			sender.sendMessage("You cannot run this command from the console");
 			return true;
 		}
 		Player player = (Player) sender;
 		
-		if (args.length >= 1){
-			if (args[0].equalsIgnoreCase("list")){
+		if (args.length >= 1) {
+			if (args[0].equalsIgnoreCase("list")) {
 				StringBuilder artifacts = new StringBuilder();
 				for (Artifact artifact : manager.getArtifactRegistry().values())
 					artifacts.append(artifact.getName()).append(", ");
@@ -37,8 +38,8 @@ public class ArtifactCmd implements CommandExecutor {
 				player.sendMessage(ChatColor.GRAY + message);
 			}
 
-			else if (args[0].equalsIgnoreCase("give")){
-				if (args.length >= 2){
+			else if (args[0].equalsIgnoreCase("give")) {
+				if (args.length >= 2) {
 					String artifactName = args[1].replace("_", " ");
 					Artifact artifact = manager.getArtifact(artifactName);
 					if (artifact == null){
@@ -47,13 +48,14 @@ public class ArtifactCmd implements CommandExecutor {
 					}
 					
 					manager.giveArtifact(player, artifact);
-				}else{
+				}
+				else {
 					plugin.sendMessage(player, "/artifact give <artifact_name>");
 				}
 			}
 			
-			else{ plugin.sendMessage(player, "Unknown parameter, " + ChatColor.AQUA + args[0]); }
-		}else{ plugin.sendMessage(player, "/artifact <list|give>"); }
+			else { plugin.sendMessage(player, "Unknown parameter, " + ChatColor.AQUA + args[0]); }
+		} else { plugin.sendMessage(player, "/artifact <list|give>"); }
 		
 		return true;
 	}

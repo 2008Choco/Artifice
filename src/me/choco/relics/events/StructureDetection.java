@@ -23,24 +23,25 @@ import me.choco.relics.api.events.player.PlayerCreateObeliskEvent;
 import me.choco.relics.structures.Obelisk;
 import me.choco.relics.utils.ObeliskManager;
 
-public class StructureDetection implements Listener{
+public class StructureDetection implements Listener {
 	
-	private static final Random random = new Random();
-	private static final String[] creationMessages = {
+	private static final Random RANDOM = new Random();
+	private static final String[] CREATION_MESSAGES = {
 			"A strange aura seems to empower and surround the structure",
 			"The structure seems to start shaking as it illuminates dimly",
 			"As you step away from the structures, you hear silent whispers",
 	};
 	
-	private Relics plugin;
-	private ObeliskManager manager;
-	public StructureDetection(Relics plugin){
+	private final Relics plugin;
+	private final ObeliskManager manager;
+	
+	public StructureDetection(Relics plugin) {
 		this.plugin = plugin;
 		this.manager = plugin.getObeliskManager();
 	}
 	
 	@EventHandler
-	public void onClickFormationBlock(PlayerInteractEvent event){
+	public void onClickFormationBlock(PlayerInteractEvent event) {
 		if (!event.getAction().equals(Action.RIGHT_CLICK_BLOCK)
 				|| event.getHand().equals(EquipmentSlot.HAND)) return; 
 		
@@ -74,14 +75,14 @@ public class StructureDetection implements Listener{
 				Bukkit.getPluginManager().callEvent(pcoe);
 				
 				manager.registerObelisk(obelisk);
-				plugin.sendMessage(player, creationMessages[random.nextInt(creationMessages.length)]);
+				plugin.sendMessage(player, CREATION_MESSAGES[RANDOM.nextInt(CREATION_MESSAGES.length)]);
 				player.playSound(player.getLocation(), Sound.ENTITY_ELDER_GUARDIAN_AMBIENT, 5, 0);
 				player.playSound(player.getLocation(), Sound.ENTITY_ELDER_GUARDIAN_AMBIENT, 5, 1);
 			}
 		}
 	}
 	
-	private boolean isObeliskStructure(Block block, ObeliskStructure structure){
+	private boolean isObeliskStructure(Block block, ObeliskStructure structure) {
 		if (!block.getType().equals(structure.getFormationMaterial())
 				|| manager.isObeliskComponent(block)) return false;
 		

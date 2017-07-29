@@ -20,16 +20,16 @@ import me.choco.relics.utils.general.ArtifactUtils;
 
 public class ArtifactCorruption implements Listener {
 	
-	private static final Random random = new Random();
+	private static final Random RANDOM = new Random();
 	
-	private ArtifactManager manager;
-	public ArtifactCorruption(Relics plugin){
+	private final ArtifactManager manager;
+	
+	public ArtifactCorruption(Relics plugin) {
 		this.manager = plugin.getArtifactManager();
 	}
 	
-	// MAKE SURE THIS EVENT RUNS FIRST
-	@EventHandler(priority = EventPriority.MONITOR)
-	public void onDiscoverArtifact(PlayerDiscoverArtifactEvent event){
+	@EventHandler(priority = EventPriority.HIGH)
+	public void onDiscoverArtifact(PlayerDiscoverArtifactEvent event) {
 		if (event.getArtifact() instanceof CorruptedArtifact) return;
 		Player player = event.getPlayer();
 		
@@ -40,7 +40,7 @@ public class ArtifactCorruption implements Listener {
 			// Check conditions
 			if (!artifact.canCorrupt(event.getArtifact().getType())) return;
 			if (ArtifactUtils.playerHasArtifact(player, artifact)) return; // Duplicate artifact prevention
-			if (random.nextDouble() * 100 > artifact.corruptionPercent()) return;
+			if (RANDOM.nextDouble() * 100 > artifact.corruptionPercent()) return;
 			
 			// Call the event
 			ArtifactCorruptEvent ace = new ArtifactCorruptEvent(player, event.getArtifact(), artifact);

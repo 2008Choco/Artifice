@@ -14,24 +14,25 @@ import me.choco.relics.utils.ArtifactManager;
 
 public class ArtifactEffectLoop extends BukkitRunnable {
 	
-	private static final Random random = new Random();
+	private static final Random RANDOM = new Random();
 	
 	private ArtifactManager manager;
-	public ArtifactEffectLoop(Relics plugin){
+	
+	public ArtifactEffectLoop(Relics plugin) {
 		this.manager = plugin.getArtifactManager();
 	}
 	
 	@Override
-	public void run(){
-		for (Player player : Bukkit.getOnlinePlayers()){
+	public void run() {
+		for (Player player : Bukkit.getOnlinePlayers()) {
 			Inventory inventory = player.getInventory();
-			for (ItemStack item : inventory.getContents()){
+			for (ItemStack item : inventory.getContents()) {
 				if (item == null) continue;
 				
 				Artifact artifact = manager.getArtifact(item);
 				if (artifact == null) continue;
 				
-				if (artifact.shouldEffect(random))
+				if (artifact.shouldEffect(RANDOM))
 					artifact.executeEffect(player);
 			}
 		}

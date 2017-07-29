@@ -14,7 +14,9 @@ import me.choco.relics.utils.general.ItemBuilder;
 
 public class TestArtifact extends FossilizedArtifact {
 	
-	private static final ItemStack item = new ItemBuilder(Material.GOLDEN_APPLE).setName(ChatColor.GOLD + "Test Artifact").build();
+	private static final ItemStack ITEM = new ItemBuilder(Material.GOLDEN_APPLE)
+			.setName(ChatColor.GOLD + "Test Artifact")
+			.build();
 
 	@Override
 	public String getName() {
@@ -23,7 +25,7 @@ public class TestArtifact extends FossilizedArtifact {
 
 	@Override
 	public ItemStack getItem() {
-		return item;
+		return ITEM;
 	}
 	
 	@Override

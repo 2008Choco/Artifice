@@ -1,104 +1,172 @@
 package me.choco.relics.api;
 
+import java.util.Arrays;
+
 import org.bukkit.Material;
+import org.bukkit.inventory.ShapedRecipe;
 
 import me.choco.relics.Relics;
 import me.choco.relics.structures.Obelisk;
 import me.choco.relics.utils.ObeliskManager;
 
+/**
+ * Represents a structure pattern for an obelisk. Each structure pattern is composed
+ * of 3 different axis of materials which correspond to a relative coordinate in the
+ * world. This class is similar to the construction of a {@link ShapedRecipe}
+ * 
+ * @author Parker Hawke - 2008Choco
+ */
 public class ObeliskStructure {
 	
 	private Material[][][] materials; /* [length][height][width] */
-	private final int length, width, height;
 	private Material formationMaterial;
+	
+	private final int length, width, height;
 	private int xFormationIndex = 0, yFormationIndex = 0, zFormationIndex = 0;
 	
 	private final Class<? extends Obelisk> clazz;
-	/** Create a new obelisk structure to be detected 
-	 * @param length - The size of the structure along the x axis
-	 * @param height - The size of the structure along the y axis
-	 * @param width - The size of the structure along the z axis
+	
+	/** 
+	 * Create a new obelisk structure to be detected 
+	 * 
+	 * @param length the size of the structure along the x axis
+	 * @param height the size of the structure along the y axis
+	 * @param width the size of the structure along the z axis
+	 * @param clazz the resulting obelisk type for this structure pattern
 	 */
-	public ObeliskStructure(int length, int height, int width, Class<? extends Obelisk> clazz){
+	public ObeliskStructure(int length, int height, int width, Class<? extends Obelisk> clazz) {
 		 this.materials = new Material[length][height][width];
 		 this.length = length; this.height = height; this.width = width;
 		 this.clazz = clazz;
 	}
 	
-	private ObeliskStructure(int length, int height, int width, Class<? extends Obelisk> clazz, Material[][][] materials){
+	private ObeliskStructure(int length, int height, int width, Class<? extends Obelisk> clazz, Material[][][] materials) {
 		this.materials = materials;
 		this.length = length; this.height = height; this.width = width;
 		this.clazz = clazz;
 	}
 	
-	public ObeliskStructure setFormationMaterial(int relXLoc, int relYLoc, int relZLoc){
+	/**
+	 * Set the relative coordinates that must be clicked by a player in order to 
+	 * complete construction of the obelisk
+	 * 
+	 * @param relXLoc the relative x coordinate
+	 * @param relYLoc the relative y coordinate
+	 * @param relZLoc the relative z coordinate
+	 * 
+	 * @return this instance. Allows for chained calls
+	 */
+	public ObeliskStructure setFormationMaterial(int relXLoc, int relYLoc, int relZLoc) {
 		if (relXLoc > getLength() || relYLoc > getHeight() || relZLoc > getWidth()
 				|| relXLoc < 0 || relYLoc < 0 || relZLoc < 0) 
 			throw new IllegalArgumentException("Cannot use a size exceeding the dimensions of the structure");
+		
 		this.formationMaterial = materials[relXLoc][relYLoc][relZLoc];
 		this.xFormationIndex = relXLoc; this.yFormationIndex = relYLoc; this.zFormationIndex = relZLoc;
+		
 		return this;
 	}
-	
-	@Deprecated
-	public ObeliskStructure setFormationMaterial(Material formationMaterial, int relXLoc, int relYLoc, int relZLoc){
-		if (relXLoc > getLength() || relYLoc > getHeight() || relZLoc > getWidth()) 
-			throw new IllegalArgumentException("Cannot use a size greater than the dimensions of the structure");
-		if (!materials[relXLoc][relYLoc][relZLoc].equals(formationMaterial))
-			throw new IllegalStateException("Formation Material " + formationMaterial.name() + " is not identical to index array value" +
-					relXLoc + ", " + relYLoc + ", " + relZLoc + "(" + materials[relXLoc][relYLoc][relZLoc].name() + ")");
-		this.formationMaterial = formationMaterial;
-		this.xFormationIndex = relXLoc; this.yFormationIndex = relYLoc; this.zFormationIndex = relZLoc;
-		return this;
-	}
-	
-	public Material getFormationMaterial(){
+
+	/**
+	 * Get the material representing the formation
+	 * 
+	 * @return the formation material
+	 */
+	public Material getFormationMaterial() {
 		return formationMaterial;
 	}
 	
-	public int getXFormationIndex(){
+	/**
+	 * Get the relative x coordinate in which a formation will be made
+	 * 
+	 * @return the x formation index
+	 */
+	public int getXFormationIndex() {
 		return xFormationIndex;
 	}
 	
-	public int getYFormationIndex(){
+	/**
+	 * Get the relative y coordinate in which a formation will be made
+	 * 
+	 * @return the y formation index
+	 */
+	public int getYFormationIndex() {
 		return yFormationIndex;
 	}
 	
-	public int getZFormationIndex(){
+	/**
+	 * Get the relative z coordinate in which a formation will be made
+	 * 
+	 * @return the z formation index
+	 */
+	public int getZFormationIndex() {
 		return zFormationIndex;
 	}
 	
-	public ObeliskStructure setBlockPosition(int xPos, int yPos, int zPos, Material material){
+	/**
+	 * Set a relative position's material
+	 * 
+	 * @param xPos the relative x position
+	 * @param yPos the relative y position
+	 * @param zPos the relative z position
+	 * @param material the material to set
+	 * 
+	 * @return this instance. Allows for chained calls
+	 */
+	public ObeliskStructure setBlockPosition(int xPos, int yPos, int zPos, Material material) {
 		materials[xPos][yPos][zPos] = material;
 		return this;
 	}
 	
-	public ObeliskStructure removeBlockPosition(int xPos, int yPos, int zPos){
-		materials[xPos][yPos][zPos] = null;
-		return this;
+	/**
+	 * Get the underlying block formation
+	 * 
+	 * @return the block formation
+	 */
+	public Material[][][] getBlockFormation() {
+		return Arrays.copyOf(materials, materials.length);
 	}
 	
-	public Material[][][] getBlockFormation(){
-		return materials;
-	}
-	
+	/**
+	 * Get the length of this obelisk structure (x axis)
+	 * 
+	 * @return the structure length
+	 */
 	public int getLength(){
 		return length;
 	}
 	
-	public int getHeight(){
+	/**
+	 * Get the height of this obelisk structure (y axis)
+	 * 
+	 * @return the structure height
+	 */
+	public int getHeight() {
 		return height;
 	}
 	
-	public int getWidth(){
+	/**
+	 * Get the width of this obelisk structure (z axis)
+	 * 
+	 * @return the structure width
+	 */
+	public int getWidth() {
 		return width;
 	}
 	
-	public Class<? extends Obelisk> getObeliskClass(){
+	/**
+	 * Get the obelisk class that will be created for this structure
+	 * 
+	 * @return the resulting obelisk
+	 */
+	public Class<? extends Obelisk> getObeliskClass() {
 		return clazz;
 	}
 	
-	public void build(){
+	/**
+	 * Build the structure and register it to the {@link ObeliskManager}
+	 */
+	public void build() {
 		ObeliskManager manager = Relics.getPlugin().getObeliskManager();
 		if (manager.getStructures().contains(this)) throw new IllegalStateException("Cannot register same obelisk structure twice");
 		Material[][][] axisSwap = new Material[width][height][length];
@@ -119,7 +187,7 @@ public class ObeliskStructure {
 		axisSwapStructure.setFormationMaterial(zFormationIndex, yFormationIndex, xFormationIndex);
 		
 		// Register both structures
-		ObeliskManager.registerStructure(this, clazz);
-		ObeliskManager.registerStructure(axisSwapStructure, clazz); // Swapped axis
+		manager.registerStructure(this, clazz);
+		manager.registerStructure(axisSwapStructure, clazz); // Swapped axis
 	}
 }

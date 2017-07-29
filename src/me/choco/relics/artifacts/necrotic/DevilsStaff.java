@@ -13,7 +13,9 @@ import me.choco.relics.utils.general.ItemBuilder;
 
 public class DevilsStaff extends NecroticArtifact {
 	
-	private static final ItemStack item = new ItemBuilder(Material.BLAZE_ROD).setName(ChatColor.RED + "Devil's Staff").build();
+	private static final ItemStack ITEM = new ItemBuilder(Material.BLAZE_ROD)
+			.setName(ChatColor.RED + "Devil's Staff")
+			.build();
 
 	@Override
 	public double discoveryPercent() {
@@ -27,7 +29,7 @@ public class DevilsStaff extends NecroticArtifact {
 
 	@Override
 	public ItemStack getItem() {
-		return item;
+		return ITEM;
 	}
 
 	@Override

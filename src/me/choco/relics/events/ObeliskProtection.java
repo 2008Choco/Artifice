@@ -15,17 +15,18 @@ import me.choco.relics.structures.Obelisk;
 import me.choco.relics.utils.ObeliskManager;
 import net.md_5.bungee.api.ChatColor;
 
-public class ObeliskProtection implements Listener{
+public class ObeliskProtection implements Listener {
 	
-	private Relics plugin;
-	private ObeliskManager manager;
+	private final Relics plugin;
+	private final ObeliskManager manager;
+	
 	public ObeliskProtection(Relics plugin) {
 		this.plugin = plugin;
 		this.manager = plugin.getObeliskManager();
 	}
 	
 	@EventHandler
-	public void onPlaceBlock(BlockPlaceEvent event){
+	public void onPlaceBlock(BlockPlaceEvent event) {
 		Block block = event.getBlock();
 		if (!manager.isObeliskComponent(block)) return;
 		
@@ -46,7 +47,7 @@ public class ObeliskProtection implements Listener{
 	}
 	
 	@EventHandler
-	public void onBreakObeliskBlock(BlockBreakEvent event){
+	public void onBreakObeliskBlock(BlockBreakEvent event) {
 		Block block = event.getBlock();
 		if (!manager.isObeliskComponent(block)) return;
 		

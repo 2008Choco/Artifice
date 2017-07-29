@@ -18,21 +18,22 @@ import me.choco.relics.artifacts.ArtifactType;
 import me.choco.relics.utils.ArtifactManager;
 import me.choco.relics.utils.general.ArtifactUtils;
 
-public class MineArtifact implements Listener{
+public class MineArtifact implements Listener {
 	
 	 /* THIS LISTENER IS TO DISCOVER ARTIFACTS OF THE TYPE "ArtifactType.FOSSILIZED" */
 	
 	private static final Random random = new Random();
 	
-	private Relics plugin;
-	private ArtifactManager manager;
-	public MineArtifact(Relics plugin){
+	private final Relics plugin;
+	private final ArtifactManager manager;
+	
+	public MineArtifact(Relics plugin) {
 		this.plugin = plugin;
 		this.manager = plugin.getArtifactManager();
 	}
 	
 	@EventHandler
-	public void onMineBlock(BlockBreakEvent event){
+	public void onMineBlock(BlockBreakEvent event) {
 		Player player = event.getPlayer();
 		Material blockMat = event.getBlock().getType();
 		

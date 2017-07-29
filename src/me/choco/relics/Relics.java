@@ -31,7 +31,7 @@ import me.choco.relics.utils.general.ConfigAccessor;
 import me.choco.relics.utils.loops.ArtifactEffectLoop;
 import me.choco.relics.utils.loops.ObeliskEffectLoop;
 
-public class Relics extends JavaPlugin{
+public class Relics extends JavaPlugin {
 	
 	public ConfigAccessor obeliskFile;
 	
@@ -44,15 +44,15 @@ public class Relics extends JavaPlugin{
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public void onEnable(){
+	public void onEnable() {
 		instance = this;
-		obeliskManager = new ObeliskManager(this);
-		artifactManager = new ArtifactManager();
+		this.obeliskManager = new ObeliskManager(this);
+		this.artifactManager = new ArtifactManager();
 		
-		obeliskFile = new ConfigAccessor(this, "obelisks.yml");
-		obeliskFile.loadConfig(); 
-		obeliskFile.getConfig().options().copyDefaults(true); 
-		obeliskFile.saveConfig();
+		this.obeliskFile = new ConfigAccessor(this, "obelisks.yml");
+		this.obeliskFile.loadConfig(); 
+		this.obeliskFile.getConfig().options().copyDefaults(true); 
+		this.obeliskFile.saveConfig();
 		
 		// Register events
 		this.getLogger().info("Registering events");
@@ -71,17 +71,17 @@ public class Relics extends JavaPlugin{
 		
 		// Commence effect loops
 		this.getLogger().info("Running obelisk and artifact effect loops");
-		obeliskEffectLoop = new ObeliskEffectLoop(this);
-		obeliskEffectLoop.runTaskTimer(this, 0, 20);
+		this.obeliskEffectLoop = new ObeliskEffectLoop(this);
+		this.obeliskEffectLoop.runTaskTimer(this, 0, 20);
 		
-		artifactEffectLoop = new ArtifactEffectLoop(this);
-		artifactEffectLoop.runTaskTimer(this, 0, 20);
+		this.artifactEffectLoop = new ArtifactEffectLoop(this);
+		this.artifactEffectLoop.runTaskTimer(this, 0, 20);
 		
 		// Register artifacts
 		this.getLogger().info("Registering artifacts");
-		ArtifactManager.registerArtifact(TestArtifact.class, new TestArtifact());
-		ArtifactManager.registerArtifact(PoisonedArtifact.class, new PoisonedArtifact());
-		ArtifactManager.registerArtifact(DevilsStaff.class, new DevilsStaff());
+		this.artifactManager.registerArtifact(new TestArtifact());
+		this.artifactManager.registerArtifact(new PoisonedArtifact());
+		this.artifactManager.registerArtifact(new DevilsStaff());
 		
 		// Load structures
 		this.getLogger().info("Construcing obelisk multiblock structures");
@@ -93,7 +93,7 @@ public class Relics extends JavaPlugin{
 		
 		// Load obelisks
 		this.getLogger().info("Loading existing obelisks from file");
-		for (String uuid : obeliskFile.getConfig().getKeys(false)){
+		for (String uuid : obeliskFile.getConfig().getKeys(false)) {
 			try {
 				Obelisk obelisk = obeliskManager.createObelisk(
 						(Class<? extends Obelisk>) Class.forName(obeliskFile.getConfig().getString(uuid + ".class")), 
@@ -109,56 +109,79 @@ public class Relics extends JavaPlugin{
 	}
 	
 	@Override
-	public void onDisable(){
+	public void onDisable() {
 		this.getLogger().info("Saving obelisk information to file");
-		for (Obelisk obelisk : obeliskManager.getObelisks()){
-			obeliskFile.getConfig().set(obelisk.getUniqueId() + ".ownerUUID", obelisk.getOwner().getUniqueId().toString());
-			obeliskFile.getConfig().set(obelisk.getUniqueId() + ".ownerName", obelisk.getOwner().getName());
-			obeliskFile.getConfig().set(obelisk.getUniqueId() + ".components", blockListToStringList(obelisk.getComponents()));
-			obeliskFile.getConfig().set(obelisk.getUniqueId() + ".class", obelisk.getCustomClass().getName());
+		for (Obelisk obelisk : obeliskManager.getObelisks()) {
+			this.obeliskFile.getConfig().set(obelisk.getUniqueId() + ".ownerUUID", obelisk.getOwner().getUniqueId().toString());
+			this.obeliskFile.getConfig().set(obelisk.getUniqueId() + ".ownerName", obelisk.getOwner().getName());
+			this.obeliskFile.getConfig().set(obelisk.getUniqueId() + ".components", blockListToStringList(obelisk.getComponents()));
+			this.obeliskFile.getConfig().set(obelisk.getUniqueId() + ".class", obelisk.getCustomClass().getName());
 		}
-		obeliskFile.saveConfig();
+		this.obeliskFile.saveConfig();
 		
 		this.getLogger().info("Clearing local relic registration information");
-		obeliskManager.getObelisks().clear();
-		obeliskManager.getStructureRegistry().clear();
+		this.obeliskManager.getObelisks().clear();
+		this.obeliskManager.getStructureRegistry().clear();
 		
 		artifactManager.getArtifactRegistry().clear();
 		
 		this.getLogger().info("Cancelling obelisk and artifact effect loops");
-		obeliskEffectLoop.cancel();
-		artifactEffectLoop.cancel();
+		this.obeliskEffectLoop.cancel();
+		this.artifactEffectLoop.cancel();
 	}
 	
-	public static Relics getPlugin(){
+	/**
+	 * Get an instance of this plugin
+	 * 
+	 * @return this instance
+	 */
+	public static Relics getPlugin() {
 		return instance;
 	}
 	
-	public ObeliskManager getObeliskManager(){
+	/**
+	 * Get the obelisk manager which manages most obelisk interactions
+	 * 
+	 * @return the obelisk manager
+	 */
+	public ObeliskManager getObeliskManager() {
 		return obeliskManager;
 	}
 	
-	public ArtifactManager getArtifactManager(){
+	/**
+	 * Get the artifact manager which manages most artifact interactions
+	 * 
+	 * @return the artifact manager
+	 */
+	public ArtifactManager getArtifactManager() {
 		return artifactManager;
 	}
 	
-	public void sendMessage(CommandSender sender, String message){
+	/**
+	 * Send a message to a user with the Relics prefix
+	 * 
+	 * @param sender the user to send the message to
+	 * @param message the message to send
+	 */
+	public void sendMessage(CommandSender sender, String message) {
 		sender.sendMessage(ChatColor.GRAY + "[" + ChatColor.GOLD + "Relics" + ChatColor.GRAY + "] " + message);
 	}
 	
-	private List<String> blockListToStringList(List<Block> blocks){
+	private List<String> blockListToStringList(List<Block> blocks) {
 		List<String> strings = new ArrayList<>();
 		for (Block block : blocks)
 			strings.add(block.getX() + "," + block.getY() + "," + block.getZ() + "," + block.getWorld().getName());
 		return strings;
 	}
 	
-	private List<Block> stringListToBlockList(List<String> strings){
+	private List<Block> stringListToBlockList(List<String> strings) {
 		List<Block> blocks = new ArrayList<>();
+		
 		for (String string : strings){
 			String[] values = string.split(",");
 			blocks.add(Bukkit.getWorld(values[3]).getBlockAt(Integer.parseInt(values[0]), Integer.parseInt(values[1]), Integer.parseInt(values[2])));
 		}
+		
 		return blocks;
 	}
 	

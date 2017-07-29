@@ -9,27 +9,28 @@ import org.bukkit.event.player.PlayerItemConsumeEvent;
 import me.choco.relics.Relics;
 import me.choco.relics.utils.ArtifactManager;
 
-public class ArtifactProtection implements Listener{
+public class ArtifactProtection implements Listener {
 	
-	private ArtifactManager manager;
-	public ArtifactProtection(Relics plugin){
+	private final ArtifactManager manager;
+	
+	public ArtifactProtection(Relics plugin) {
 		this.manager = plugin.getArtifactManager();
 	}
 	
 	@EventHandler
-	public void onEatItem(PlayerItemConsumeEvent event){
+	public void onEatItem(PlayerItemConsumeEvent event) {
 		if (manager.isArtifact(event.getItem())) 
 			event.setCancelled(true);
 	}
 	
 	@EventHandler
-	public void onItemDespawn(ItemDespawnEvent event){
+	public void onItemDespawn(ItemDespawnEvent event) {
 		if (manager.isArtifact(event.getEntity().getItemStack()))
 			event.setCancelled(true);
 	}
 	
 	@EventHandler
-	public void placeArtifact(BlockPlaceEvent event){
+	public void placeArtifact(BlockPlaceEvent event) {
 		if (manager.isArtifact(event.getItemInHand()))
 			event.setCancelled(true);
 	}

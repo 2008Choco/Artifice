@@ -24,15 +24,16 @@ public class KillEntityArtifact implements Listener {
 	
 	private static final Random random = new Random();
 	
-	private Relics plugin;
-	private ArtifactManager manager;
-	public KillEntityArtifact(Relics plugin){
+	private final Relics plugin;
+	private final ArtifactManager manager;
+	
+	public KillEntityArtifact(Relics plugin) {
 		this.plugin = plugin;
 		this.manager = plugin.getArtifactManager();
 	}
 	
 	@EventHandler
-	public void onKillEntity(EntityDeathEvent event){
+	public void onKillEntity(EntityDeathEvent event) {
 		Player player = event.getEntity().getKiller();
 		if (player == null || !(event.getEntity() instanceof Monster)) return;
 		

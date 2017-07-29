@@ -15,9 +15,12 @@ import me.choco.relics.utils.general.ItemBuilder;
 
 public class PoisonedArtifact extends CorruptedArtifact {
 	
-	private static final ItemStack item = new ItemBuilder(Material.GHAST_TEAR).setName(ChatColor.DARK_PURPLE + "Poisoned Artifact")
-			.setLore(Arrays.asList(ChatColor.DARK_GREEN + "A demonic artifact, crafted by witches", 
-									ChatColor.DARK_GREEN + "Only the purest of pure may witness its true power")).build();
+	private static final ItemStack ITEM = new ItemBuilder(Material.GHAST_TEAR)
+			.setName(ChatColor.DARK_PURPLE + "Poisoned Artifact")
+			.setLore(Arrays.asList(
+					ChatColor.DARK_GREEN + "A demonic artifact, crafted by witches", 
+					ChatColor.DARK_GREEN + "Only the purest of pure may witness its true power")
+			).build();
 
 	@Override
 	public double corruptionPercent() {
@@ -36,7 +39,7 @@ public class PoisonedArtifact extends CorruptedArtifact {
 
 	@Override
 	public ItemStack getItem() {
-		return item;
+		return ITEM;
 	}
 
 	@Override
