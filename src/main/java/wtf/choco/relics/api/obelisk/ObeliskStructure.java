@@ -44,13 +44,13 @@ public class ObeliskStructure {
     /**
      * Create a new obelisk structure to be detected
      *
-     * @param length the size of the structure along the x axis
-     * @param height the size of the structure along the y axis
-     * @param width the size of the structure along the z axis
+     * @param sizeX the size of the structure along the x axis
+     * @param sizeY the size of the structure along the y axis
+     * @param sizeZ the size of the structure along the z axis
      * @param clazz the resulting obelisk type for this structure pattern
      */
-    private ObeliskStructure(int length, int height, int width) {
-        this(length, width, height, new Material[length][height][width]);
+    private ObeliskStructure(int sizeX, int sizeY, int sizeZ) {
+        this(sizeX, sizeY, sizeZ, new Material[sizeX][sizeY][sizeZ]);
     }
 
     /**
@@ -234,8 +234,8 @@ public class ObeliskStructure {
         return true;
     }
 
-    public static ObeliskStructure withSize(int length, int height, int width) {
-        return new ObeliskStructure(length, height, width);
+    public static ObeliskStructure withSize(int sizeX, int sizeY, int sizeZ) {
+        return new ObeliskStructure(sizeX, sizeY, sizeZ);
     }
 
 }

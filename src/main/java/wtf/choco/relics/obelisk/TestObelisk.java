@@ -42,11 +42,6 @@ public class TestObelisk extends Obelisk {
     }
 
     @Override
-    public ObeliskStructure getStructure() {
-        return STRUCTURE;
-    }
-
-    @Override
     public String getName(ObeliskState state) {
         return NAME;
     }
