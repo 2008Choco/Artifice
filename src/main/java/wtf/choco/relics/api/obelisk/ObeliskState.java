@@ -60,6 +60,10 @@ public class ObeliskState {
         return world;
     }
 
+    public final Block getFormationBlock() {
+        return obelisk.getStructure().getFormationBlock(this);
+    }
+
     public BoundingBox getBounds() {
         return bounds.clone();
     }
