@@ -1,0 +1,13 @@
+name: ${project.name}
+main: wtf.choco.relics.Relics
+version: ${project.version}
+description: Mystical relics and obelisks to make your server more magical
+api-version: 1.15
+author: Choco
+commands:
+    relics:
+      description: The main administrative command for relics
+      usage: /<command> <reload|version>
+    artifact:
+      description: The artifact command for artifact manipulation
+      usage: /<command> <list|give>
