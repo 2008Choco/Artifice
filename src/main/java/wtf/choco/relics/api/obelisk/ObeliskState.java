@@ -34,8 +34,10 @@ public class ObeliskState {
         this.owner = owner.getUniqueId();
         this.world = world;
         this.bounds = bounds;
-        this.components = Collections.unmodifiableSet(components);
         this.rotation = rotation;
+
+        components.removeIf(b -> b == null || b.isEmpty());
+        this.components = Collections.unmodifiableSet(components);
 
         this.setEngraving(obelisk.getName(this));
     }
