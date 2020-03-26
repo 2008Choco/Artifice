@@ -1,6 +1,5 @@
 package wtf.choco.relics.artifacts.corrupted;
 
-import java.util.Arrays;
 import java.util.Random;
 
 import org.bukkit.ChatColor;
@@ -17,7 +16,9 @@ import wtf.choco.relics.utils.ItemBuilder;
 
 public class PoisonedArtifact extends CorruptedArtifact {
 
-    private static final ItemStack ITEM = new ItemBuilder(Material.GHAST_TEAR).setName(ChatColor.DARK_PURPLE + "Poisoned Artifact").setLore(Arrays.asList(ChatColor.DARK_GREEN + "A demonic artifact, crafted by witches", ChatColor.DARK_GREEN + "Only the purest of pure may witness its true power")).build();
+    private static final ItemStack ITEM = ItemBuilder.of(Material.GHAST_TEAR).name(ChatColor.DARK_PURPLE + "Poisoned Artifact")
+            .lore(ChatColor.DARK_GREEN + "A demonic artifact, crafted by witches", ChatColor.DARK_GREEN + "Only the purest of pure may witness its true power")
+            .build();
 
     public PoisonedArtifact(Relics plugin) {
         super(new NamespacedKey(plugin, "poisoned"), Rarity.EPIC);

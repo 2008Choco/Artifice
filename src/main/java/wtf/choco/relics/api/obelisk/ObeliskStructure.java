@@ -10,16 +10,14 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.structure.StructureRotation;
-import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.util.BoundingBox;
 import org.bukkit.util.Vector;
 
 /**
  * Represents a structure pattern for an obelisk. Each structure pattern is composed of 3
  * different axis of materials which correspond to a relative coordinate in the world.
- * This class is similar to the construction of a {@link ShapedRecipe}
  *
- * @author Parker Hawke - 2008Choco
+ * @author Parker Hawke - Choco
  */
 public class ObeliskStructure {
 
@@ -50,21 +48,13 @@ public class ObeliskStructure {
         }
     }
 
-    /**
-     * Create a new obelisk structure to be detected
-     *
-     * @param sizeX the size of the structure along the x axis
-     * @param sizeY the size of the structure along the y axis
-     * @param sizeZ the size of the structure along the z axis
-     * @param clazz the resulting obelisk type for this structure pattern
-     */
     private ObeliskStructure(int sizeX, int sizeY, int sizeZ) {
         this(sizeX, sizeY, sizeZ, new Material[sizeX][sizeY][sizeZ]);
     }
 
     /**
      * Set the relative coordinates that must be clicked by a player in order to complete
-     * construction of the obelisk
+     * construction of the obelisk.
      *
      * @param x the relative x coordinate
      * @param y the relative y coordinate
@@ -86,7 +76,7 @@ public class ObeliskStructure {
     }
 
     /**
-     * Get the material representing the formation
+     * Get the material at the formation point for this structure.
      *
      * @return the formation material
      */
@@ -95,7 +85,7 @@ public class ObeliskStructure {
     }
 
     /**
-     * Get the relative x coordinate in which a formation will be made
+     * Get the relative x coordinate for the formation block for this structure.
      *
      * @return the x formation index
      */
@@ -104,7 +94,7 @@ public class ObeliskStructure {
     }
 
     /**
-     * Get the relative y coordinate in which a formation will be made
+     * Get the relative y coordinate for the formation block for this structure.
      *
      * @return the y formation index
      */
@@ -113,7 +103,7 @@ public class ObeliskStructure {
     }
 
     /**
-     * Get the relative z coordinate in which a formation will be made
+     * Get the relative z coordinate for the formation block for this structure.
      *
      * @return the z formation index
      */
@@ -121,32 +111,70 @@ public class ObeliskStructure {
         return zFormationOffset;
     }
 
+    /**
+     * Get the relative formation point for this structure. This is a 3D vector representation of
+     * all formation offsets.
+     *
+     * @return the formation vector
+     */
     public Vector getFormationVector() {
         return new Vector(xFormationOffset, yFormationOffset, zFormationOffset);
     }
 
+    /**
+     * Get the formation block for this obelisk structure relative to the given world and coordinates.
+     *
+     * @param world the world
+     * @param x the x coordinate
+     * @param y the y coordinate
+     * @param z the z coordinate
+     *
+     * @return the formation block
+     */
     public Block getFormationBlock(World world, int x, int y, int z) {
         return world.getBlockAt(x + xFormationOffset, y + yFormationOffset, z + zFormationOffset);
     }
 
+    /**
+     * Get the formation block for this obelisk structure relative to the given world and coordinates.
+     *
+     * @param world the world
+     * @param position the position in the world
+     *
+     * @return the formation block
+     */
     public Block getFormationBlock(World world, Vector position) {
         return getFormationBlock(world, position.getBlockX(), position.getBlockY(), position.getBlockZ());
     }
 
+    /**
+     * Get the formation block for this obelisk structure for the given obelisk state.
+     *
+     * @param obelisk the obelisk state for which to get the formation block
+     *
+     * @return the formation block
+     */
     public Block getFormationBlock(ObeliskState obelisk) {
         return getFormationBlock(obelisk.getWorld(), obelisk.getBounds().getMin());
     }
 
+    /**
+     * Get the formation block for this obelisk structure relative to the given location.
+     *
+     * @param location the location
+     *
+     * @return the formation block
+     */
     public Block getFormationBlock(Location location) {
         return getFormationBlock(location.getWorld(), location.getBlockX(), location.getBlockY(), location.getBlockZ());
     }
 
     /**
-     * Set a relative position's material
+     * Set a relative position's material.
      *
-     * @param x the relative x position
-     * @param y the relative y position
-     * @param z the relative z position
+     * @param x the relative x coordinate
+     * @param y the relative y coordinate
+     * @param z the relative z coordinate
      * @param material the material to set
      *
      * @return this instance. Allows for chained calls
@@ -156,10 +184,26 @@ public class ObeliskStructure {
         return this;
     }
 
+    /**
+     * Get the relative position's material.
+     *
+     * @param x the relative x coordinate
+     * @param y the relative y coordinate
+     * @param z the relative z coordinate
+     *
+     * @return the material at the given indices
+     */
     public Material get(int x, int y, int z) {
         return materials[x][y][z];
     }
 
+    /**
+     * Create a Map of {@link StructureRotation} to {@link ObeliskStructure} instances. Rotated structures
+     * are automatically calculated. This is a convenience method to more easily implement
+     * {@link Obelisk#getStructure(StructureRotation)}.
+     *
+     * @return the rotation map
+     */
     public Map<StructureRotation, ObeliskStructure> compileRotationMap() {
         Map<StructureRotation, ObeliskStructure> structures = new EnumMap<>(StructureRotation.class);
         for (StructureRotation rotation : StructureRotation.values()) {
@@ -170,7 +214,7 @@ public class ObeliskStructure {
     }
 
     /**
-     * Get the length of this obelisk structure (x axis)
+     * Get the length of this obelisk structure (x axis).
      *
      * @return the structure length
      */
@@ -179,7 +223,7 @@ public class ObeliskStructure {
     }
 
     /**
-     * Get the height of this obelisk structure (y axis)
+     * Get the height of this obelisk structure (y axis).
      *
      * @return the structure height
      */
@@ -188,7 +232,7 @@ public class ObeliskStructure {
     }
 
     /**
-     * Get the width of this obelisk structure (z axis)
+     * Get the width of this obelisk structure (z axis).
      *
      * @return the structure width
      */
@@ -196,11 +240,27 @@ public class ObeliskStructure {
         return sizeZ;
     }
 
+    /**
+     * Create a {@link BoundingBox} relative to the given location.
+     *
+     * @param min the minimum location at which to create a bounding box.
+     *
+     * @return the created bounds
+     */
     public BoundingBox asBoundsFrom(Location min) {
         int x = min.getBlockX(), y = min.getBlockY(), z = min.getBlockZ();
         return new BoundingBox(x, y, z, x + sizeX, y + sizeY, z + sizeZ);
     }
 
+    /**
+     * Check whether the location (representing the minimum location) matches this obelisk structure.
+     *
+     * @param from the location from which to start structure matching
+     * @param strict whether to strictly match the structure blocks (including air). If true, air will
+     * be considered a mandatory block.
+     *
+     * @return true if matches, false otherwise
+     */
     public boolean matches(Location from, boolean strict) {
         Preconditions.checkArgument(from != null, "Attempted to match against null \"from\" location");
 
@@ -211,6 +271,18 @@ public class ObeliskStructure {
         return matches(from.getWorld(), x, y, z, strict);
     }
 
+    /**
+     * Check whether the world and coordinates (representing the minimum position) matches this obelisk structure.
+     *
+     * @param world the world
+     * @param x the minimum x coordinate
+     * @param y the minimum y coordinate
+     * @param z the minimum z coordinate
+     * @param strict whether to strictly match the structure blocks (including air). If true, air will
+     * be considered a mandatory block.
+     *
+     * @return true if matches, false otherwise
+     */
     public boolean matches(World world, int x, int y, int z, boolean strict) {
         Preconditions.checkArgument(world != null, "Cannot match against null world");
 
@@ -302,6 +374,15 @@ public class ObeliskStructure {
         return new ObeliskStructure(newSizeX, sizeY, newSizeZ, materials).formationPoint(newFormationOffsetX, yFormationOffset, newFormationOffsetZ);
     }
 
+    /**
+     * Create an {@link ObeliskStructure} with the given size.
+     *
+     * @param sizeX the size of the structure along the x axis
+     * @param sizeY the size of the structure along the y axis
+     * @param sizeZ the size of the structure along the z axis
+     *
+     * @return the created {@link ObeliskStructure}
+     */
     public static ObeliskStructure withSize(int sizeX, int sizeY, int sizeZ) {
         return new ObeliskStructure(sizeX, sizeY, sizeZ);
     }

@@ -19,7 +19,7 @@ import wtf.choco.relics.utils.ItemBuilder;
 
 public class TestArtifact extends FossilizedArtifact {
 
-    private static final ItemStack ITEM = new ItemBuilder(Material.GOLDEN_APPLE).setName(ChatColor.GOLD + "Test Artifact").build();
+    private static final ItemStack ITEM = ItemBuilder.of(Material.GOLDEN_APPLE).name(ChatColor.GOLD + "Test Artifact").build();
     private static final PotionEffect EFFECT_ABSORPTION = PotionEffectType.ABSORPTION.createEffect(21, 9);
 
     public TestArtifact(Relics plugin) {

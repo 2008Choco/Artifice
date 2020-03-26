@@ -56,7 +56,7 @@ public class ArtifactCmd implements CommandExecutor {
                 return true;
             }
 
-            player.getInventory().addItem(ArtifactUtils.addTypeAndRarity(artifact));
+            player.getInventory().addItem(ArtifactUtils.createItemStack(artifact));
             return true;
         }
 

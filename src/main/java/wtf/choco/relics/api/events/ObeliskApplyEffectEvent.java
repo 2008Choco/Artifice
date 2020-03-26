@@ -12,9 +12,9 @@ import org.bukkit.event.HandlerList;
 import wtf.choco.relics.api.obelisk.ObeliskState;
 
 /**
- * Called when entities receive an effect from an obelisks
+ * Called when entities receive an effect from an obelisks.
  *
- * @author Parker Hawke - 2008Choco
+ * @author Parker Hawke - Choco
  */
 public class ObeliskApplyEffectEvent extends Event implements Cancellable {
 
@@ -26,7 +26,7 @@ public class ObeliskApplyEffectEvent extends Event implements Cancellable {
     private final ImmutableSet<Entity> entities;
 
     /**
-     * Construct a new ObeliskApplyEffectEvent
+     * Construct a new ObeliskApplyEffectEvent.
      *
      * @param obelisk the obelisk that applied the effect
      * @param entities the entities affected
@@ -37,7 +37,7 @@ public class ObeliskApplyEffectEvent extends Event implements Cancellable {
     }
 
     /**
-     * Get the obelisk that applied the effect
+     * Get the obelisk that applied the effect.
      *
      * @return the obelisk
      */
@@ -46,7 +46,7 @@ public class ObeliskApplyEffectEvent extends Event implements Cancellable {
     }
 
     /**
-     * Get an immutable set of all entities that were affected by the obelisk
+     * Get an immutable set of all entities that were affected by the obelisk.
      *
      * @return all affected entities
      */
@@ -72,4 +72,5 @@ public class ObeliskApplyEffectEvent extends Event implements Cancellable {
     public static HandlerList getHandlerList() {
         return handlers;
     }
+
 }

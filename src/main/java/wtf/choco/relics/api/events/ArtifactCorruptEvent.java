@@ -8,19 +8,20 @@ import org.bukkit.event.player.PlayerEvent;
 import wtf.choco.relics.api.artifact.Artifact;
 
 /**
- * Called when an artifact becomes corrupted
+ * Called when an artifact becomes corrupted.
  *
- * @author Parker Hawke - 2008Choco
+ * @author Parker Hawke - Choco
  */
 public class ArtifactCorruptEvent extends PlayerEvent implements Cancellable {
 
     private static final HandlerList handlers = new HandlerList();
+
     private boolean cancelled;
 
     private final Artifact originalArtifact, corruptedArtifact;
 
     /**
-     * Construct a new ArtifactCorruptEvent event
+     * Construct a new ArtifactCorruptEvent event.
      *
      * @param player the player that discovered the corrupted artifact
      * @param originalArtifact the original artifact
@@ -33,7 +34,7 @@ public class ArtifactCorruptEvent extends PlayerEvent implements Cancellable {
     }
 
     /**
-     * Get the original artifact before corruption
+     * Get the original artifact before corruption.
      *
      * @return the original artifact
      */
@@ -42,7 +43,7 @@ public class ArtifactCorruptEvent extends PlayerEvent implements Cancellable {
     }
 
     /**
-     * Get the newly corrupted artifact
+     * Get the newly corrupted artifact.
      *
      * @return the corrupted artifact
      */
@@ -68,4 +69,5 @@ public class ArtifactCorruptEvent extends PlayerEvent implements Cancellable {
     public static HandlerList getHandlerList() {
         return handlers;
     }
+
 }

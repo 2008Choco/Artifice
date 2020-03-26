@@ -1,5 +1,7 @@
 package wtf.choco.relics.runnable;
 
+import com.google.common.base.Preconditions;
+
 import org.bukkit.Bukkit;
 import org.bukkit.FluidCollisionMode;
 import org.bukkit.Location;
@@ -83,12 +85,19 @@ public class AsyncObeliskFormationHint extends BukkitRunnable {
         }
     }
 
+    /**
+     * Run the {@link AsyncObeliskFormationHint} and create a singleton instance. If the task
+     * has already been scheduled, this method will throw an IllegalStateException.
+     *
+     * @param plugin the plugin to schedule the task
+     *
+     * @return the {@link AsyncObeliskFormationHint} instance
+     */
     public static AsyncObeliskFormationHint runTask(Relics plugin) {
-        if (instance == null) {
-            instance = new AsyncObeliskFormationHint(plugin);
-            instance.runTaskTimerAsynchronously(plugin, 0L, 20L);
-        }
+        Preconditions.checkState(instance == null, "Runnable has already been scheduled");
 
+        instance = new AsyncObeliskFormationHint(plugin);
+        instance.runTaskTimerAsynchronously(plugin, 0L, 20L);
         return instance;
     }
 

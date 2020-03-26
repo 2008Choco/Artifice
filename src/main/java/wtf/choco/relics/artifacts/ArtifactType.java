@@ -1,43 +1,24 @@
 package wtf.choco.relics.artifacts;
 
-import wtf.choco.relics.api.artifact.Artifact;
-import wtf.choco.relics.api.artifact.CorruptedArtifact;
-import wtf.choco.relics.api.artifact.FossilizedArtifact;
-import wtf.choco.relics.api.artifact.NecroticArtifact;
-
 /**
  * Represents the different types of discoverable artifacts
  *
- * @author Parker Hawke - 2008Choco
+ * @author Parker Hawke - Choco
  */
 public enum ArtifactType {
 
-    REGULAR(Artifact.class, "Regular"),
-
-    FOSSILIZED(FossilizedArtifact.class, "Fossilized"),
-
-    CORRUPTED(CorruptedArtifact.class, "Corrupted"),
-
-    NECROTIC(NecroticArtifact.class, "Necrotic");
+    REGULAR("Regular"),
+    FOSSILIZED("Fossilized"),
+    CORRUPTED("Corrupted"),
+    NECROTIC("Necrotic");
 
     // TODO ANCIENT - Re-add with the capability to discover them in dungeon chests
 
 
     private String name;
-    private Class<? extends Artifact> clazz;
 
-    private ArtifactType(Class<? extends Artifact> clazz, String name) {
-        this.clazz = clazz;
+    private ArtifactType(String name) {
         this.name = name;
-    }
-
-    /**
-     * Get the parent class that represents this artifact type
-     *
-     * @return the artifact class
-     */
-    public Class<? extends Artifact> getParentClass() {
-        return clazz;
     }
 
     /**
@@ -50,16 +31,19 @@ public enum ArtifactType {
     }
 
     /**
-     * Get an artifact type based on its name
+     * Get an artifact type according to its name.
      *
-     * @param name the artifact type name
-     * 
-     * @return the resulting artifact type, or null if non-existent
+     * @param name the artifact type name (case insensitive)
+     *
+     * @return the artifact type. null if non-existent
      */
     public static ArtifactType getByName(String name) {
-        for (ArtifactType type : values())
-            if (type.getName().equalsIgnoreCase(name))
+        for (ArtifactType type : values()) {
+            if (type.getName().equalsIgnoreCase(name)) {
                 return type;
+            }
+        }
+
         return null;
     }
 }

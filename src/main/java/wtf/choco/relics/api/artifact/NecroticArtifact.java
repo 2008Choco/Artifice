@@ -7,9 +7,9 @@ import wtf.choco.relics.artifacts.Rarity;
 
 /**
  * Represents a more specific Artifact implementation discoverable through the killing of
- * hostile entities
+ * hostile entities.
  *
- * @author Parker Hawke - 2008Choco
+ * @author Parker Hawke - Choco
  */
 public abstract class NecroticArtifact extends AbstractArtifact {
 
@@ -18,10 +18,10 @@ public abstract class NecroticArtifact extends AbstractArtifact {
     }
 
     /**
-     * The percentage (0.00% - 100.00%) that this item can be discovered; 100 being
-     * guaranteed. Decimal values (up to two places) are accepted
+     * Get the percent chance (0.0 - 100.0) that this item will be discovered where 0.0 is
+     * not at all and 100.0 is guaranteed.
      *
-     * @return the percentage chance
+     * @return the discovery chance
      */
     public abstract double discoveryPercent();
 

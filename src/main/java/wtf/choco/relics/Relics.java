@@ -105,7 +105,7 @@ public class Relics extends JavaPlugin {
     }
 
     /**
-     * Get an instance of this plugin
+     * Get the singleton instance of this plugin.
      *
      * @return this instance
      */
@@ -114,7 +114,7 @@ public class Relics extends JavaPlugin {
     }
 
     /**
-     * Get the obelisk manager which manages most obelisk interactions
+     * Get the plugin's {@link ObeliskManager}.
      *
      * @return the obelisk manager
      */
@@ -123,7 +123,7 @@ public class Relics extends JavaPlugin {
     }
 
     /**
-     * Get the artifact manager which manages most artifact interactions
+     * Get the plugin's {@link ArtifactManager}.
      *
      * @return the artifact manager
      */
@@ -131,28 +131,23 @@ public class Relics extends JavaPlugin {
         return artifactManager;
     }
 
+    /**
+     * Get this plugin's {@link ArtifactEffectRunnable}.
+     *
+     * @return the artifact effect loop
+     */
     public ArtifactEffectRunnable getArtifactEffectLoop() {
         return artifactEffectLoop;
     }
 
     /**
-     * Send a message to a user with the Relics prefix
+     * Send a message to a user with the Relics prefix.
      *
-     * @param sender the user to send the message to
+     * @param sender the user to which to send a message
      * @param message the message to send
      */
     public void sendMessage(CommandSender sender, String message) {
         sender.sendMessage(ChatColor.GRAY + "[" + ChatColor.GOLD + "Relics" + ChatColor.GRAY + "] " + message);
     }
 
-    /*
-     * Relics - General Idea: Hidden artifacts can be found throughout the world
-     * - Mining
-     * - Killing Entities
-     * - Crafting
-     * - Dungeon Loot Different artifacts grant different abilities / effects
-     *
-     * Hopefully expandable artifacts? Craftable totemnic objects / obelisks that act similar to beacons
-     * Spirits fly around obelisks (particles)
-     */
 }

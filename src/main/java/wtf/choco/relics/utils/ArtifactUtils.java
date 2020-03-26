@@ -14,16 +14,18 @@ import wtf.choco.relics.api.artifact.Artifact;
  *
  * @author Parker Hawke - 2008Choco
  */
-public class ArtifactUtils {
+public final class ArtifactUtils {
+
+    private ArtifactUtils() { }
 
     /**
-     * Apply lore to an artifact's item and return the item
+     * Apply lore to an artifact's item and return the item.
      *
      * @param artifact the artifact to get the item for
      *
      * @return the resulting ItemStack
      */
-    public static ItemStack addTypeAndRarity(Artifact artifact) {
+    public static ItemStack createItemStack(Artifact artifact) {
         ItemStack item = artifact.getItem().clone();
         ItemMeta meta = item.getItemMeta();
 

@@ -28,8 +28,16 @@ public final class ObeliskEffectRunnable extends BukkitRunnable {
         }
     }
 
+    /**
+     * Run the {@link ObeliskEffectRunnable} and create a singleton instance. If the task
+     * has already been scheduled, this method will throw an IllegalStateException.
+     *
+     * @param plugin the plugin to schedule the task
+     *
+     * @return the {@link ObeliskEffectRunnable} instance
+     */
     public static ObeliskEffectRunnable runTask(Relics plugin) {
-        Preconditions.checkArgument(instance == null, "Obelisk effect runnable has already been scheduled");
+        Preconditions.checkState(instance == null, "Runnable has already been scheduled");
 
         instance = new ObeliskEffectRunnable(plugin);
         instance.runTaskTimer(plugin, 0L, 1L);

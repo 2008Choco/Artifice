@@ -49,7 +49,7 @@ public class ArtifactNecroticLootListener implements Listener {
 
             // Give actual artifact (Can be modified in event)
             this.plugin.sendMessage(player, pdae.getMessage());
-            event.getDrops().add(ArtifactUtils.addTypeAndRarity(pdae.getArtifact()));
+            event.getDrops().add(ArtifactUtils.createItemStack(pdae.getArtifact()));
             // TODO: Play a "mystical sound of discovery" :P
             break;
         }

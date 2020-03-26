@@ -7,9 +7,9 @@ import org.bukkit.event.player.PlayerEvent;
 import wtf.choco.relics.api.obelisk.ObeliskState;
 
 /**
- * Called when a player successfully creates an obelisk
+ * Called when a player successfully creates an obelisk.
  *
- * @author Parker Hawke - 2008Choco
+ * @author Parker Hawke - Choco
  */
 public class PlayerCreateObeliskEvent extends PlayerEvent {
 
@@ -18,7 +18,7 @@ public class PlayerCreateObeliskEvent extends PlayerEvent {
     private final ObeliskState obelisk;
 
     /**
-     * Construct a new PlayerCreateObeliskEvent
+     * Construct a new PlayerCreateObeliskEvent.
      *
      * @param player the player that created the obelisk
      * @param obelisk the created obelisk
@@ -29,7 +29,7 @@ public class PlayerCreateObeliskEvent extends PlayerEvent {
     }
 
     /**
-     * Get the obelisk that was created in this event
+     * Get the obelisk that was created in this event.
      *
      * @return the created obelisk
      */
@@ -45,4 +45,5 @@ public class PlayerCreateObeliskEvent extends PlayerEvent {
     public static HandlerList getHandlerList() {
         return handlers;
     }
+
 }

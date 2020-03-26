@@ -8,7 +8,7 @@ import org.bukkit.event.player.PlayerEvent;
 import wtf.choco.relics.api.artifact.Artifact;
 
 /**
- * Called when a player discovers an artifact in the world
+ * Called when a player discovers an artifact in the world.
  *
  * @author Parker Hawke - 2008Choco
  */
@@ -21,7 +21,7 @@ public class PlayerDiscoverArtifactEvent extends PlayerEvent implements Cancella
     private Artifact artifact;
 
     /**
-     * Construct a new PlayerDiscoverArtifactEvent
+     * Construct a new PlayerDiscoverArtifactEvent.
      *
      * @param player the player that discovered the artifact
      * @param artifact the discovered artifact
@@ -29,21 +29,21 @@ public class PlayerDiscoverArtifactEvent extends PlayerEvent implements Cancella
     public PlayerDiscoverArtifactEvent(Player player, Artifact artifact) {
         super(player);
         this.artifact = artifact;
-        this.message = "You have discovered a " + artifact.getName() + (artifact.getName().toLowerCase().contains("artifact") ? "" : " artifact");
+        this.message = "You have discovered a " + artifact.getName();
     }
 
     /**
-     * Set the artifact to be discovered in this event
+     * Set the artifact to be discovered in this event.
      *
      * @param artifact the new artifact to discover
      */
     public void setArtifact(Artifact artifact) {
         this.artifact = artifact;
-        this.message = "You have discovered a " + artifact.getName() + (artifact.getName().toLowerCase().contains("artifact") ? "" : " artifact");
+        this.message = "You have discovered a " + artifact.getName();
     }
 
     /**
-     * Get the artifact that has been discovered in this event
+     * Get the artifact that has been discovered in this event.
      *
      * @return the discovered artifact
      */
@@ -52,7 +52,7 @@ public class PlayerDiscoverArtifactEvent extends PlayerEvent implements Cancella
     }
 
     /**
-     * Set the message that should display to the player upon discovery
+     * Set the message that should display to the player upon discovery.
      *
      * @param message the new message
      */
@@ -61,7 +61,7 @@ public class PlayerDiscoverArtifactEvent extends PlayerEvent implements Cancella
     }
 
     /**
-     * Get the message that should display to the player upon discovery
+     * Get the message that should display to the player upon discovery.
      *
      * @return the message
      */
@@ -87,4 +87,5 @@ public class PlayerDiscoverArtifactEvent extends PlayerEvent implements Cancella
     public static HandlerList getHandlerList() {
         return handlers;
     }
+
 }

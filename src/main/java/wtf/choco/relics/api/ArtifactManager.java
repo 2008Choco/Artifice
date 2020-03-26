@@ -20,9 +20,9 @@ import wtf.choco.relics.artifacts.ArtifactType;
 import wtf.choco.relics.utils.ArtifactUtils;
 
 /**
- * Represents a manager to handle all interactions regarding artifacts
+ * Represents a manager to handle all interactions regarding artifacts.
  *
- * @author Parker Hawke - 2008Choco
+ * @author Parker Hawke - Choco
  */
 public class ArtifactManager {
 
@@ -30,7 +30,7 @@ public class ArtifactManager {
     private final Map<ItemStack, Artifact> artifactsByItem = new HashMap<>();
 
     /**
-     * Register a new artifact to the artifact registry
+     * Register an artifact to the artifact registry.
      *
      * @param artifact the artifact to register
      */
@@ -42,30 +42,38 @@ public class ArtifactManager {
 
         ItemStack item = artifact.getItem();
         item.setAmount(1);
-        this.artifactsByItem.put(ArtifactUtils.addTypeAndRarity(artifact), artifact);
+        this.artifactsByItem.put(ArtifactUtils.createItemStack(artifact), artifact);
     }
 
     /**
-     * Get the artifact instance based on its name
+     * Get an {@link Artifact} by its unique key (including the namespace). i.e. {@code relics:example}.
      *
-     * @param id the name of the artifact
+     * @param key the key of the artifact to get
      *
-     * @return the resulting instance, or null if not registered
+     * @return the artifact. null if none registered with the given key
      */
-    public Artifact getArtifact(String id) {
-        return artifacts.get(id);
+    public Artifact getArtifact(String key) {
+        return artifacts.get(key);
     }
 
+    /**
+     * Get an {@link Artifact} by its unique id.
+     *
+     * @param key the key of the artifact to get
+     *
+     * @return the artifact. null if none registered with the given key
+     */
     public Artifact getArtifact(NamespacedKey key) {
         return getArtifact(key.toString());
     }
 
     /**
-     * Get the artifact instance based on its item
+     * Get an {@link Artifact} by its {@link ItemStack}. Comparisons are made by calls to
+     * {@link ItemStack#equals(Object)}, though amount will not be taken into consideration.
      *
-     * @param item the item to reference
+     * @param item the item of the artifact to get
      *
-     * @return the resulting instance, or null if not registered
+     * @return the artifact. null if no artifact is associated with the given item
      */
     public Artifact getArtifact(ItemStack item) {
         item = item.clone();
@@ -74,14 +82,19 @@ public class ArtifactManager {
         return artifactsByItem.get(item);
     }
 
+    /**
+     * Get an unmodifiable collection of all registered artifacts.
+     *
+     * @return all registered artifacts
+     */
     public Collection<Artifact> getArtifacts() {
         return Collections.unmodifiableCollection(artifacts.values());
     }
 
     /**
-     * Get instances of all artifacts of the given type
+     * Get a list of all artifacts of the given type.
      *
-     * @param type the type to search for
+     * @param type the type of artifact to get
      *
      * @return all registered artifacts with the given type
      */
@@ -98,9 +111,9 @@ public class ArtifactManager {
     }
 
     /**
-     * Get instances of all artifacts of the given types
+     * Get a list of all artifacts of the given types
      *
-     * @param types the types to search for
+     * @param types the types of artifacts to get
      *
      * @return all registered artifacts with one of the given types
      */
@@ -119,18 +132,23 @@ public class ArtifactManager {
         return result;
     }
 
+    /**
+     * Clear all registered artifacts.
+     */
     public void clearArtifacts() {
         this.artifacts.clear();
     }
 
     /**
-     * Give an artifact's item to a player
+     * Give an artifact's item to a player with additional lore.
      *
-     * @param player the player to give the artifact to
+     * @param player the player to whom the artifact should be given
      * @param artifact the artifact to give
+     *
+     * @see ArtifactUtils#createItemStack(Artifact)
      */
     public void giveArtifact(Player player, Artifact artifact) {
-        player.getInventory().addItem(ArtifactUtils.addTypeAndRarity(artifact));
+        player.getInventory().addItem(ArtifactUtils.createItemStack(artifact));
     }
 
 }

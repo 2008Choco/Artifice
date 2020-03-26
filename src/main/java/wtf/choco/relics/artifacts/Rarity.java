@@ -3,9 +3,9 @@ package wtf.choco.relics.artifacts;
 import org.bukkit.ChatColor;
 
 /**
- * Represents an artifact's rarity
+ * Represents an artifact's rarity.
  *
- * @author Parker Hawke - 2008Choco
+ * @author Parker Hawke - Choco
  */
 public enum Rarity {
 
@@ -30,7 +30,7 @@ public enum Rarity {
     }
 
     /**
-     * Get the tier of this rarity
+     * Get the tier of this rarity.
      *
      * @return the rarity tier
      */
@@ -39,7 +39,7 @@ public enum Rarity {
     }
 
     /**
-     * Get the friendly name for this rarity
+     * Get the friendly name for this rarity.
      *
      * @return the friendly name
      */
@@ -48,7 +48,7 @@ public enum Rarity {
     }
 
     /**
-     * Get the name to be displayed on artifacts (includes colours)
+     * Get the name to be displayed on artifacts (includes colours).
      *
      * @return the display name
      */
@@ -56,16 +56,21 @@ public enum Rarity {
         return displayName;
     }
 
+    /**
+     * Get the {@link ChatColor} associated with this rarity.
+     *
+     * @return the rarity colour
+     */
     public ChatColor getColor() {
         return color;
     }
 
     /**
-     * Get an artifact type based on its friendly name
+     * Get an artifact type according to its friendly name.
      *
-     * @param name the name to search for
+     * @param name the rarity name (case insensitive)
      *
-     * @return the resulting rarity, or null if non-existent
+     * @return the rarity. null if non-existent
      */
     public static Rarity getByName(String name) {
         for (Rarity rarity : values()) {
@@ -78,19 +83,14 @@ public enum Rarity {
     }
 
     /**
-     * Get an artifact type based on its tier
+     * Get an artifact type according to its tier.
      *
      * @param tier the rarity tier
      *
-     * @return the resulting rarity, or null if non-existent
+     * @return the rarity. null if non-existent
      */
     public static Rarity getByTier(int tier) {
-        for (Rarity rarity : values()) {
-            if (rarity.getTier() == tier) {
-                return rarity;
-            }
-        }
-
-        return null;
+        Rarity[] values = values();
+        return (tier > 0 && tier <= values.length ? values[tier - 1] : null);
     }
 }

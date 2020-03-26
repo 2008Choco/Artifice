@@ -50,7 +50,7 @@ public class ArtifactFossilizedLootListener implements Listener {
 
             // Give actual artifact (Can be modified in event)
             this.plugin.sendMessage(player, pdae.getMessage());
-            player.getInventory().addItem(ArtifactUtils.addTypeAndRarity(pdae.getArtifact()));
+            player.getInventory().addItem(ArtifactUtils.createItemStack(pdae.getArtifact()));
             // TODO: Play a, "mystical sound of discovery" :P
             break;
         }

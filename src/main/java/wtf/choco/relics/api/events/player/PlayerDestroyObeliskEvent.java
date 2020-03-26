@@ -7,7 +7,7 @@ import org.bukkit.event.player.PlayerEvent;
 import wtf.choco.relics.api.obelisk.ObeliskState;
 
 /**
- * Called when a player successfully destroys an obelisk in the world
+ * Called when a player successfully destroys an obelisk in the world.
  *
  * @author Parker Hawke - 2008Choco
  */
@@ -18,7 +18,7 @@ public class PlayerDestroyObeliskEvent extends PlayerEvent {
     private final ObeliskState obelisk;
 
     /**
-     * Construct a new PlayerDestroyObeliskEvent
+     * Construct a new PlayerDestroyObeliskEvent.
      *
      * @param player the player that destroyed the obelisk
      * @param obelisk the destroyed obelisk
@@ -29,7 +29,7 @@ public class PlayerDestroyObeliskEvent extends PlayerEvent {
     }
 
     /**
-     * Get the obelisk that was destroyed in this event
+     * Get the obelisk that was destroyed in this event.
      *
      * @return the destroyed obelisk
      */
@@ -45,4 +45,5 @@ public class PlayerDestroyObeliskEvent extends PlayerEvent {
     public static HandlerList getHandlerList() {
         return handlers;
     }
+
 }

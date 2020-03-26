@@ -19,6 +19,12 @@ import wtf.choco.relics.Relics;
 import wtf.choco.relics.api.ArtifactManager;
 import wtf.choco.relics.api.artifact.Artifact;
 
+/**
+ * Represents a {@link BukkitRunnable} responsible for ticking and applying in-world effects
+ * to all artifacts.
+ *
+ * @author Parker Hawke - Choco
+ */
 public class ArtifactEffectRunnable extends BukkitRunnable {
 
     private static final Random RANDOM = new Random();
@@ -75,16 +81,33 @@ public class ArtifactEffectRunnable extends BukkitRunnable {
         }
     }
 
+    /**
+     * Track an {@link Item} in the world to tick according to the specified artifact.
+     *
+     * @param item the item to track
+     * @param artifact the belonging artifact
+     */
     public void trackArtifactItem(Item item, Artifact artifact) {
         this.itemEntities.put(item, artifact);
     }
 
+    /**
+     * Clear all tracked artifact items.
+     */
     public void clearArtifactEntities() {
         this.itemEntities.clear();
     }
 
+    /**
+     * Run the {@link ArtifactEffectRunnable} and create a singleton instance. If the task
+     * has already been scheduled, this method will throw an IllegalStateException.
+     *
+     * @param plugin the plugin to schedule the task
+     *
+     * @return the {@link ArtifactEffectRunnable} instance
+     */
     public static ArtifactEffectRunnable runTask(Relics plugin) {
-        Preconditions.checkArgument(instance == null, "Obelisk effect runnable has already been scheduled");
+        Preconditions.checkState(instance == null, "Runnable has already been scheduled");
 
         instance = new ArtifactEffectRunnable(plugin);
         instance.runTaskTimer(plugin, 0L, 1L);

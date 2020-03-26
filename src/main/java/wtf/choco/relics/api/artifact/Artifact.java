@@ -11,44 +11,44 @@ import wtf.choco.relics.artifacts.ArtifactType;
 import wtf.choco.relics.artifacts.Rarity;
 
 /**
- * Represents a special item ("artifact") with special effects applicable to players
+ * Represents a special item ("artifact") with special effects applicable to players.
  *
- * @author Parker Hawke - 2008Choco
+ * @author Parker Hawke - Choco
  */
 public interface Artifact extends Keyed {
 
     /**
-     * The item representation of the artifact (Used for identification)
+     * Get the item representation of the artifact.
      *
      * @return the item to reference
      */
     public ItemStack getItem();
 
     /**
-     * Get the rarity of the artifact
+     * Get the artifact's rarity.
      *
      * @return the rarity
      */
     public Rarity getRarity();
 
     /**
-     * Get the type of artifact
+     * Get the artifact's type.
      *
      * @return the type of artifact
      */
     public ArtifactType getType();
 
     /**
-     * The name of the obelisk used in game for identification
+     * Get the name of the artifact.
      *
-     * @return the artifact name
+     * @return the artifact's name
      */
     public String getName();
 
     /**
-     * The name of the obelisk used in game for identification
+     * Get the name of the artifact with format codes applied. Defaults to {@link #getName()}.
      *
-     * @return the artifact name
+     * @return the artifact's formatted name
      */
     public default String getNameFormatted() {
         return getName();

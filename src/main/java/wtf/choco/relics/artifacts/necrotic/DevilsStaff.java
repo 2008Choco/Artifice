@@ -15,7 +15,7 @@ import wtf.choco.relics.utils.ItemBuilder;
 
 public class DevilsStaff extends NecroticArtifact {
 
-    private static final ItemStack ITEM = new ItemBuilder(Material.BLAZE_ROD).setName(ChatColor.RED + "Devil's Staff").build();
+    private static final ItemStack ITEM = ItemBuilder.of(Material.BLAZE_ROD).name(ChatColor.RED + "Devil's Staff").build();
 
     public DevilsStaff(Relics plugin) {
         super(new NamespacedKey(plugin, "devils_staff"), Rarity.MYTHICAL);
