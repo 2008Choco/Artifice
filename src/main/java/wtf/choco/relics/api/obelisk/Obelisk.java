@@ -6,6 +6,7 @@ import java.util.Set;
 import org.bukkit.Keyed;
 import org.bukkit.NamespacedKey;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.Particle;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.structure.StructureRotation;
@@ -60,6 +61,10 @@ public abstract class Obelisk implements Keyed {
 
     public SoundData getDisruptionSound(@SuppressWarnings("unused") ObeliskState state) {
         return null;
+    }
+
+    public Particle getFormationHintParticle() {
+        return Particle.FLAME;
     }
 
     @SuppressWarnings("unused")

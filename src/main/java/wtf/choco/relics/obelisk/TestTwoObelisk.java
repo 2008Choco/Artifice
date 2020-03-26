@@ -78,6 +78,11 @@ public class TestTwoObelisk extends Obelisk {
     }
 
     @Override
+    public Particle getFormationHintParticle() {
+        return Particle.VILLAGER_HAPPY;
+    }
+
+    @Override
     public void tick(ObeliskState state, int partialTick) {
         if (partialTick % 10 != 0) {
             return;

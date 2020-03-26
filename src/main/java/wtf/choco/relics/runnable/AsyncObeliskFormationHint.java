@@ -42,6 +42,8 @@ public class AsyncObeliskFormationHint extends BukkitRunnable {
 
             obeliskLoop:
             for (Obelisk obelisk : plugin.getObeliskManager().getRegisteredObelisks()) {
+                Particle particle = obelisk.getFormationHintParticle();
+
                 for (StructureRotation rotation : StructureRotation.values()) {
                     ObeliskStructure structure = obelisk.getStructure(rotation);
                     Location obeliskLocation = targetLocation.clone().subtract(structure.getFormationX(), structure.getFormationY(), structure.getFormationZ());
@@ -68,7 +70,7 @@ public class AsyncObeliskFormationHint extends BukkitRunnable {
 
                                 if (components >= 2) {
                                     targetLocation.add(x, y, z);
-                                    player.spawnParticle(Particle.FLAME, targetLocation, 1, 0, 0, 0, 0);
+                                    player.spawnParticle(particle, targetLocation, 1, 0, 0, 0, 0);
                                     targetLocation.subtract(x, y, z);
                                 }
                             }
