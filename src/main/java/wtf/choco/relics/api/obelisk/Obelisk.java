@@ -12,6 +12,7 @@ import org.bukkit.block.Block;
 import org.bukkit.block.structure.StructureRotation;
 import org.bukkit.util.BoundingBox;
 
+import wtf.choco.relics.Relics;
 import wtf.choco.relics.utils.SoundData;
 
 public abstract class Obelisk implements Keyed {
@@ -45,9 +46,8 @@ public abstract class Obelisk implements Keyed {
         return state.getEngraving();
     }
 
-    @SuppressWarnings("unused")
-    public String getFormationMessage(ObeliskState state, Random random) {
-        return null;
+    public String getFormationMessage(@SuppressWarnings("unused") ObeliskState state, Random random) {
+        return Relics.GLOBAL_FORMATION_MESSAGES[random.nextInt(Relics.GLOBAL_FORMATION_MESSAGES.length)];
     }
 
     @SuppressWarnings("unused")

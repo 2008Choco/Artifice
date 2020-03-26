@@ -29,12 +29,6 @@ public class TestTwoObelisk extends Obelisk {
             .set(1, 2, 1, Material.OAK_FENCE).set(2, 2, 1, Material.OAK_FENCE).set(2, 2, 0, Material.OAK_FENCE)
             .formationPoint(1, 2, 1).compileRotationMap();
 
-    private static final String[] FORMATION_MESSAGES = {
-            "A strange aura seems to empower and surround the structure",
-            "The structure seems to start shaking as it illuminates dimly",
-            "As you step away from the structures, you hear silent whispers"
-    };
-
     private static final SoundData FORMATION_SOUND = SoundData.of(Sound.ENTITY_ELDER_GUARDIAN_AMBIENT, 5F, 0F);
     private static final SoundData DISRUPTION_SOUND = SoundData.of(Sound.ENTITY_ELDER_GUARDIAN_CURSE, 5F, 0F);
 
@@ -55,11 +49,6 @@ public class TestTwoObelisk extends Obelisk {
     @Override
     public String getNameFormatted(ObeliskState state) {
         return NAME_FORMATTED;
-    }
-
-    @Override
-    public String getFormationMessage(ObeliskState state, Random random) {
-        return FORMATION_MESSAGES[random.nextInt(FORMATION_MESSAGES.length)];
     }
 
     @Override

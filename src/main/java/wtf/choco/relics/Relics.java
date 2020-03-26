@@ -29,6 +29,12 @@ import wtf.choco.relics.runnable.ObeliskEffectRunnable;
 
 public class Relics extends JavaPlugin {
 
+    public static final String[] GLOBAL_FORMATION_MESSAGES = {
+            "A strange aura seems to empower and surround the structure",
+            "The structure seems to start shaking as it illuminates dimly",
+            "As you step away from the structures, you hear silent whispers"
+    };
+
     private static Relics instance;
     private ObeliskManager obeliskManager;
     private ArtifactManager artifactManager;
