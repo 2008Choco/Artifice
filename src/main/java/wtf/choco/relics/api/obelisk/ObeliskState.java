@@ -12,6 +12,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.block.structure.StructureRotation;
 import org.bukkit.entity.Player;
 import org.bukkit.util.BoundingBox;
 
@@ -26,12 +27,15 @@ public class ObeliskState {
     protected final BoundingBox bounds;
     protected final Set<Block> components;
 
-    public ObeliskState(Obelisk obelisk, OfflinePlayer owner, World world, BoundingBox bounds, Set<Block> components) {
+    protected final StructureRotation rotation;
+
+    public ObeliskState(Obelisk obelisk, OfflinePlayer owner, World world, BoundingBox bounds, StructureRotation rotation, Set<Block> components) {
         this.obelisk = obelisk;
         this.owner = owner.getUniqueId();
         this.world = world;
         this.bounds = bounds;
         this.components = Collections.unmodifiableSet(components);
+        this.rotation = rotation;
 
         this.setEngraving(obelisk.getName(this));
     }
@@ -61,7 +65,7 @@ public class ObeliskState {
     }
 
     public final Block getFormationBlock() {
-        return obelisk.getStructure().getFormationBlock(this);
+        return obelisk.getStructure(rotation).getFormationBlock(this);
     }
 
     public BoundingBox getBounds() {
@@ -70,6 +74,14 @@ public class ObeliskState {
 
     public final Set<Block> getComponents() {
         return components; // Unmodifiable through constructor
+    }
+
+    public StructureRotation getRotation() {
+        return rotation;
+    }
+
+    public ObeliskStructure getStructure() {
+        return obelisk.getStructure(rotation);
     }
 
     public final boolean isLoaded() {

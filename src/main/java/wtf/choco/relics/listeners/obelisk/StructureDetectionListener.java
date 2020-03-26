@@ -8,6 +8,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
+import org.bukkit.block.structure.StructureRotation;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event.Result;
 import org.bukkit.event.EventHandler;
@@ -51,47 +52,50 @@ public class StructureDetectionListener implements Listener {
             return;
         }
 
+        obeliskLoop:
         for (Obelisk obelisk : manager.getRegisteredObelisks()) {
-            ObeliskStructure structure = obelisk.getStructure();
-            Location obeliskLocation = block.getLocation().subtract(structure.getFormationX(), structure.getFormationY(), structure.getFormationZ());
+            for (StructureRotation rotation : StructureRotation.values()) {
+                ObeliskStructure structure = obelisk.getStructure(rotation);
+                Location obeliskLocation = block.getLocation().subtract(structure.getFormationX(), structure.getFormationY(), structure.getFormationZ());
 
-            if (!structure.matches(obeliskLocation)) {
-                continue;
-            }
+                if (!structure.matches(obeliskLocation, obelisk.hasStrongAura())) {
+                    continue;
+                }
 
-            Set<Block> components = new HashSet<>();
+                Set<Block> components = new HashSet<>();
 
-            for (int x = 0; x < structure.getSizeX(); x++) {
-                for (int y = 0; y < structure.getSizeY(); y++) {
-                    for (int z = 0; z < structure.getSizeZ(); z++) {
-                        obeliskLocation.add(x, y, z);
+                for (int x = 0; x < structure.getSizeX(); x++) {
+                    for (int y = 0; y < structure.getSizeY(); y++) {
+                        for (int z = 0; z < structure.getSizeZ(); z++) {
+                            obeliskLocation.add(x, y, z);
 
-                        if (!structure.get(x, y, z).isAir()) {
-                            components.add(obeliskLocation.getBlock());
+                            if (!structure.get(x, y, z).isAir()) {
+                                components.add(obeliskLocation.getBlock());
+                            }
+
+                            obeliskLocation.subtract(x, y, z);
                         }
-
-                        obeliskLocation.subtract(x, y, z);
                     }
                 }
+
+                obeliskState = obelisk.createObelisk(player, block.getWorld(), structure.asBoundsFrom(obeliskLocation), rotation, components);
+                PlayerCreateObeliskEvent pcoe = new PlayerCreateObeliskEvent(player, obeliskState);
+                Bukkit.getPluginManager().callEvent(pcoe);
+
+                manager.addObelisk(obeliskState);
+
+                SoundData sound = obelisk.getFormationSound(obeliskState);
+                if (sound != null) {
+                    sound.play(player.getLocation());
+                }
+
+                String formationMessage = obeliskState.getObelisk().getFormationMessage(obeliskState, ThreadLocalRandom.current());
+                if (formationMessage != null) {
+                    this.plugin.sendMessage(player, formationMessage);
+                }
+
+                break obeliskLoop;
             }
-
-            obeliskState = obelisk.createObelisk(player, block.getWorld(), structure.asBoundsFrom(obeliskLocation), components);
-            PlayerCreateObeliskEvent pcoe = new PlayerCreateObeliskEvent(player, obeliskState);
-            Bukkit.getPluginManager().callEvent(pcoe);
-
-            manager.addObelisk(obeliskState);
-
-            SoundData sound = obelisk.getFormationSound(obeliskState);
-            if (sound != null) {
-                sound.play(player.getLocation());
-            }
-
-            String formationMessage = obeliskState.getObelisk().getFormationMessage(obeliskState, ThreadLocalRandom.current());
-            if (formationMessage != null) {
-                this.plugin.sendMessage(player, formationMessage);
-            }
-
-            break;
         }
     }
 

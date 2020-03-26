@@ -1,6 +1,7 @@
 package wtf.choco.relics.api.obelisk;
 
-import java.util.Arrays;
+import java.util.EnumMap;
+import java.util.Map;
 
 import com.google.common.base.Preconditions;
 
@@ -8,6 +9,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.block.structure.StructureRotation;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.util.BoundingBox;
 import org.bukkit.util.Vector;
@@ -24,11 +26,14 @@ public class ObeliskStructure {
     private Material[][][] materials; /* [x][y][z] */
     private Material formationMaterial;
     private int xFormationOffset = 0, yFormationOffset = 0, zFormationOffset = 0;
-    private boolean strict = true;
 
     private final int sizeX, sizeY, sizeZ;
 
     private ObeliskStructure(int sizeX, int sizeY, int sizeZ, Material[][][] materials) {
+        Preconditions.checkArgument(sizeX > 0, "x size must be > 0 (got %s)", sizeX);
+        Preconditions.checkArgument(sizeY > 0, "y size must be > 0 (got %s)", sizeY);
+        Preconditions.checkArgument(sizeZ > 0, "z size must be > 0 (got %s)", sizeZ);
+
         this.materials = materials;
         this.sizeX = sizeX;
         this.sizeY = sizeY;
@@ -36,7 +41,11 @@ public class ObeliskStructure {
 
         for (Material[][] iHateDoing : materials) {
             for (Material[] thingsLikeThis : iHateDoing) {
-                Arrays.fill(thingsLikeThis, Material.AIR); // This is stupid >:/
+                for (int i = 0; i < thingsLikeThis.length; i++) {
+                    if (thingsLikeThis[i] == null) {
+                        thingsLikeThis[i] = Material.AIR;
+                    }
+                }
             }
         }
     }
@@ -64,11 +73,11 @@ public class ObeliskStructure {
      * @return this instance. Allows for chained calls
      */
     public ObeliskStructure formationPoint(int x, int y, int z) {
-        Preconditions.checkArgument(x >= 0 && x < getSizeX(), "x bound out of range. Got %d, expected 0 - %d", x, getSizeX());
-        Preconditions.checkArgument(y >= 0 && y < getSizeY(), "y bound out of range. Got %d, expected 0 - %d", x, getSizeY());
-        Preconditions.checkArgument(z >= 0 && z < getSizeZ(), "z bound out of range. Got %d, expected 0 - %d", x, getSizeZ());
+        Preconditions.checkArgument(x >= 0 && x < getSizeX(), "x bound out of range. Got %s, expected 0 - %s (exclusive)", x, getSizeX());
+        Preconditions.checkArgument(y >= 0 && y < getSizeY(), "y bound out of range. Got %s, expected 0 - %s (exclusive)", x, getSizeY());
+        Preconditions.checkArgument(z >= 0 && z < getSizeZ(), "z bound out of range. Got %s, expected 0 - %s (exclusive)", x, getSizeZ());
 
-        this.formationMaterial = materials[x][y][z];
+        this.formationMaterial = get(x, y, z);
         this.xFormationOffset = x;
         this.yFormationOffset = y;
         this.zFormationOffset = z;
@@ -135,38 +144,29 @@ public class ObeliskStructure {
     /**
      * Set a relative position's material
      *
-     * @param xPos the relative x position
-     * @param yPos the relative y position
-     * @param zPos the relative z position
+     * @param x the relative x position
+     * @param y the relative y position
+     * @param z the relative z position
      * @param material the material to set
      *
      * @return this instance. Allows for chained calls
      */
-    public ObeliskStructure set(int xPos, int yPos, int zPos, Material material) {
-        materials[xPos][yPos][zPos] = material;
+    public ObeliskStructure set(int x, int y, int z, Material material) {
+        this.materials[x][y][z] = material;
         return this;
     }
 
-    public Material get(int xPos, int yPos, int zPos) {
-        return materials[xPos][yPos][zPos];
+    public Material get(int x, int y, int z) {
+        return materials[x][y][z];
     }
 
-    /**
-     * Get the underlying block formation
-     *
-     * @return the block formation
-     */
-    public Material[][][] getBlockFormation() {
-        return Arrays.copyOf(materials, materials.length);
-    }
+    public Map<StructureRotation, ObeliskStructure> compileRotationMap() {
+        Map<StructureRotation, ObeliskStructure> structures = new EnumMap<>(StructureRotation.class);
+        for (StructureRotation rotation : StructureRotation.values()) {
+            structures.put(rotation, rotated(rotation));
+        }
 
-    public ObeliskStructure setNotStrict() {
-        this.strict = false;
-        return this;
-    }
-
-    public boolean isStrict() {
-        return strict;
+        return structures;
     }
 
     /**
@@ -201,24 +201,28 @@ public class ObeliskStructure {
         return new BoundingBox(x, y, z, x + sizeX, y + sizeY, z + sizeZ);
     }
 
-    public boolean matches(Location from) {
+    public boolean matches(Location from, boolean strict) {
         Preconditions.checkArgument(from != null, "Attempted to match against null \"from\" location");
 
         int x = from.getBlockX();
         int y = from.getBlockY();
         int z = from.getBlockZ();
 
-        return matches(from.getWorld(), x, y, z);
+        return matches(from.getWorld(), x, y, z, strict);
     }
 
-    public boolean matches(World world, int x, int y, int z) {
+    public boolean matches(World world, int x, int y, int z, boolean strict) {
         Preconditions.checkArgument(world != null, "Cannot match against null world");
+
+        if (getFormationBlock(world, x, y, z).getType() != formationMaterial) {
+            return false;
+        }
 
         for (int localX = 0; localX < sizeX; localX++) {
             for (int localY = 0; localY < sizeY; localY++) {
                 for (int localZ = 0; localZ < sizeZ; localZ++) {
                     Material type = world.getBlockAt(x + localX, y + localY, z + localZ).getType();
-                    Material obeliskType = materials[localX][localY][localZ];
+                    Material obeliskType = get(localX, localY, localZ);
 
                     if (obeliskType.isAir() && !strict) {
                         continue;
@@ -232,6 +236,70 @@ public class ObeliskStructure {
         }
 
         return true;
+    }
+
+    private ObeliskStructure rotated(StructureRotation rotation) {
+        if (rotation == StructureRotation.NONE || rotation == null) {
+            return this;
+        }
+
+        Material[][][] materials = null;
+        int newSizeX = -1, newSizeZ = -1;
+        int newFormationOffsetX = -1, newFormationOffsetZ = -1;
+
+        if (rotation == StructureRotation.CLOCKWISE_90) { // 90 degrees
+            newSizeX = sizeZ;
+            newSizeZ = sizeX;
+            newFormationOffsetX = zFormationOffset;
+            newFormationOffsetZ = sizeX - xFormationOffset - 1;
+            materials = new Material[newSizeX][sizeY][newSizeZ];
+
+            for (int x = 0; x < newSizeX; x++) {
+                for (int y = 0; y < sizeY; y++) {
+                    for (int z = 0; z < newSizeZ; z++) {
+                        materials[x][y][newSizeZ - z - 1] = get(z, y, x);
+                    }
+                }
+            }
+        }
+
+        else if (rotation == StructureRotation.CLOCKWISE_180) { // 180 degrees
+            newSizeX = sizeX;
+            newSizeZ = sizeZ;
+            newFormationOffsetX = sizeX - xFormationOffset - 1;
+            newFormationOffsetZ = sizeZ - zFormationOffset - 1;
+            materials = new Material[newSizeX][sizeY][newSizeZ];
+
+            for (int x = 0; x < newSizeX; x++) {
+                for (int y = 0; y < sizeY; y++) {
+                    for (int z = 0; z < newSizeZ; z++) {
+                        materials[newSizeX - x - 1][y][newSizeZ - z - 1] = get(x, y, z);
+                    }
+                }
+            }
+        }
+
+        else if (rotation == StructureRotation.COUNTERCLOCKWISE_90) { // 270 degrees
+            newSizeX = sizeZ;
+            newSizeZ = sizeX;
+            newFormationOffsetX = sizeZ - zFormationOffset - 1;
+            newFormationOffsetZ = xFormationOffset;
+            materials = new Material[newSizeX][sizeY][newSizeZ];
+
+            for (int x = 0; x < newSizeX; x++) {
+                for (int y = 0; y < sizeY; y++) {
+                    for (int z = 0; z < newSizeZ; z++) {
+                        materials[newSizeX - x - 1][y][z] = get(z, y, x);
+                    }
+                }
+            }
+        }
+
+        if (materials == null || newSizeX <= 0 || newSizeZ <= 0 || newFormationOffsetX < 0 || newFormationOffsetZ < 0) {
+            throw new UnsupportedOperationException("Unsupported obelisk structure rotation");
+        }
+
+        return new ObeliskStructure(newSizeX, sizeY, newSizeZ, materials).formationPoint(newFormationOffsetX, yFormationOffset, newFormationOffsetZ);
     }
 
     public static ObeliskStructure withSize(int sizeX, int sizeY, int sizeZ) {

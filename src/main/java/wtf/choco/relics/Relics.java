@@ -22,6 +22,7 @@ import wtf.choco.relics.listeners.obelisk.ObeliskEngraveListener;
 import wtf.choco.relics.listeners.obelisk.ObeliskProtectionListener;
 import wtf.choco.relics.listeners.obelisk.StructureDetectionListener;
 import wtf.choco.relics.obelisk.TestObelisk;
+import wtf.choco.relics.obelisk.TestTwoObelisk;
 import wtf.choco.relics.runnable.ArtifactEffectRunnable;
 import wtf.choco.relics.runnable.AsyncObeliskFormationHint;
 import wtf.choco.relics.runnable.ObeliskEffectRunnable;
@@ -65,6 +66,7 @@ public class Relics extends JavaPlugin {
         // Register obelisks
         this.getLogger().info("Registering obelisks");
         this.obeliskManager.registerObelisk(new TestObelisk(this));
+        this.obeliskManager.registerObelisk(new TestTwoObelisk(this));
 
         // Register commands
         this.getLogger().info("Registering commands");

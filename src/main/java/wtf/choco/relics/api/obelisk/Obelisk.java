@@ -8,18 +8,17 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.block.structure.StructureRotation;
 import org.bukkit.util.BoundingBox;
 
 import wtf.choco.relics.utils.SoundData;
 
-public class Obelisk implements Keyed {
+public abstract class Obelisk implements Keyed {
 
     private final NamespacedKey key;
-    private final ObeliskStructure structure;
 
-    public Obelisk(NamespacedKey key, ObeliskStructure structure) {
+    public Obelisk(NamespacedKey key) {
         this.key = key;
-        this.structure = structure;
     }
 
     @Override
@@ -27,8 +26,10 @@ public class Obelisk implements Keyed {
         return key;
     }
 
-    public ObeliskStructure getStructure() {
-        return structure;
+    public abstract ObeliskStructure getStructure(StructureRotation rotation);
+
+    public boolean hasStrongAura() {
+        return true;
     }
 
     public String getName(@SuppressWarnings("unused") ObeliskState state) {
@@ -64,8 +65,8 @@ public class Obelisk implements Keyed {
     @SuppressWarnings("unused")
     public void tick(ObeliskState state, int partialTick) { }
 
-    public ObeliskState createObelisk(OfflinePlayer owner, World world, BoundingBox bounds, Set<Block> components) {
-        return new ObeliskState(this, owner, world, bounds, components);
+    public ObeliskState createObelisk(OfflinePlayer owner, World world, BoundingBox bounds, StructureRotation rotation, Set<Block> components) {
+        return new ObeliskState(this, owner, world, bounds, rotation, components);
     }
 
 }

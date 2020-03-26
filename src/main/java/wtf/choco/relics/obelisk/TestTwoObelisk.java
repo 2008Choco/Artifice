@@ -19,16 +19,15 @@ import wtf.choco.relics.api.obelisk.ObeliskState;
 import wtf.choco.relics.api.obelisk.ObeliskStructure;
 import wtf.choco.relics.utils.SoundData;
 
-public class TestObelisk extends Obelisk {
+public class TestTwoObelisk extends Obelisk {
 
     private static final int EFFECT_RADIUS = 5;
 
-    private static final String NAME = "Test Obelisk", NAME_FORMATTED = ChatColor.GOLD + "Test Obelisk";
-    private static final Map<StructureRotation, ObeliskStructure> STRUCTURES = ObeliskStructure.withSize(3, 3, 1)
-            .set(1, 0, 0, Material.OAK_LOG).set(0, 1, 0, Material.OAK_FENCE)
-            .set(1, 1, 0, Material.OAK_LOG).set(2, 1, 0, Material.OAK_FENCE)
-            .set(0, 2, 0, Material.OAK_PLANKS).set(1, 2, 0, Material.OAK_LOG).set(2, 2, 0, Material.OAK_PLANKS)
-            .formationPoint(1, 0, 0).compileRotationMap();
+    private static final String NAME = "Test Two Obelisk", NAME_FORMATTED = ChatColor.GOLD + "Test Two Obelisk";
+    private static final Map<StructureRotation, ObeliskStructure> STRUCTURES = ObeliskStructure.withSize(3, 3, 2)
+            .set(0, 0, 1, Material.OAK_LOG).set(0, 1, 1, Material.OAK_LOG).set(0, 2, 1, Material.OAK_LOG)
+            .set(1, 2, 1, Material.OAK_FENCE).set(2, 2, 1, Material.OAK_FENCE).set(2, 2, 0, Material.OAK_FENCE)
+            .formationPoint(1, 2, 1).compileRotationMap();
 
     private static final String[] FORMATION_MESSAGES = {
             "A strange aura seems to empower and surround the structure",
@@ -39,8 +38,8 @@ public class TestObelisk extends Obelisk {
     private static final SoundData FORMATION_SOUND = SoundData.of(Sound.ENTITY_ELDER_GUARDIAN_AMBIENT, 5F, 0F);
     private static final SoundData DISRUPTION_SOUND = SoundData.of(Sound.ENTITY_ELDER_GUARDIAN_CURSE, 5F, 0F);
 
-    public TestObelisk(Relics plugin) {
-        super(new NamespacedKey(plugin, "test"));
+    public TestTwoObelisk(Relics plugin) {
+        super(new NamespacedKey(plugin, "test_two"));
     }
 
     @Override
@@ -99,7 +98,7 @@ public class TestObelisk extends Obelisk {
                 double x = Math.cos(theta), y = 1, z = Math.sin(theta);
 
                 location.add(x, y, z);
-                world.spawnParticle(Particle.FLAME, location, 1, 0, 0, 0, 0);
+                world.spawnParticle(Particle.VILLAGER_HAPPY, location, 1, 0, 0, 0, 0);
                 location.subtract(x, y, z);
             }
         });

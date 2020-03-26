@@ -16,7 +16,6 @@ import wtf.choco.relics.Relics;
 import wtf.choco.relics.api.ObeliskManager;
 import wtf.choco.relics.api.events.player.PlayerDestroyObeliskEvent;
 import wtf.choco.relics.api.obelisk.ObeliskState;
-import wtf.choco.relics.api.obelisk.ObeliskStructure;
 import wtf.choco.relics.utils.SoundData;
 
 public class ObeliskProtectionListener implements Listener {
@@ -32,7 +31,7 @@ public class ObeliskProtectionListener implements Listener {
         ObeliskManager manager = plugin.getObeliskManager();
         Block block = event.getBlock();
         ObeliskState obeliskState = manager.getObelisk(block, true);
-        if (obeliskState == null || !obeliskState.getObelisk().getStructure().isStrict()) {
+        if (obeliskState == null || !obeliskState.getObelisk().hasStrongAura()) {
             return;
         }
 
@@ -68,8 +67,7 @@ public class ObeliskProtectionListener implements Listener {
             return;
         }
 
-        ObeliskStructure structure = obeliskState.getObelisk().getStructure();
-        if (!structure.isStrict()) {
+        if (!obeliskState.getObelisk().hasStrongAura()) {
             BoundingBox bounds = obeliskState.getBounds();
             Vector min = bounds.getMin();
             Vector blockPos = block.getLocation().toVector();
@@ -78,7 +76,7 @@ public class ObeliskProtectionListener implements Listener {
             int relativeY = blockPos.getBlockY() - min.getBlockY();
             int relativeZ = blockPos.getBlockZ() - min.getBlockZ();
 
-            if (bounds.contains(blockPos) && structure.get(relativeX, relativeY, relativeZ).isAir()) {
+            if (bounds.contains(blockPos) && obeliskState.getStructure().get(relativeX, relativeY, relativeZ).isAir()) {
                 return;
             }
         }
