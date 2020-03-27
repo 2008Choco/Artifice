@@ -1,5 +1,7 @@
 package wtf.choco.relics.api.obelisk;
 
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
@@ -26,15 +28,58 @@ import wtf.choco.relics.utils.SoundData;
 public abstract class Obelisk implements Keyed {
 
     private final NamespacedKey key;
+    private final Set<ObeliskQuality> qualities;
 
     protected Obelisk(NamespacedKey key) {
         Preconditions.checkArgument(key != null, "Key must not be null");
         this.key = key;
+        this.qualities = new HashSet<>();
     }
 
     @Override
     public final NamespacedKey getKey() {
         return key;
+    }
+
+    /**
+     * Add a quality to this obelisk. The quality added may define the behaviour of this obelisk.
+     *
+     * @param quality the quality to add
+     *
+     * @return whether or not the quality was added. If false, the quality likely conflicts
+     * with one already present on this obelisk or vice versa
+     */
+    public boolean addQuality(ObeliskQuality quality) {
+        return qualities.stream().noneMatch(q -> q.conflictsWith(quality) || quality.conflictsWith(q)) && qualities.add(quality);
+    }
+
+    /**
+     * Remove a quality from this obelisk.
+     *
+     * @param quality the quality to remove
+     */
+    public void removeQuality(ObeliskQuality quality) {
+        this.qualities.remove(quality);
+    }
+
+    /**
+     * Check whether this obelisk has the queried quality.
+     *
+     * @param quality the quality to check
+     *
+     * @return true if this obelisk has the quality, false otherwise
+     */
+    public boolean hasQuality(ObeliskQuality quality) {
+        return qualities.contains(quality);
+    }
+
+    /**
+     * Get an unmodifiable set of all qualities present on this obelisk.
+     *
+     * @return this obelisk's qualities
+     */
+    public Set<ObeliskQuality> getQualities() {
+        return Collections.unmodifiableSet(qualities);
     }
 
     /**

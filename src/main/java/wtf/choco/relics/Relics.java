@@ -8,6 +8,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import wtf.choco.relics.api.ArtifactManager;
 import wtf.choco.relics.api.ObeliskManager;
+import wtf.choco.relics.api.QualityRegistry;
 import wtf.choco.relics.artifacts.corrupted.PoisonedArtifact;
 import wtf.choco.relics.artifacts.fossilized.TestArtifact;
 import wtf.choco.relics.artifacts.necrotic.DevilsStaff;
@@ -20,9 +21,11 @@ import wtf.choco.relics.listeners.discovery.ArtifactFossilizedLootListener;
 import wtf.choco.relics.listeners.discovery.ArtifactNecroticLootListener;
 import wtf.choco.relics.listeners.obelisk.ObeliskEngraveListener;
 import wtf.choco.relics.listeners.obelisk.ObeliskProtectionListener;
+import wtf.choco.relics.listeners.obelisk.ObeliskDebugQualityListener;
 import wtf.choco.relics.listeners.obelisk.StructureDetectionListener;
 import wtf.choco.relics.obelisk.TestObelisk;
 import wtf.choco.relics.obelisk.TestTwoObelisk;
+import wtf.choco.relics.obelisk.qualities.ObeliskQualities;
 import wtf.choco.relics.runnable.ArtifactEffectRunnable;
 import wtf.choco.relics.runnable.AsyncObeliskFormationHint;
 import wtf.choco.relics.runnable.ObeliskEffectRunnable;
@@ -38,6 +41,7 @@ public class Relics extends JavaPlugin {
     private static Relics instance;
     private ObeliskManager obeliskManager;
     private ArtifactManager artifactManager;
+    private QualityRegistry qualityRegistry;
 
     private ObeliskEffectRunnable obeliskEffectLoop;
     private ArtifactEffectRunnable artifactEffectLoop;
@@ -46,11 +50,12 @@ public class Relics extends JavaPlugin {
     @Override
     public void onEnable() {
         instance = this;
-        this.obeliskManager = new ObeliskManager();
         this.artifactManager = new ArtifactManager();
+        this.obeliskManager = new ObeliskManager();
+        this.qualityRegistry = new QualityRegistry();
 
         // Register events
-        this.getLogger().info("Registering events");
+        this.getLogger().info("Registering event listeners");
         PluginManager pluginManager = Bukkit.getPluginManager();
         pluginManager.registerEvents(new StructureDetectionListener(this), this);
         pluginManager.registerEvents(new ObeliskProtectionListener(this), this);
@@ -62,15 +67,20 @@ public class Relics extends JavaPlugin {
         pluginManager.registerEvents(new ArtifactDroppedListener(this), this);
 
         pluginManager.registerEvents(new ObeliskEngraveListener(this), this);
+        pluginManager.registerEvents(new ObeliskDebugQualityListener(this), this);
 
         // Register artifacts
-        this.getLogger().info("Registering artifacts");
+        this.getLogger().info("Registering core artifacts");
         this.artifactManager.registerArtifact(new TestArtifact(this));
         this.artifactManager.registerArtifact(new PoisonedArtifact(this));
         this.artifactManager.registerArtifact(new DevilsStaff(this));
 
+        // Register qualities
+        this.getLogger().info("Registering core obelisk qualities");
+        this.qualityRegistry.registerQuality(ObeliskQualities.DEBUG_QUALITY);
+
         // Register obelisks
-        this.getLogger().info("Registering obelisks");
+        this.getLogger().info("Registering core obelisks");
         this.obeliskManager.registerObelisk(new TestObelisk(this));
         this.obeliskManager.registerObelisk(new TestTwoObelisk(this));
 
@@ -94,7 +104,7 @@ public class Relics extends JavaPlugin {
 
         this.getLogger().info("Clearing local relic registration information");
         this.obeliskManager.clear();
-
+        this.qualityRegistry.clear();
         this.artifactManager.clearArtifacts();
 
         this.getLogger().info("Cancelling obelisk and artifact effect loops");
@@ -129,6 +139,15 @@ public class Relics extends JavaPlugin {
      */
     public ArtifactManager getArtifactManager() {
         return artifactManager;
+    }
+
+    /**
+     * Get the plugin's {@link QualityRegistry}.
+     *
+     * @return the quality registry
+     */
+    public QualityRegistry getQualityRegistry() {
+        return qualityRegistry;
     }
 
     /**

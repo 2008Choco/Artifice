@@ -163,6 +163,28 @@ public class ObeliskState {
     }
 
     /**
+     * Check whether this obelisk has the queried quality. This is a convenience method and is equivalent
+     * to {@code getObelisk().hasQuality(quality)}.
+     *
+     * @param quality the quality to check
+     *
+     * @return true if this obelisk has the quality. false otherwise
+     */
+    public final boolean hasQuality(ObeliskQuality quality) {
+        return obelisk.hasQuality(quality);
+    }
+
+    /**
+     * Get an unmodifiable set of all qualities present on this obelisk. This is a convenience method and
+     * is equivalent to {@code getObelisk().getQualities()}.
+     *
+     * @return this obelisk's qualities
+     */
+    public final Set<ObeliskQuality> getQualities() {
+        return obelisk.getQualities();
+    }
+
+    /**
      * Tick this obelisk. Consequently invokes {@link Obelisk#tick(ObeliskState, int)}.
      */
     public final void tick() {

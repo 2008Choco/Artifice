@@ -17,6 +17,7 @@ import wtf.choco.relics.Relics;
 import wtf.choco.relics.api.obelisk.Obelisk;
 import wtf.choco.relics.api.obelisk.ObeliskState;
 import wtf.choco.relics.api.obelisk.ObeliskStructure;
+import wtf.choco.relics.obelisk.qualities.ObeliskQualities;
 import wtf.choco.relics.utils.SoundData;
 
 public class TestObelisk extends Obelisk {
@@ -35,6 +36,7 @@ public class TestObelisk extends Obelisk {
 
     public TestObelisk(Relics plugin) {
         super(new NamespacedKey(plugin, "test"));
+        this.addQuality(ObeliskQualities.DEBUG_QUALITY);
     }
 
     @Override
