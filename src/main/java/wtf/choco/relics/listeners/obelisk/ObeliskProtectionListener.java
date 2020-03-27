@@ -16,6 +16,7 @@ import wtf.choco.relics.Relics;
 import wtf.choco.relics.api.ObeliskManager;
 import wtf.choco.relics.api.events.player.PlayerDestroyObeliskEvent;
 import wtf.choco.relics.api.obelisk.ObeliskState;
+import wtf.choco.relics.api.obelisk.ObeliskStructure;
 import wtf.choco.relics.utils.SoundData;
 
 public class ObeliskProtectionListener implements Listener {
@@ -32,6 +33,11 @@ public class ObeliskProtectionListener implements Listener {
         Block block = event.getBlock();
         ObeliskState obeliskState = manager.getObelisk(block, true);
         if (obeliskState == null || !obeliskState.getObelisk().hasStrongAura()) {
+            return;
+        }
+
+        ObeliskStructure structure = obeliskState.getStructure();
+        if (structure.hasIgnorePredicate() && structure.getIgnorePredicate().test(block)) {
             return;
         }
 
@@ -64,6 +70,11 @@ public class ObeliskProtectionListener implements Listener {
         Block block = event.getBlock();
         ObeliskState obeliskState = manager.getObelisk(block, true);
         if (obeliskState == null) {
+            return;
+        }
+
+        ObeliskStructure structure = obeliskState.getStructure();
+        if (structure.hasIgnorePredicate() && structure.getIgnorePredicate().test(block)) {
             return;
         }
 
