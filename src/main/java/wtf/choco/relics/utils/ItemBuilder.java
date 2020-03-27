@@ -27,7 +27,7 @@ public final class ItemBuilder {
 
     private ItemBuilder(Material type, int amount) {
         Preconditions.checkArgument(type != null, "Cannot create ItemBuilder for null Material");
-        Preconditions.checkArgument(!type.isItem(), "Illegal material!");
+        Preconditions.checkArgument(type.isItem(), "Illegal material!");
         Preconditions.checkArgument(amount > 0 && amount <= type.getMaxStackSize(), "Amount must be between 0 - " + type.getMaxStackSize());
 
         this.item = new ItemStack(type);
