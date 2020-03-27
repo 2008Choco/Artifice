@@ -15,6 +15,7 @@ import org.bukkit.util.Vector;
 import wtf.choco.relics.Relics;
 import wtf.choco.relics.api.ObeliskManager;
 import wtf.choco.relics.api.events.player.PlayerDestroyObeliskEvent;
+import wtf.choco.relics.api.obelisk.Obelisk;
 import wtf.choco.relics.api.obelisk.ObeliskState;
 import wtf.choco.relics.api.obelisk.ObeliskStructure;
 import wtf.choco.relics.utils.SoundData;
@@ -36,6 +37,7 @@ public class ObeliskProtectionListener implements Listener {
             return;
         }
 
+        Obelisk obelisk = obeliskState.getObelisk();
         ObeliskStructure structure = obeliskState.getStructure();
         if (structure.hasIgnorePredicate() && structure.getIgnorePredicate().test(block)) {
             return;
@@ -51,14 +53,15 @@ public class ObeliskProtectionListener implements Listener {
         PlayerDestroyObeliskEvent pdoe = new PlayerDestroyObeliskEvent(player, obeliskState);
         Bukkit.getPluginManager().callEvent(pdoe);
 
+        obelisk.onDisrupted(obeliskState, player);
         manager.removeObelisk(obeliskState);
 
-        SoundData sound = obeliskState.getObelisk().getDisruptionSound(obeliskState);
+        SoundData sound = obelisk.getDisruptionSound(obeliskState);
         if (sound != null) {
             sound.play(player.getLocation());
         }
 
-        String disruptionMessage = obeliskState.getObelisk().getDisruptionMessage(obeliskState, ThreadLocalRandom.current());
+        String disruptionMessage = obelisk.getDisruptionMessage(obeliskState, ThreadLocalRandom.current());
         if (disruptionMessage != null) {
             this.plugin.sendMessage(player, disruptionMessage);
         }
@@ -73,12 +76,13 @@ public class ObeliskProtectionListener implements Listener {
             return;
         }
 
+        Obelisk obelisk = obeliskState.getObelisk();
         ObeliskStructure structure = obeliskState.getStructure();
         if (structure.hasIgnorePredicate() && structure.getIgnorePredicate().test(block)) {
             return;
         }
 
-        if (!obeliskState.getObelisk().hasStrongAura()) {
+        if (!obelisk.hasStrongAura()) {
             BoundingBox bounds = obeliskState.getBounds();
             Vector min = bounds.getMin();
             Vector blockPos = block.getLocation().toVector();
@@ -102,14 +106,15 @@ public class ObeliskProtectionListener implements Listener {
         PlayerDestroyObeliskEvent pdoe = new PlayerDestroyObeliskEvent(player, obeliskState);
         Bukkit.getPluginManager().callEvent(pdoe);
 
+        obelisk.onDisrupted(obeliskState, player);
         manager.removeObelisk(obeliskState);
 
-        SoundData sound = obeliskState.getObelisk().getDisruptionSound(obeliskState);
+        SoundData sound = obelisk.getDisruptionSound(obeliskState);
         if (sound != null) {
             sound.play(player.getLocation());
         }
 
-        String disruptionMessage = obeliskState.getObelisk().getDisruptionMessage(obeliskState, ThreadLocalRandom.current());
+        String disruptionMessage = obelisk.getDisruptionMessage(obeliskState, ThreadLocalRandom.current());
         if (disruptionMessage != null) {
             this.plugin.sendMessage(player, disruptionMessage);
         }

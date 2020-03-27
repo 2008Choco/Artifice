@@ -14,6 +14,7 @@ import org.bukkit.Particle;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.structure.StructureRotation;
+import org.bukkit.entity.Player;
 import org.bukkit.util.BoundingBox;
 
 import wtf.choco.relics.Relics;
@@ -206,6 +207,14 @@ public abstract class Obelisk implements Keyed {
      * @param partialTick the partial tick
      */
     public void tick(ObeliskState state, int partialTick) { }
+
+    /**
+     * Called when a player disrupts the given obelisk state.
+     *
+     * @param state the obelisk state being disrupted
+     * @param player the player that disrupted the obelisk
+     */
+    public void onDisrupted(ObeliskState state, Player player) { }
 
     /**
      * Create an ObeliskState given the supplied information.
