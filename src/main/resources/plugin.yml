@@ -1,11 +1,12 @@
 name: ${project.name}
-main: wtf.choco.relics.Relics
+main: wtf.choco.artifice.Artifice
 version: ${project.version}
 description: Mystical relics and obelisks to make your server more magical
-api-version: 1.15
 author: Choco
+api-version: 1.15
+
 commands:
-    relics:
+    artifice:
       description: The main administrative command for relics
       usage: /<command> <reload|version>
     artifact:
