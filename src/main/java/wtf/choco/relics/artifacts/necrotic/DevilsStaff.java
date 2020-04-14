@@ -23,7 +23,7 @@ public class DevilsStaff extends NecroticArtifact {
 
     @Override
     public double discoveryPercent() {
-        return 100;
+        return 0.2;
     }
 
     @Override

@@ -29,10 +29,10 @@ public class ObeliskState {
     protected final Obelisk obelisk;
     protected final UUID owner;
     protected final World world;
-    protected final BoundingBox bounds;
     protected final Set<Block> components;
-
     protected final StructureRotation rotation;
+
+    private final BoundingBox bounds;
 
     public ObeliskState(Obelisk obelisk, OfflinePlayer owner, World world, BoundingBox bounds, StructureRotation rotation, Set<Block> components) {
         this.obelisk = obelisk;

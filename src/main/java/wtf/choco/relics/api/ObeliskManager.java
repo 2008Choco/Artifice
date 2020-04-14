@@ -9,6 +9,7 @@ import java.util.Map;
 
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
+import org.bukkit.World;
 import org.bukkit.block.Block;
 
 import wtf.choco.relics.api.obelisk.Obelisk;
@@ -152,6 +153,42 @@ public class ObeliskManager {
      */
     public ObeliskState getObelisk(Block block) {
         return getObelisk(block, false);
+    }
+
+    public List<ObeliskState> getNearbyObelisks(Location location, double distance, boolean fromCenter) {
+        List<ObeliskState> nearby = new ArrayList<>();
+
+        distance = Math.pow(distance, 2);
+        World world = location.getWorld();
+
+        for (ObeliskState state : states) {
+            if (fromCenter && location.distanceSquared(state.getBounds().getCenter().toLocation(world)) < distance) {
+                nearby.add(state);
+            }
+
+            else { // I really hope no one wants to use this, but oh well!
+                for (Block component : state.getComponents()) {
+                    if (location.distanceSquared(component.getLocation()) < distance) {
+                        nearby.add(state);
+                        break;
+                    }
+                }
+            }
+        }
+
+        return nearby;
+    }
+
+    public List<ObeliskState> getNearbyObelisks(Location location, double distance) {
+        return getNearbyObelisks(location, distance, true);
+    }
+
+    public List<ObeliskState> getNearbyObelisks(Block block, double distance, boolean fromCenter) {
+        return getNearbyObelisks(block.getLocation(), distance, fromCenter);
+    }
+
+    public List<ObeliskState> getNearbyObelisks(Block block, double distance) {
+        return getNearbyObelisks(block.getLocation(), distance, true);
     }
 
     /**
